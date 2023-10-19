@@ -1,0 +1,20 @@
+{
+  "name": "baller-form",
+  "version": "0.0.1",
+  "description": "Sign up form implemented as a self-contained Web Component",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dropbear-software/baller-form.git"
+  },
+  "author": "Inuit.Agency",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dropbear-software/baller-form/issues"
+  },
+  "homepage": "https://github.com/dropbear-software/baller-form#readme"
+}
