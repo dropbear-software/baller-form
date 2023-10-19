@@ -1,5 +1,7 @@
 import { html, LitElement } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, query } from 'lit/decorators.js';
+
+import type { MdFilledButton } from '@material/web/button/filled-button.js';
 
 import { typographyBaseline } from "./design-system.css.js";
 import { componentStyles } from './baller-form.css.js';
@@ -11,8 +13,7 @@ import '@material/web/button/filled-button.js';
  * 
  * @summary The Baller League Player Registration Form
  * 
- * @property {number} counter - some description
- * @property {string} header - some description
+ * @property {number} progress - A value between 0 and 1 representing the progress of the application process
  *
  * @cssproperty --baller-form-text-color - Controls the color of the text
  */
@@ -22,18 +23,18 @@ export class BallerForm extends LitElement {
     componentStyles
   ];
 
-  @property({ type: String }) header = 'Hey there';
+  @query('md-filled-button[type="submit"]')
+  submitButton!: MdFilledButton;
 
-  @property({ type: Number }) counter = 5;
+  @property({ type: Number }) progress = 0;
 
-  private __increment() {
-    this.counter += 1;
+  private _handleSubmission() {
+    this.progress += 1;
   }
 
   protected render() {
     return html`
-      <h2 class="title-large">${this.header} Nr. ${this.counter}!</h2>
-      <md-filled-button @click=${this.__increment}>Increment</md-filled-button>
+      <md-filled-button @click=${this._handleSubmission} type="submit">Submit</md-filled-button>
     `;
   }
 }
