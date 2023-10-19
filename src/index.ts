@@ -1,1 +1,1 @@
-export { BallerForm } from './BallerForm.js';
+export { BallerForm } from './baller-form.js';

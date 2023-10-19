@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { fixture, expect } from '@open-wc/testing';
-import { BallerForm } from '../src/BallerForm.js';
+import type { BallerForm } from '../src/baller-form.js';
 import '../src/baller-form.js';
 
 describe('BallerForm', () => {
