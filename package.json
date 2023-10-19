@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@material/web": "^1.0.0",
-    "lit": "^3.0.0"
+    "lit": "^2.7.4"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.4.17",
