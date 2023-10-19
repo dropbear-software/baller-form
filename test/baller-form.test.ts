@@ -13,7 +13,7 @@ describe('BallerForm', () => {
 
   it('increases the counter on button click', async () => {
     const el = await fixture<BallerForm>(html`<baller-form></baller-form>`);
-    el.shadowRoot!.querySelector('button')!.click();
+    el.shadowRoot!.querySelector('md-filled-button')!.click();
 
     expect(el.counter).to.equal(6);
   });
