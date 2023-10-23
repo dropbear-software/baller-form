@@ -11,9 +11,7 @@ npm i baller-form
 ## Usage
 
 ```html
-<script type="module">
-  import 'baller-form/baller-form.js';
-</script>
+<script type="module" src="path/to/baller-form-bundle.js"></script>
 
 <baller-form></baller-form>
 ```
@@ -52,6 +50,19 @@ To run the tests in interactive watch mode run:
 npm run test:watch
 ```
 
+## Building
+
+To compile the Typescript run:
+
+```bash
+npm run build
+```
+
+To bundle everything together into a single file run:
+
+```bash
+npm run bundle
+```
 
 ## Tooling configs
 

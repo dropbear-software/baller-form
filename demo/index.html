@@ -5,21 +5,43 @@
   <link rel="stylesheet" href="/demo/demo-styles.css">
 </head>
 <body class="surface on-surface-text">
-  <div id="demo"></div>
+  <header class="surface-variant on-surface-variant-text">
+    <h1 class="display-medium">
+      Sign up form demo
+    </h1>
+    <label class="label-medium">
+      <span id="bundle-name"></span>
+      <button aria-label="Production" id="production-switch" class="tertiary-container on-tertiary-container-text">Switch</button>
+    </label>
+  </header>
+
+  <div id="demo">
+    <baller-form></baller-form>
+  </div>
 
   <script type="module">
-    import { html, render } from 'lit';
-    import '../dist/src/baller-form.js';
+    // Load the bundled version if the URL has a `prod` URL parameter
+    const currentURL = new URL(window.location.href);
+    const bundleName = document.getElementById('bundle-name');
+    if (currentURL.searchParams.has('prod')) {
+      await import('../dist/baller-form-bundle.js');
+      bundleName.innerText = 'Production Bundle';
+    } else {
+      await import('../dist/src/baller-form.js');
+      bundleName.innerText = 'Development Bundle';
+    }
 
-    const header = 'Hello owc World!';
-    render(
-      html`
-        <baller-form .header=${header}>
-          some light-dom
-        </baller-form>
-      `,
-      document.querySelector('#demo')
-    );
+    // Hook up the bundle type button element
+    const productionSwitch = document.getElementById('production-switch');
+    productionSwitch.addEventListener('click', () => {
+      if (currentURL.searchParams.has('prod')) {
+        currentURL.searchParams.delete('prod', true);
+        window.location.href = currentURL;
+      } else {
+        currentURL.searchParams.set('prod', 'true')
+        window.location.href = currentURL;
+      }
+    });
   </script>
 
   <section>

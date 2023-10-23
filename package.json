@@ -9,7 +9,9 @@
   "module": "dist/src/index.js",
   "exports": {
     ".": "./dist/src/index.js",
-    "./baller-form.js": "./dist/src/baller-form.js"
+    "./baller-form.js": "./dist/src/baller-form.js",
+    "./baller-form-bundle.js": "./dist/baller-form.js",
+    "./baller-form-bundle.js.map": "./dist/baller-form.js.map"
   },
   "scripts": {
     "analyze": "cem analyze --litelement",
@@ -19,7 +21,8 @@
     "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --check --ignore-path .gitignore",
     "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",
     "test": "tsc && wtr --coverage",
-    "test:watch": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wtr --watch\""
+    "test:watch": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wtr --watch\"",
+    "bundle": "esbuild dist/src/index.js --bundle --minify --sourcemap --outfile=dist/baller-form-bundle.js"
   },
   "dependencies": {
     "@material/web": "^1.0.0",
@@ -35,6 +38,7 @@
     "@web/test-runner": "^0.17.0",
     "@web/test-runner-playwright": "^0.10.1",
     "concurrently": "^5.3.0",
+    "esbuild": "^0.19.5",
     "eslint": "^8.31.0",
     "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.4.1",
