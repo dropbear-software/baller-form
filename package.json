@@ -10,8 +10,8 @@
   "exports": {
     ".": "./dist/src/index.js",
     "./baller-form.js": "./dist/src/baller-form.js",
-    "./baller-form-bundle.js": "./dist/baller-form.js",
-    "./baller-form-bundle.js.map": "./dist/baller-form.js.map"
+    "./baller-form-bundle.js": "./demo/baller-form.js",
+    "./baller-form-bundle.js.map": "./demo/baller-form.js.map"
   },
   "scripts": {
     "analyze": "cem analyze --litelement",
@@ -22,7 +22,7 @@
     "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",
     "test": "tsc && wtr --coverage",
     "test:watch": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wtr --watch\"",
-    "bundle": "esbuild dist/src/index.js --bundle --minify --sourcemap --outfile=dist/baller-form-bundle.js"
+    "bundle": "esbuild dist/src/index.js --bundle --minify --sourcemap --outfile=demo/baller-form-bundle.js && esbuild --bundle styles/theme.css --outfile=demo/theme.css"
   },
   "dependencies": {
     "@material/web": "^1.0.0",
