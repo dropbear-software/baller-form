@@ -1,5 +1,10 @@
 @import url(../styles/theme.css);
 
+.colors {
+  display: flex;
+  gap: 1rem;
+}
+
 .color-swatch {
   display: inline-block;
   height: 25px;

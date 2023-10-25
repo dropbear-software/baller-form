@@ -8,6 +8,8 @@ import { componentStyles } from './baller-form.css.js';
 
 import '@material/web/button/filled-button.js';
 import '@material/web/textfield/outlined-text-field.js';
+import '@material/web/progress/linear-progress.js';
+import '@material/web/elevation/elevation.js';
 
 /**
  * @tagname baller-form
@@ -24,7 +26,7 @@ import '@material/web/textfield/outlined-text-field.js';
 export class BallerForm extends LitElement {
   static styles = [typographyBaseline, componentStyles];
 
-  @property({ type: Number }) progress = 0;
+  @property({ type: Number }) progress = 0.33;
 
   @query('md-filled-button[type="submit"]')
   submitButton!: MdFilledButton;
@@ -34,27 +36,14 @@ export class BallerForm extends LitElement {
 
   protected render() {
     return html`
-      <form>
-        <md-outlined-text-field
-          label="First Name"
-          required
-          autocomplete="given-name"
-        ></md-outlined-text-field>
-        <md-outlined-text-field
-          label="Family Name"
-          required
-          autocomplete="family-name"
-        ></md-outlined-text-field>
-        <md-outlined-text-field
-          label="Email"
-          required
-          autocomplete="email"
-          type="email"
-        ></md-outlined-text-field>
-        <md-filled-button @click=${this._handleSubmission} type="submit"
-          >Submit</md-filled-button
-        >
-      </form>
+      <section id="form-wrapper" class="level5">
+        <md-elevation></md-elevation>
+        <form>
+          <p class="label-medium">Schritt 1 von 3</p>
+          <md-linear-progress .value=${this.progress}></md-linear-progress>
+          ${this._renderStepOne()}
+        </form>
+      </section>
     `;
   }
 
@@ -68,5 +57,49 @@ export class BallerForm extends LitElement {
       this.dispatchEvent(new CustomEvent('completed-application'));
       this.formElement.submit();
     }
+  }
+
+  private _renderStepOne(){
+    return html`
+    <div class="row">
+      <div class="column">
+        <h2 class="display-small">Erzähle uns etwas über Dich:</h2>
+        <h3 class="headline-large">XING baller League</h3>
+        <div class="form-elements-container column">
+          <md-outlined-text-field
+            label="Vorname"
+            required
+            autocomplete="given-name"
+          ></md-outlined-text-field>
+          <md-outlined-text-field
+            label="Nachname"
+            required
+            autocomplete="family-name"
+          ></md-outlined-text-field>
+          <md-outlined-text-field
+            label="Email"
+            required
+            autocomplete="email"
+            type="email"
+          ></md-outlined-text-field>
+          <md-outlined-text-field
+            label="Phone"
+            autocomplete="tel"
+            type="tel"
+          ></md-outlined-text-field>
+          <md-outlined-text-field
+            label="Geburtsdatum"
+            required
+            autocomplete="bday"
+            type="date"
+          ></md-outlined-text-field>
+        </div>
+      </div>
+      <div class="column"></div>
+    </div>
+    <div class="row-reverse">
+      <md-filled-button @click=${this._handleSubmission} type="submit">Weiter</md-filled-button>
+    </div>
+    `;
   }
 }
