@@ -22,7 +22,8 @@
     "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",
     "test": "tsc && wtr --coverage",
     "test:watch": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wtr --watch\"",
-    "bundle": "esbuild dist/src/index.js --bundle --minify --sourcemap --outfile=demo/baller-form-bundle.js && esbuild --bundle styles/theme.css --outfile=demo/theme.css"
+    "bundle": "esbuild dist/src/index.js --bundle --minify --sourcemap --outfile=demo/baller-form-bundle.js && esbuild --bundle styles/theme.css --outfile=demo/theme.css",
+    "deploy": "firebase deploy"
   },
   "dependencies": {
     "@material/web": "^1.0.0",
@@ -41,6 +42,7 @@
     "esbuild": "^0.19.5",
     "eslint": "^8.31.0",
     "eslint-config-prettier": "^8.3.0",
+    "firebase-tools": "^12.7.0",
     "prettier": "^2.4.1",
     "tslib": "^2.6.2",
     "typescript": "^5.2.0"

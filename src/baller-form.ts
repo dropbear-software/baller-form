@@ -16,7 +16,7 @@ import '@material/web/elevation/elevation.js';
  *
  * @summary The Baller League Player Registration Form
  *
- * @property {number} progress - A value between 0 and 1 representing the progress of the application process
+ * @property {number} currentStep - The current step of the form the user is completing
  *
  * @cssproperty --baller-form-text-color - Controls the color of the text
  *
@@ -26,7 +26,7 @@ import '@material/web/elevation/elevation.js';
 export class BallerForm extends LitElement {
   static styles = [typographyBaseline, componentStyles];
 
-  @property({ type: Number }) progress = 0.33;
+  @property({ type: Number }) currentStep = 1;
 
   @query('md-filled-button[type="submit"]')
   submitButton!: MdFilledButton;
@@ -39,8 +39,8 @@ export class BallerForm extends LitElement {
       <section id="form-wrapper" class="level5">
         <md-elevation></md-elevation>
         <form>
-          <p class="label-medium">Schritt 1 von 3</p>
-          <md-linear-progress .value=${this.progress}></md-linear-progress>
+          <p class="label-medium">Schritt ${this.currentStep} von 3</p>
+          <md-linear-progress .value=${this.currentStep / 3}></md-linear-progress>
           ${this._renderStepOne()}
         </form>
       </section>
@@ -49,7 +49,7 @@ export class BallerForm extends LitElement {
 
   private _handleSubmission(e: SubmitEvent) {
     // Set the progress to 100%
-    this.progress = 1;
+    this.currentStep += 1;
 
     // Only submit the form if it is valid
     e.preventDefault();
