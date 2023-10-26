@@ -41,21 +41,35 @@ export const componentStyles = css`
     border-radius: 5px;
   }
 
-  .row {
-    display: flex;
+  .form-container {
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: 1fr 2fr 1fr; 
+    gap: 1em 1em; 
+    grid-template-areas: 
+      "form-header form-header"
+      "form-fields form-image"
+      "form-footer form-footer"; 
   }
-
-  .row-reverse {
+  .form-image { grid-area: form-image; }
+  .form-fields { 
+    grid-area: form-fields;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+  .form-header { grid-area: form-header; }
+  .form-footer { 
+    grid-area: form-footer;
     display: flex;
     flex-direction: row-reverse;
   }
 
-  .column {
-    display: flex;
-    flex-direction: column;
+  .form-image img {
+    max-width: 100%;
   }
 
-  .form-elements-container {
-    gap: 1rem;
+  .slide-hidden {
+    display: none;
   }
 `;

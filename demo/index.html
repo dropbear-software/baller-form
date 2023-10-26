@@ -16,7 +16,33 @@
   </header>
 
   <div id="demo">
-    <baller-form></baller-form>
+    <baller-form>
+      <style>
+        baller-form picture[slot] img{
+          max-width: 100%;
+        }
+      </style>
+      <picture slot="image-one">
+        <source srcset="./images/football-one.avif" type="image/avif">
+        <source srcset="./images/football-one.webp" type="image/webp">
+        <img src="./images/football-one.jpg" alt="Football players" loading="eager" decoding="async">
+      </picture>
+      <picture slot="image-two">
+        <source srcset="./images/football-two.avif" type="image/avif">
+        <source srcset="./images/football-two.webp" type="image/webp">
+        <img src="./images/football-two.jpg" alt="Football players" loading="lazy" decoding="async">
+      </picture>
+      <picture slot="image-three">
+        <source srcset="./images/football-three.avif" type="image/avif">
+        <source srcset="./images/football-three.webp" type="image/webp">
+        <img src="./images/football-three.jpg" alt="Football players" loading="lazy" decoding="async">
+      </picture>
+      <picture slot="image-four">
+        <source srcset="./images/football-four.avif" type="image/avif">
+        <source srcset="./images/football-four.webp" type="image/webp">
+        <img src="./images/football-four.jpg" alt="Football players" loading="lazy" decoding="async">
+      </picture>
+    </baller-form>
   </div>
 
   <script type="module">

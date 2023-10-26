@@ -8,7 +8,7 @@ describe('BallerForm', () => {
     const el = await fixture<BallerForm>(html`<baller-form></baller-form>`);
     el.submitButton.click();
 
-    expect(el.currentStep).to.equal(2);
+    expect(el.slideIndex).to.equal(2);
   });
 
   it('passes the a11y audit', async () => {
