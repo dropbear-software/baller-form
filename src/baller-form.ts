@@ -12,6 +12,7 @@ import '@material/web/button/filled-tonal-button.js';
 import '@material/web/textfield/outlined-text-field.js';
 import '@material/web/progress/linear-progress.js';
 import '@material/web/elevation/elevation.js';
+import '@material/web/checkbox/checkbox.js';
 
 import {
   AnimationTuple,
@@ -59,10 +60,11 @@ export class BallerForm extends LitElement {
         <md-elevation></md-elevation>
         <form>
           <p class="label-medium">Schritt ${this.slideIndex + 1} von 3</p>
-          <md-linear-progress .value=${this.slideIndex + 1  / 4}></md-linear-progress>
+          <md-linear-progress .value=${(this.slideIndex + 1)  / 4}></md-linear-progress>
           <div class="slides-container" style="${styleMap(containerStyles)}">
             ${this._renderStepOne()}
             ${this._renderStepTwo()}
+            ${this._renderStepThree()}
           </div>
         </form>
       </section>
@@ -96,13 +98,34 @@ export class BallerForm extends LitElement {
   }
 
   navigateToNextSlide() {
-    // Animation driven by the `updated` lifecycle.
-    this.slideIndex += 1;
+    const canProceed = this.validateSlideData();
+
+    if (canProceed) {
+      // Animation driven by the `updated` lifecycle.
+      this.slideIndex += 1;
+    }
   }
 
   navigateToPrevSlide() {
     // Animation driven by the `updated` lifecycle.
     this.slideIndex -= 1;
+  }
+
+  validateSlideData(): boolean {
+    const currentSlide = this.slideElements[this.slideIndex];
+    const formFields = Array.from(currentSlide.querySelectorAll('.form-fields > *')!);
+    // eslint-disable-next-line consistent-return
+    const validFields = formFields.every((field) => {
+      if ('willValidate' in field && 'reportValidity' in field) {
+        // @ts-ignore
+        field.reportValidity();
+        // @ts-ignore
+        return field.checkValidity();
+      }
+      return true;
+    });
+    
+    return validFields;
   }
 
   /**
@@ -185,9 +208,6 @@ export class BallerForm extends LitElement {
   }
 
   private _handleSubmission(e: SubmitEvent) {
-    // Set the progress to 100%
-    this.slideIndex += 1;
-
     // Only submit the form if it is valid
     e.preventDefault();
     if (this.formElement.checkValidity()) {
@@ -236,7 +256,7 @@ export class BallerForm extends LitElement {
         <slot name="image-one"></slot>
       </div>
       <div class="form-footer">
-        <md-filled-button @click=${this.navigateToNextSlide} type="button" data-action="next">Weiter</md-filled-button>
+        <md-filled-button @click=${this.navigateToNextSlide} type="button">Weiter</md-filled-button>
       </div>
     </div>
     `;
@@ -282,9 +302,44 @@ export class BallerForm extends LitElement {
         <slot name="image-two"></slot>
       </div>
       <div class="form-footer">
-        <md-filled-button @click=${this.navigateToNextSlide} type="button" data-action="next">Weiter</md-filled-button>
-        <md-filled-tonal-button @click=${this.navigateToPrevSlide} type="button" data-action="prev">Vorherige</md-filled-tonal-button>
+        <md-filled-button @click=${this.navigateToNextSlide} type="button">Weiter</md-filled-button>
+        <md-filled-tonal-button @click=${this.navigateToPrevSlide} type="button">Back</md-filled-tonal-button>
+      </div>
+    </div>
+    `;
+  }
 
+  private _renderStepThree(){
+    return html`
+    <div class="form-container slide-hidden" data-slide="3">
+      <div class="form-header">
+        <h2 class="display-small">Zeig uns wer Du bist!</h2>
+        <h3 class="headline-large">Deine Social Media Auftritt</h3>
+      </div>
+      <div class="form-fields">
+        <md-outlined-text-field
+            label="YouTube"
+            autocomplete="username"
+          ></md-outlined-text-field>
+          <md-outlined-text-field
+            label="Instagram"
+            autocomplete="username"
+          ></md-outlined-text-field>
+          <md-outlined-text-field
+            label="TikTok"
+            autocomplete="username"
+          ></md-outlined-text-field>
+          <label>
+            <md-checkbox touch-target="wrapper"></md-checkbox>
+            Checkbox one
+          </label>
+      </div>
+      <div class="form-image">
+        <slot name="image-three"></slot>
+      </div>
+      <div class="form-footer">
+        <md-filled-button @click=${this._handleSubmission} type="submit">Absenden</md-filled-button>
+        <md-filled-tonal-button @click=${this.navigateToPrevSlide} type="button">Back</md-filled-tonal-button>
       </div>
     </div>
     `;
