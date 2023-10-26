@@ -1,5 +1,6 @@
 import { html, LitElement, PropertyValues } from 'lit';
-import { customElement, property, query, queryAll } from 'lit/decorators.js';
+import { customElement, property, query, queryAll, state } from 'lit/decorators.js';
+import { styleMap } from "lit/directives/style-map.js";
 
 import type { MdFilledButton } from '@material/web/button/filled-button.js';
 
@@ -7,6 +8,7 @@ import { typographyBaseline } from './design-system.css.js';
 import { componentStyles } from './baller-form.css.js';
 
 import '@material/web/button/filled-button.js';
+import '@material/web/button/filled-tonal-button.js';
 import '@material/web/textfield/outlined-text-field.js';
 import '@material/web/progress/linear-progress.js';
 import '@material/web/elevation/elevation.js';
@@ -36,6 +38,8 @@ export class BallerForm extends LitElement {
 
   @property({ type: Number }) slideIndex = 0;
 
+  @state() private containerHeight = 0;
+
   @query('md-filled-button[type="submit"]')
   submitButton!: MdFilledButton;
 
@@ -46,25 +50,32 @@ export class BallerForm extends LitElement {
   private readonly slideElements!: HTMLElement[];
 
   protected render() {
+    const containerStyles = {
+      minHeight: `${this.containerHeight}px`,
+    };
+
     return html`
       <section id="form-wrapper" class="level5">
         <md-elevation></md-elevation>
         <form>
           <p class="label-medium">Schritt ${this.slideIndex + 1} von 3</p>
-          <md-linear-progress .value=${this.slideIndex + 1  / 3}></md-linear-progress>
-          ${this._renderStepOne()}
-          ${this._renderStepTwo()}
+          <md-linear-progress .value=${this.slideIndex + 1  / 4}></md-linear-progress>
+          <div class="slides-container" style="${styleMap(containerStyles)}">
+            ${this._renderStepOne()}
+            ${this._renderStepTwo()}
+          </div>
         </form>
       </section>
     `;
   }
 
   override firstUpdated() {
+    this.containerHeight = BallerForm.getMaxElHeight(this.slideElements);
     this.initializeSlides();
   }
 
   override updated(changedProperties: PropertyValues<this>): void {
-    // Not covered in the video, but if you want to drive animations from the
+    // If you want to drive animations from the
     // 'slideindex' attribute and property, we can calculate the animation in
     // the 'updated' lifecycle callback.
     if (changedProperties.has("slideIndex")) {
@@ -111,6 +122,11 @@ export class BallerForm extends LitElement {
 
   private static hideSlide(el: HTMLElement) {
     el.classList.add("slide-hidden");
+  }
+
+  private static getMaxElHeight(els: HTMLElement[]): number {
+    const slideHeights = Array.from(els).map((el) => el.getBoundingClientRect().height);
+    return Math.max(0, ...slideHeights);
   }
 
   private async navigateWithAnimation(
@@ -220,7 +236,7 @@ export class BallerForm extends LitElement {
         <slot name="image-one"></slot>
       </div>
       <div class="form-footer">
-        <md-filled-button @click=${this.navigateToNextSlide} type="button">Weiter</md-filled-button>
+        <md-filled-button @click=${this.navigateToNextSlide} type="button" data-action="next">Weiter</md-filled-button>
       </div>
     </div>
     `;
@@ -266,8 +282,9 @@ export class BallerForm extends LitElement {
         <slot name="image-two"></slot>
       </div>
       <div class="form-footer">
-        <md-filled-button @click=${this.navigateToNextSlide} type="button">Weiter</md-filled-button>
-        <md-filled-button @click=${this.navigateToPrevSlide} type="button" class="secondary text-on-secondary">Vorherige</md-filled-button>
+        <md-filled-button @click=${this.navigateToNextSlide} type="button" data-action="next">Weiter</md-filled-button>
+        <md-filled-tonal-button @click=${this.navigateToPrevSlide} type="button" data-action="prev">Vorherige</md-filled-tonal-button>
+
       </div>
     </div>
     `;

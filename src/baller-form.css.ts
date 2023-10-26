@@ -44,7 +44,7 @@ export const componentStyles = css`
   .form-container {
     display: grid; 
     grid-template-columns: 1fr 1fr; 
-    grid-template-rows: 1fr 2fr 1fr; 
+    grid-template-rows: 1fr 2fr 0fr; 
     gap: 1em 1em; 
     grid-template-areas: 
       "form-header form-header"
@@ -63,6 +63,7 @@ export const componentStyles = css`
     grid-area: form-footer;
     display: flex;
     flex-direction: row-reverse;
+    justify-content: space-between;
   }
 
   .form-image img {
@@ -71,5 +72,16 @@ export const componentStyles = css`
 
   .slide-hidden {
     display: none;
+  }
+
+  .slides-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+
+    padding: 1em;
+    overflow: hidden;
+    position: relative;
   }
 `;

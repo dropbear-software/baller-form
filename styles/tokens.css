@@ -167,21 +167,21 @@
   /* display - large */
   --md-sys-typescale-display-large-font-family-name: var(--brand-sans-font, sans-serif);
   --md-sys-typescale-display-large-font-family-style: normal;
-  --md-sys-typescale-display-large-font-weight: 400;
+  --md-sys-typescale-display-large-font-weight: 700;
   --md-sys-typescale-display-large-font-size: 57px;
   --md-sys-typescale-display-large-height: 64px;
   --md-sys-typescale-display-large-tracking: -0.25px;
   /* display - medium */
   --md-sys-typescale-display-medium-font-family-name: var(--brand-sans-font, sans-serif);
   --md-sys-typescale-display-medium-font-family-style: normal;
-  --md-sys-typescale-display-medium-font-weight: 400;
+  --md-sys-typescale-display-medium-font-weight: 700;
   --md-sys-typescale-display-medium-font-size: 45px;
   --md-sys-typescale-display-medium-height: 52px;
   --md-sys-typescale-display-medium-tracking: 0px;
   /* display - small */
   --md-sys-typescale-display-small-font-family-name: var(--brand-sans-font, sans-serif);
   --md-sys-typescale-display-small-font-family-style: normal;
-  --md-sys-typescale-display-small-font-weight: 400;
+  --md-sys-typescale-display-small-font-weight: 700;
   --md-sys-typescale-display-small-font-size: 36px;
   --md-sys-typescale-display-small-height: 44px;
   --md-sys-typescale-display-small-tracking: 0px;
