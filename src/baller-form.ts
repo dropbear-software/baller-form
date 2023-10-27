@@ -65,10 +65,9 @@ export class BallerForm extends LitElement {
           <p class="label-medium">Schritt ${this.slideIndex + 1} von 3</p>
           <md-linear-progress .value=${(this.slideIndex + 1)  / 4}></md-linear-progress>
           <div class="slides-container" style="${styleMap(containerStyles)}">
-            ${this._renderStepThree()}
             ${this._renderStepOne()}
             ${this._renderStepTwo()}
-            
+            ${this._renderStepThree()}
           </div>
         </form>
       </section>
