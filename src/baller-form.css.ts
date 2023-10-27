@@ -60,4 +60,9 @@ export const componentStyles = css`
     overflow: hidden;
     position: relative;
   }
+
+  .inline-label {
+    display: flex;
+    align-items: center;
+  }
 `;
