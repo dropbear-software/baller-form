@@ -20,7 +20,7 @@ export const componentStyles = css`
   .form-container {
     display: grid; 
     grid-template-columns: 1fr 1fr; 
-    grid-template-rows: 0.5fr 2fr 0.5fr; 
+    grid-template-rows: 0.5fr 2fr 0fr; 
     gap: 1em 1em; 
     grid-template-areas: 
       "form-header form-header"
@@ -33,6 +33,7 @@ export const componentStyles = css`
     display: flex;
     flex-direction: column;
     gap: 1em;
+    justify-content: center;
   }
   .form-header { grid-area: form-header; }
   .form-footer { 
