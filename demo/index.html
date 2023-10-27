@@ -16,6 +16,29 @@
   </header>
 
   <div id="demo">
+    <script type="module">
+      // Example implementation for analytics that reports on any of the key events
+      // that occur when using the form in a way that integrates with many tools using the dataLayer.
+      window.dataLayer = window.dataLayer || [];
+      document.addEventListener('completed-application', () => {
+        window.dataLayer.push({event: "completed-application"})
+      });
+      document.addEventListener('signup-form-displayed', () => {
+        window.dataLayer.push({event: "signup-form-displayed"})
+      });
+      document.addEventListener('next-form-step', (event) => {
+        window.dataLayer.push({
+          event: "next-form-step",
+          formStep: event.detail.step
+        });
+      });
+      document.addEventListener('prev-form-step', (event) => {
+        window.dataLayer.push({
+          event: "prev-form-step",
+          formStep: event.detail.step
+        });
+      });
+    </script>
     <baller-form>
       <style>
         baller-form picture[slot] > img{
