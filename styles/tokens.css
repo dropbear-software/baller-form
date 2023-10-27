@@ -202,7 +202,7 @@
   /* headline - small */
   --md-sys-typescale-headline-small-font-family-name: var(--brand-sans-font, sans-serif);
   --md-sys-typescale-headline-small-font-family-style: normal;
-  --md-sys-typescale-headline-small-font-weight: 400;
+  --md-sys-typescale-headline-small-font-weight: 100;
   --md-sys-typescale-headline-small-font-size: 24px;
   --md-sys-typescale-headline-small-height: 32px;
   --md-sys-typescale-headline-small-tracking: 0px;

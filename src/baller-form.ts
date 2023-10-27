@@ -239,7 +239,7 @@ export class BallerForm extends LitElement {
     <div class="form-container" data-slide="1">
       <div class="form-header">
         <h2 class="display-small">Erzähle uns etwas über Dich:</h2>
-        <h3 class="headline-large">XING baller League</h3>
+        <h3 class="headline-small">XING baller League</h3>
       </div>
       <div class="form-fields">
         <md-outlined-text-field
@@ -285,7 +285,7 @@ export class BallerForm extends LitElement {
     <div class="form-container slide-hidden" data-slide="2">
       <div class="form-header">
         <h2 class="display-small">Welche Skills zeichnen Dich aus?</h2>
-        <h3 class="headline-large">Deine Fußballerfahrung</h3>
+        <h3 class="headline-small">Deine Fußballerfahrung</h3>
       </div>
       <div class="form-fields">
         <md-outlined-text-field
@@ -332,7 +332,7 @@ export class BallerForm extends LitElement {
     <div class="form-container slide-hidden" data-slide="3">
       <div class="form-header">
         <h2 class="display-small">Zeig uns wer Du bist!</h2>
-        <h3 class="headline-large">Deine Social Media Auftritt</h3>
+        <h3 class="headline-small">Deine Social Media Auftritt</h3>
       </div>
       <div class="form-fields">
         <md-outlined-text-field

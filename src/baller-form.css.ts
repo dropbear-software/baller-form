@@ -20,7 +20,7 @@ export const componentStyles = css`
   .form-container {
     display: grid; 
     grid-template-columns: 1fr 1fr; 
-    grid-template-rows: 0.5fr 2fr 0fr; 
+    grid-template-rows: 0fr 2fr 0fr; 
     gap: 1em 1em; 
     grid-template-areas: 
       "form-header form-header"
@@ -65,5 +65,9 @@ export const componentStyles = css`
   .inline-label {
     display: flex;
     align-items: center;
+  }
+
+  h3 {
+    color: var(--md-sys-color-secondary);
   }
 `;
