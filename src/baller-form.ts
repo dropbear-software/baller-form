@@ -3,6 +3,7 @@ import { customElement, property, query, queryAll, state } from 'lit/decorators.
 import { styleMap } from "lit/directives/style-map.js";
 
 import type { MdFilledButton } from '@material/web/button/filled-button.js';
+import type { MdCheckbox } from '@material/web/checkbox/checkbox.js';
 
 import { typographyBaseline } from './design-system.css.js';
 import { componentStyles } from './baller-form.css.js';
@@ -53,6 +54,10 @@ export class BallerForm extends LitElement {
   @query('form')
   formElement!: HTMLFormElement;
 
+  
+  @query('[data-element="tos"]')
+  termsOfServiceBox!: MdCheckbox
+
   @queryAll('[data-slide]')
   private readonly slideElements!: HTMLElement[];
 
@@ -64,12 +69,13 @@ export class BallerForm extends LitElement {
     return html`
       <section id="form-wrapper">
         <form>
-          <p class="label-medium">Schritt ${this.slideIndex + 1} von 3</p>
-          <md-linear-progress .value=${(this.slideIndex + 1)  / 4}></md-linear-progress>
+          <p class="label-medium">Schritt ${this.slideIndex + 1} von ${this.slideElements.length}</p>
+          <md-linear-progress .value=${(this.slideIndex + 1)  / this.slideElements.length}></md-linear-progress>
           <div class="slides-container" style="${styleMap(containerStyles)}">
             ${this._renderStepOne()}
             ${this._renderStepTwo()}
             ${this._renderStepThree()}
+            ${this._renderStepFour()}
           </div>
         </form>
       </section>
@@ -236,6 +242,15 @@ export class BallerForm extends LitElement {
     }
   }
 
+  private handleLegalChange(){
+    if (this.termsOfServiceBox.checked) {
+      this.submitButton.disabled = false;
+    } else {
+      this.submitButton.disabled = true;
+    }
+    
+  }
+
   private _renderStepOne(){
     return html`
     <div class="form-container" data-slide="1">
@@ -267,6 +282,7 @@ export class BallerForm extends LitElement {
             label="Phone"
             autocomplete="tel"
             type="tel"
+            @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Geburtsdatum"
@@ -381,16 +397,40 @@ export class BallerForm extends LitElement {
             ${icons.tiktok}
             </md-icon>
           </md-outlined-text-field>
-          <label class="label-medium inline-label">
-            <md-checkbox touch-target="wrapper"></md-checkbox>
-            Ich stimme den Datenschutz zu
-          </label>
       </div>
       <div class="form-image">
         <slot name="image-three"></slot>
       </div>
       <div class="form-footer">
-        <md-filled-button @click=${this._handleSubmission} type="submit">Absenden</md-filled-button>
+        <md-filled-button @click=${this.navigateToNextSlide} type="button">Weiter</md-filled-button>
+        <md-filled-tonal-button @click=${this.navigateToPrevSlide} type="button">Back</md-filled-tonal-button>
+      </div>
+    </div>
+    `;
+  }
+
+  private _renderStepFour(){
+    return html`
+    <div class="form-container slide-hidden" data-slide="4">
+      <div class="form-header">
+        <h2 class="display-small">Achievements oder Anmerkungen</h2>
+        <h3 class="headline-small">Mochtest Du uns noch etwas sagen</h3>
+      </div>
+      <div class="form-fields">
+        <md-outlined-text-field
+          type="textarea"
+          rows="10">
+        </md-outlined-text-field>
+        <label class="label-medium inline-label">
+          <md-checkbox touch-target="wrapper" @change=${this.handleLegalChange} data-element="tos"></md-checkbox>
+          Ich stimme den Datenschutz zu
+        </label>
+      </div>
+      <div class="form-image">
+        <slot name="image-four"></slot>
+      </div>
+      <div class="form-footer">
+        <md-filled-button @click=${this._handleSubmission} type="submit" disabled>Absenden</md-filled-button>
         <md-filled-tonal-button @click=${this.navigateToPrevSlide} type="button">Back</md-filled-tonal-button>
       </div>
     </div>
