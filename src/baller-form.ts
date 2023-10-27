@@ -56,8 +56,7 @@ export class BallerForm extends LitElement {
     };
 
     return html`
-      <section id="form-wrapper" class="level5">
-        <md-elevation></md-elevation>
+      <section id="form-wrapper">
         <form>
           <p class="label-medium">Schritt ${this.slideIndex + 1} von 3</p>
           <md-linear-progress .value=${(this.slideIndex + 1)  / 4}></md-linear-progress>

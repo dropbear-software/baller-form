@@ -11,30 +11,6 @@ export const componentStyles = css`
     width: 100%;
   }
 
-  .level0 {
-    --md-elevation-level: 0;
-  }
-
-  .level1 {
-    --md-elevation-level: 1;
-  }
-
-  .level2 {
-    --md-elevation-level: 2;
-  }
-
-  .level3 {
-    --md-elevation-level: 3;
-  }
-
-  .level4 {
-    --md-elevation-level: 4;
-  }
-
-  .level5 {
-    --md-elevation-level: 5;
-  }
-
   #form-wrapper {
     border: 1px solid var(--md-sys-color-outline);
     padding: 1.5rem;
@@ -44,7 +20,7 @@ export const componentStyles = css`
   .form-container {
     display: grid; 
     grid-template-columns: 1fr 1fr; 
-    grid-template-rows: 1fr 2fr 0fr; 
+    grid-template-rows: 0.5fr 2fr 0.5fr; 
     gap: 1em 1em; 
     grid-template-areas: 
       "form-header form-header"
