@@ -246,17 +246,20 @@ export class BallerForm extends LitElement {
             label="Vorname"
             required
             autocomplete="given-name"
+            @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Nachname"
             required
             autocomplete="family-name"
+            @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Email"
             required
             autocomplete="email"
             type="email"
+            @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Phone"
@@ -268,6 +271,7 @@ export class BallerForm extends LitElement {
             required
             autocomplete="bday"
             type="date"
+            @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
       </div>
       <div class="form-image">
@@ -278,6 +282,11 @@ export class BallerForm extends LitElement {
       </div>
     </div>
     `;
+  }
+
+  private static reportFieldValidity(event: FocusEvent){
+    // @ts-ignore
+    event.target.reportValidity();
   }
 
   private _renderStepTwo(){
@@ -292,17 +301,20 @@ export class BallerForm extends LitElement {
             label="Vorname"
             required
             autocomplete="given-name"
+            @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Nachname"
             required
             autocomplete="family-name"
+            @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Email"
             required
             autocomplete="email"
             type="email"
+            @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Phone"
@@ -314,6 +326,7 @@ export class BallerForm extends LitElement {
             required
             autocomplete="bday"
             type="date"
+            @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
       </div>
       <div class="form-image">
