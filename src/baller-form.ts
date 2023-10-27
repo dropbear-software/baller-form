@@ -52,7 +52,7 @@ export class BallerForm extends LitElement {
 
   protected render() {
     const containerStyles = {
-      minHeight: `${this.containerHeight}px`,
+      height: `${this.containerHeight}px`,
     };
 
     return html`
