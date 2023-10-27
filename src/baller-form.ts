@@ -22,6 +22,8 @@ import '@material/web/progress/linear-progress.js';
 import '@material/web/elevation/elevation.js';
 import '@material/web/checkbox/checkbox.js';
 import '@material/web/icon/icon.js';
+import '@material/web/select/outlined-select.js';
+import '@material/web/select/select-option.js';
 
 /**
  * @tagname baller-form
@@ -297,35 +299,42 @@ export class BallerForm extends LitElement {
         <h3 class="headline-small">Deine Fußballerfahrung</h3>
       </div>
       <div class="form-fields">
-        <md-outlined-text-field
-            label="Vorname"
+        <md-outlined-select label="Deine höchste Spielklasse" supporting-text="Aktuelles oder vorheriges Level">
+          <md-select-option selected value="regionalliga">
+            <div slot="headline">Regionalliga</div>
+          </md-select-option>
+          <md-select-option value="oberliga">
+            <div slot="headline">Oberliga</div>
+          </md-select-option>
+          <md-select-option value="verbandsliga">
+            <div slot="headline">Verbandsliga</div>
+          </md-select-option>
+          <md-select-option value="landesliga">
+            <div slot="headline">Landesliga</div>
+          </md-select-option>
+          <md-select-option value="bezirkslga">
+            <div slot="headline">Bezirkslga</div>
+          </md-select-option>
+          <md-select-option value="kreisklasse">
+            <div slot="headline">Kreisklasse</div>
+          </md-select-option>
+          <md-select-option value="sonstiges">
+            <div slot="headline">Sonstiges</div>
+          </md-select-option>
+        </md-outlined-select>
+          <md-outlined-text-field
+            label="In welchem Verein spielst du"
             required
-            autocomplete="given-name"
             @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
-            label="Nachname"
-            required
-            autocomplete="family-name"
+            label="Highlight Tape (URL)"
+            type="url"
             @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
-            label="Email"
-            required
-            autocomplete="email"
-            type="email"
-            @blur=${BallerForm.reportFieldValidity}
-          ></md-outlined-text-field>
-          <md-outlined-text-field
-            label="Phone"
-            autocomplete="tel"
-            type="tel"
-          ></md-outlined-text-field>
-          <md-outlined-text-field
-            label="Geburtsdatum"
-            required
-            autocomplete="bday"
-            type="date"
+            label="Link Transfermarkt"
+            type="url"
             @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
       </div>

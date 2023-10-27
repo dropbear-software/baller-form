@@ -11,6 +11,10 @@ export const componentStyles = css`
     width: 100%;
   }
 
+  md-outlined-select {
+    --md-menu-item-label-text-color: var(--md-sys-color-secondary);
+  }
+
   #form-wrapper {
     border: 1px solid var(--md-sys-color-outline);
     padding: 1.5rem;
