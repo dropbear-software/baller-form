@@ -296,7 +296,7 @@ export class BallerForm extends LitElement {
         <slot name="image-one"></slot>
       </div>
       <div class="form-footer">
-        <md-filled-button @click=${this.navigateToNextSlide} type="button">Weiter</md-filled-button>
+        <md-filled-button trailing-icon @click=${this.navigateToNextSlide} type="button">Weiter ${icons.forwardArrow}</md-filled-button>
       </div>
     </div>
     `;
@@ -358,8 +358,8 @@ export class BallerForm extends LitElement {
         <slot name="image-two"></slot>
       </div>
       <div class="form-footer">
-        <md-filled-button @click=${this.navigateToNextSlide} type="button">Weiter</md-filled-button>
-        <md-filled-tonal-button @click=${this.navigateToPrevSlide} type="button">Back</md-filled-tonal-button>
+        <md-filled-button trailing-icon @click=${this.navigateToNextSlide} type="button">Weiter ${icons.forwardArrow}</md-filled-button>
+        <md-filled-tonal-button @click=${this.navigateToPrevSlide} type="button">Back ${icons.backArrow}</md-filled-tonal-button>
       </div>
     </div>
     `;
@@ -402,8 +402,8 @@ export class BallerForm extends LitElement {
         <slot name="image-three"></slot>
       </div>
       <div class="form-footer">
-        <md-filled-button @click=${this.navigateToNextSlide} type="button">Weiter</md-filled-button>
-        <md-filled-tonal-button @click=${this.navigateToPrevSlide} type="button">Back</md-filled-tonal-button>
+        <md-filled-button trailing-icon @click=${this.navigateToNextSlide} type="button">Weiter ${icons.forwardArrow}</md-filled-button>
+        <md-filled-tonal-button @click=${this.navigateToPrevSlide} type="button">Back ${icons.backArrow}</md-filled-tonal-button>
       </div>
     </div>
     `;
@@ -430,8 +430,8 @@ export class BallerForm extends LitElement {
         <slot name="image-four"></slot>
       </div>
       <div class="form-footer">
-        <md-filled-button @click=${this._handleSubmission} type="submit" disabled>Absenden</md-filled-button>
-        <md-filled-tonal-button @click=${this.navigateToPrevSlide} type="button">Back</md-filled-tonal-button>
+        <md-filled-button trailing-icon @click=${this._handleSubmission} type="submit" disabled>Absenden ${icons.send}</md-filled-button>
+        <md-filled-tonal-button @click=${this.navigateToPrevSlide} type="button">Back ${icons.backArrow}</md-filled-tonal-button>
       </div>
     </div>
     `;

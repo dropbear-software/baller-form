@@ -39,7 +39,7 @@ export const icons = {
         <path d="M462.5 465.934c-56.071-5.358-55-54.643-55-54.643h-36.154v155.645c-.912 16.646-14.675 29.676-31.346 29.676-17.338 0-31.393-14.055-31.393-31.393 0-17.337 14.055-31.392 31.393-31.392 3.659 0 7.29.64 10.728 1.89l.355-41.094a69.286 69.286 0 0 0-11.583-.975c-38.265 0-69.286 31.02-69.286 69.286 0 38.265 31.02 69.285 69.286 69.285 36.959 0 67.411-29.009 69.204-65.924v-81.076s19.867 17.143 53.796 17.857z" style="display:inline;fill:#fff;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/>
       </g>
     </svg>`,
-  forwardArrow: html``,
-  backArrow: html``,
-  send: html``
+  forwardArrow: html`<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" slot="icon"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>`,
+  backArrow: html`<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" slot="icon"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>`,
+  send: html`<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" slot="icon"><path d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z"/></svg>`
 }
