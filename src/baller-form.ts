@@ -50,6 +50,8 @@ export class BallerForm extends LitElement {
 
   @property({ type: Number }) slideIndex = 0;
 
+  @property({ type: String, attribute: 'braze-key' }) brazeAPI = 'BRAZE-API-KEY-GOES-HERE';
+
   @state() private containerHeight = 0;
 
   @query('md-filled-button[name="apply"]')
@@ -103,7 +105,7 @@ export class BallerForm extends LitElement {
   @queryAll('[data-slide]')
   private readonly slideElements!: HTMLElement[];
 
-  private readonly enrollmentService = new EnrollmentService('BRAZE-API-KEY-GOES-HERE');
+  private enrollmentService? :EnrollmentService;
 
   protected render() {
     const containerStyles = {
@@ -129,6 +131,7 @@ export class BallerForm extends LitElement {
   override firstUpdated() {
     this.containerHeight = BallerForm.getMaxElHeight(this.slideElements);
     this.initializeSlides();
+    this.enrollmentService = new EnrollmentService(this.brazeAPI);
     this.dispatchEvent(new CustomEvent('signup-form-displayed', {bubbles: true}));
   }
 
@@ -299,7 +302,7 @@ export class BallerForm extends LitElement {
         this.termsOfServiceBox.checked
       );
       
-      this.enrollmentService.process(applicationData);
+      this.enrollmentService!.process(applicationData);
 
       this.dispatchEvent(new CustomEvent('completed-application', {
         detail: {
