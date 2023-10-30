@@ -5,7 +5,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/demo/demo-styles.css" id="demo-styles">
+  <link rel="stylesheet" href="./demo-styles.css" id="demo-styles">
 </head>
 <body class="surface on-surface-text">
   <header class="surface-variant on-surface-variant-text">
@@ -16,75 +16,7 @@
   </header>
 
   <div id="demo">
-    <script type="module">
-      // Example implementation for analytics that reports on any of the key events
-      // that occur when using the form.
-      
-      // Set up the dataLayer objects if they don't already exist
-
-      // GTM Style DataLayer
-      window.dataLayer = window.dataLayer || [];
-      // Adobe Style DataLayer
-      window.adobeDataLayer = window.adobeDataLayer || [];
-
-      // When a user has completed a successful application
-      document.addEventListener('completed-application', (event) => {
-        // GTM Version
-        window.dataLayer.push({
-          event: "completed-application",
-          experience: event.detail.experience,
-          club: event.detail.club
-        });
-
-        // Adobe Analytics Version
-        window.adobeDataLayer.push({
-          "event": "completed-application",
-          "data": {
-            "experience": event.detail.experience,
-            "club": event.detail.club
-          }
-        });
-      });
-
-      // When the sign up form is fully loaded onto the page. 
-      document.addEventListener('signup-form-displayed', () => {
-        // GTM Version
-        window.dataLayer.push({event: "signup-form-displayed"})
-
-        // Adobe Analytics Version
-        window.adobeDataLayer.push({"event": "signup-form-displayed"});
-      });
-
-      // When a user proceeds to the next step in the form
-      document.addEventListener('next-form-step', (event) => {
-        // GTM Version
-        window.dataLayer.push({
-          event: "next-form-step",
-          formStep: event.detail.step
-        });
-
-        // Adobe Analytics Version
-        window.adobeDataLayer.push({
-          "event": "next-form-step",
-          "data": event.detail.step
-        });
-      });
-
-      // When a user goes back to a previous step in the form
-      document.addEventListener('prev-form-step', (event) => {
-        // GTM Version
-        window.dataLayer.push({
-          event: "prev-form-step",
-          formStep: event.detail.step
-        });
-
-        // Adobe Analytics Version
-        window.adobeDataLayer.push({
-          "event": "prev-form-step",
-          "data": event.detail.step
-        });
-      });
-    </script>
+    <script type="module" src="./analytics.js"></script>
     <baller-form>
       <style>
         baller-form picture[slot] > img{
@@ -99,22 +31,22 @@
         }
       </style>
       <picture slot="image-one">
-        <source srcset="/demo/images/football-one.avif" type="image/avif">
+        <source srcset="./images/football-one.avif" type="image/avif">
         <source srcset="./images/football-one.webp" type="image/webp">
         <img src="./images/football-one.jpg" alt="Football players" loading="eager" decoding="async" width="1024" height="612">
       </picture>
       <picture slot="image-two">
-        <source srcset="/demo/images/football-two.avif" type="image/avif">
+        <source srcset="./images/football-two.avif" type="image/avif">
         <source srcset="./images/football-two.webp" type="image/webp">
         <img src="./images/football-two.jpg" alt="Football players" loading="lazy" decoding="async" width="1024" height="625">
       </picture>
       <picture slot="image-three">
-        <source srcset="/demo/images/football-three.avif" type="image/avif">
+        <source srcset="./images/football-three.avif" type="image/avif">
         <source srcset="./images/football-three.webp" type="image/webp">
         <img src="./images/football-three.jpg" alt="Football players" loading="lazy" decoding="async" width="1024" height="658">
       </picture>
       <picture slot="image-four">
-        <source srcset="/demo/images/football-four.avif" type="image/avif">
+        <source srcset="./images/football-four.avif" type="image/avif">
         <source srcset="./images/football-four.webp" type="image/webp">
         <img src="./images/football-four.jpg" alt="Football players" loading="lazy" decoding="async" width="1024" height="675">
       </picture>
