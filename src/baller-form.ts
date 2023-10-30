@@ -4,6 +4,8 @@ import { styleMap } from "lit/directives/style-map.js";
 
 import type { MdFilledButton } from '@material/web/button/filled-button.js';
 import type { MdCheckbox } from '@material/web/checkbox/checkbox.js';
+import type { MdOutlinedTextField } from '@material/web/textfield/outlined-text-field.js';
+import type { MdOutlinedSelect } from '@material/web/select/outlined-select.js';
 
 import { typographyBaseline } from './design-system.css.js';
 import { componentStyles } from './baller-form.css.js';
@@ -15,6 +17,8 @@ import {
   SLIDE_RIGHT_OUT,
 } from "./constants.js";
 import { icons } from './icons.js';
+import { ApplicationData } from './application-data.js';
+import { EnrollmentService } from './application-enroller.js';
 
 import '@material/web/button/filled-button.js';
 import '@material/web/button/filled-tonal-button.js';
@@ -48,15 +52,53 @@ export class BallerForm extends LitElement {
 
   @state() private containerHeight = 0;
 
-  @query('md-filled-button[type="submit"]')
+  @query('md-filled-button[name="apply"]')
   submitButton!: MdFilledButton;
 
   @query('form')
   formElement!: HTMLFormElement;
 
+  @query('md-outlined-text-field[autocomplete="given-name"]')
+  firstName!: MdOutlinedTextField;
+
+  @query('md-outlined-text-field[autocomplete="family-name"]')
+  familyName!: MdOutlinedTextField;
+
+  @query('md-outlined-text-field[autocomplete="email"]')
+  email!: MdOutlinedTextField;
+
+  @query('md-outlined-text-field[autocomplete="tel"]')
+  tel!: MdOutlinedTextField;
+
+  @query('md-outlined-text-field[autocomplete="bday"]')
+  birthday!: MdOutlinedTextField;
+
+  @query('md-outlined-select[name="experience"]')
+  experience!: MdOutlinedSelect;
+
+  @query('md-outlined-text-field[name="club"]')
+  clubName!: MdOutlinedTextField;
+
+  @query('md-outlined-text-field[name="highlight-tape"]')
+  highlightTape!: MdOutlinedTextField;
+
+  @query('md-outlined-text-field[name="transfermarkt"]')
+  transfermarkt!: MdOutlinedTextField;
+
+  @query('md-outlined-text-field[name="youtube"]')
+  youtube!: MdOutlinedTextField;
+
+  @query('md-outlined-text-field[name="instagram"]')
+  instagram!: MdOutlinedTextField;
+
+  @query('md-outlined-text-field[name="tiktok"]')
+  tiktok!: MdOutlinedTextField;
+
+  @query('md-outlined-text-field[name="freeform"]')
+  freeform!: MdOutlinedTextField;
   
   @query('[data-element="tos"]')
-  termsOfServiceBox!: MdCheckbox
+  termsOfServiceBox!: MdCheckbox;
 
   @queryAll('[data-slide]')
   private readonly slideElements!: HTMLElement[];
@@ -237,8 +279,33 @@ export class BallerForm extends LitElement {
     // Only submit the form if it is valid
     e.preventDefault();
     if (this.formElement.checkValidity()) {
-      this.dispatchEvent(new CustomEvent('completed-application', {bubbles: true}));
-      this.formElement.submit();
+
+      const applicationData = new ApplicationData(
+        this.firstName.value, 
+        this.familyName.value, 
+        this.email.value,
+        this.tel.value,
+        this.birthday.valueAsDate!,
+        this.experience.value,
+        this.clubName.value,
+        this.highlightTape.value,
+        this.transfermarkt.value,
+        this.youtube.value,
+        this.instagram.value,
+        this.tiktok.value,
+        this.freeform.value,
+        this.termsOfServiceBox.checked
+      );
+      const enrollmentService = new EnrollmentService(applicationData);
+      enrollmentService.process();
+
+      this.dispatchEvent(new CustomEvent('completed-application', {
+        detail: {
+          experience: applicationData.experience,
+          club: applicationData.clubName
+        },
+        bubbles: true
+      }));
     }
   }
 
@@ -315,7 +382,7 @@ export class BallerForm extends LitElement {
         <h3 class="headline-small">Deine Fußballerfahrung</h3>
       </div>
       <div class="form-fields">
-        <md-outlined-select label="Deine höchste Spielklasse" supporting-text="Aktuelles oder vorheriges Level">
+        <md-outlined-select label="Deine höchste Spielklasse" supporting-text="Aktuelles oder vorheriges Level" name="experience">
           <md-select-option selected value="regionalliga">
             <div slot="headline">Regionalliga</div>
           </md-select-option>
@@ -341,16 +408,19 @@ export class BallerForm extends LitElement {
           <md-outlined-text-field
             label="In welchem Verein spielst du"
             required
+            name="club"
             @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Highlight Tape (URL)"
             type="url"
+            name="highlight-tape"
             @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Link Transfermarkt"
             type="url"
+            name="transfermarkt"
             @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
       </div>
@@ -376,6 +446,7 @@ export class BallerForm extends LitElement {
         <md-outlined-text-field
             label="YouTube"
             autocomplete="username"
+            name="youtube"
           >
           <md-icon slot="trailing-icon">
             ${icons.youtube}
@@ -384,6 +455,7 @@ export class BallerForm extends LitElement {
           <md-outlined-text-field
             label="Instagram"
             autocomplete="username"
+            name="instagram"
           >
             <md-icon slot="trailing-icon">
               ${icons.instagram}
@@ -392,6 +464,7 @@ export class BallerForm extends LitElement {
           <md-outlined-text-field
             label="TikTok"
             autocomplete="username"
+            name="tiktok"
           >
             <md-icon slot="trailing-icon">
             ${icons.tiktok}
@@ -419,7 +492,9 @@ export class BallerForm extends LitElement {
       <div class="form-fields">
         <md-outlined-text-field
           type="textarea"
-          rows="10">
+          rows="10"
+          name="freeform"
+        >
         </md-outlined-text-field>
         <label class="label-medium inline-label">
           <md-checkbox touch-target="wrapper" @change=${this.handleLegalChange} data-element="tos"></md-checkbox>
@@ -430,7 +505,7 @@ export class BallerForm extends LitElement {
         <slot name="image-four"></slot>
       </div>
       <div class="form-footer">
-        <md-filled-button trailing-icon @click=${this._handleSubmission} type="submit" disabled>Absenden ${icons.send}</md-filled-button>
+        <md-filled-button trailing-icon @click=${this._handleSubmission} type="button" name="apply" disabled>Absenden ${icons.send}</md-filled-button>
         <md-filled-tonal-button @click=${this.navigateToPrevSlide} type="button">Back ${icons.backArrow}</md-filled-tonal-button>
       </div>
     </div>
