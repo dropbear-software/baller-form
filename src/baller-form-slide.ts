@@ -44,8 +44,8 @@ import '@material/web/select/select-option.js';
  * @fires {CustomEvent} next-form-step - When the user proceeds to the next step of the form
  * @fires {CustomEvent} prev-form-step - When the user proceeds to the previous step of the form
  */
-@customElement('baller-form')
-export class BallerForm extends LitElement {
+@customElement('baller-form-slide')
+export class BallerFormSlide extends LitElement {
   static styles = [typographyBaseline, componentStyles];
 
   @property({ type: Number }) slideIndex = 0;
@@ -129,7 +129,7 @@ export class BallerForm extends LitElement {
   }
 
   override firstUpdated() {
-    this.containerHeight = BallerForm.getMaxElHeight(this.slideElements);
+    this.containerHeight = BallerFormSlide.getMaxElHeight(this.slideElements);
     this.initializeSlides();
     this.enrollmentService = new EnrollmentService(this.brazeAPI);
     this.dispatchEvent(new CustomEvent('signup-form-displayed', {bubbles: true}));
@@ -158,7 +158,7 @@ export class BallerForm extends LitElement {
 
   navigateToNextSlide() {
     const currentSlide = this.slideElements[this.slideIndex];
-    const canProceed = BallerForm.isSlideDataValid(currentSlide);
+    const canProceed = BallerFormSlide.isSlideDataValid(currentSlide);
 
     if (canProceed) {
       // Animation driven by the `updated` lifecycle.
@@ -205,7 +205,7 @@ export class BallerForm extends LitElement {
    * Return slide index in the range of [0, slideElement.length)
    */
   get wrappedIndex(): number {
-    return BallerForm.wrapIndex(this.slideIndex, this.slideElements.length);
+    return BallerFormSlide.wrapIndex(this.slideIndex, this.slideElements.length);
   }
 
   private static wrapIndex(idx: number, max: number): number {
@@ -231,12 +231,12 @@ export class BallerForm extends LitElement {
     enteringAnimation: AnimationTuple
   ) {
     this.initializeSlides();
-    const leavingElIndex = BallerForm.wrapIndex(
+    const leavingElIndex = BallerFormSlide.wrapIndex(
       this.slideIndex - nextSlideOffset,
       this.slideElements.length
     );
     const elLeaving = this.slideElements[leavingElIndex];
-    BallerForm.showSlide(elLeaving);
+    BallerFormSlide.showSlide(elLeaving);
 
     // Animate out current element
     const leavingAnim = elLeaving.animate(
@@ -248,7 +248,7 @@ export class BallerForm extends LitElement {
     const newSlideEl = this.slideElements[this.wrappedIndex];
 
     // Show the new slide
-    BallerForm.showSlide(newSlideEl);
+    BallerFormSlide.showSlide(newSlideEl);
 
     // Teleport it out of view and animate it in
     const enteringAnim = newSlideEl.animate(
@@ -261,7 +261,7 @@ export class BallerForm extends LitElement {
       await Promise.all([leavingAnim.finished, enteringAnim.finished]);
 
       // Hide the element that left
-      BallerForm.hideSlide(elLeaving);
+      BallerFormSlide.hideSlide(elLeaving);
     } catch {
       /* Animation was cancelled */
     }
@@ -273,9 +273,9 @@ export class BallerForm extends LitElement {
       const slide = this.slideElements[i];
       slide.getAnimations().forEach((anim) => anim.cancel());
       if (i === this.wrappedIndex) {
-        BallerForm.showSlide(slide);
+        BallerFormSlide.showSlide(slide);
       } else {
-        BallerForm.hideSlide(slide);
+        BallerFormSlide.hideSlide(slide);
       }
     }
   }
@@ -335,33 +335,33 @@ export class BallerForm extends LitElement {
             label="Vorname"
             required
             autocomplete="given-name"
-            @blur=${BallerForm.reportFieldValidity}
+            @blur=${BallerFormSlide.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Nachname"
             required
             autocomplete="family-name"
-            @blur=${BallerForm.reportFieldValidity}
+            @blur=${BallerFormSlide.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Email"
             required
             autocomplete="email"
             type="email"
-            @blur=${BallerForm.reportFieldValidity}
+            @blur=${BallerFormSlide.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Phone"
             autocomplete="tel"
             type="tel"
-            @blur=${BallerForm.reportFieldValidity}
+            @blur=${BallerFormSlide.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Geburtsdatum"
             required
             autocomplete="bday"
             type="date"
-            @blur=${BallerForm.reportFieldValidity}
+            @blur=${BallerFormSlide.reportFieldValidity}
           ></md-outlined-text-field>
       </div>
       <div class="form-image">
@@ -414,19 +414,19 @@ export class BallerForm extends LitElement {
             label="In welchem Verein spielst du"
             required
             name="club"
-            @blur=${BallerForm.reportFieldValidity}
+            @blur=${BallerFormSlide.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Highlight Tape (URL)"
             type="url"
             name="highlight-tape"
-            @blur=${BallerForm.reportFieldValidity}
+            @blur=${BallerFormSlide.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Link Transfermarkt"
             type="url"
             name="transfermarkt"
-            @blur=${BallerForm.reportFieldValidity}
+            @blur=${BallerFormSlide.reportFieldValidity}
           ></md-outlined-text-field>
       </div>
       <div class="form-image">
@@ -520,6 +520,6 @@ export class BallerForm extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "baller-form": BallerForm;
+    "baller-form-slide": BallerFormSlide;
   }
 }
