@@ -19,8 +19,6 @@ export const componentStyles = css`
     border: 1px solid var(--md-sys-color-outline);
     padding: 1.5rem;
     border-radius: 5px;
-    max-width: 750px;
-    margin: 0 auto;
   }
 
   .form-container {

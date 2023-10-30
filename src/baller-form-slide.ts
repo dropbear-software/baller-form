@@ -8,7 +8,7 @@ import type { MdOutlinedTextField } from '@material/web/textfield/outlined-text-
 import type { MdOutlinedSelect } from '@material/web/select/outlined-select.js';
 
 import { typographyBaseline } from './design-system.css.js';
-import { componentStyles } from './baller-form.css.js';
+import { componentStyles } from './baller-form-slide.css.js';
 import {
   AnimationTuple,
   SLIDE_LEFT_IN,
@@ -328,7 +328,7 @@ export class BallerFormSlide extends LitElement {
     <div class="form-container" data-slide="1">
       <div class="form-header">
         <h2 class="display-small">Erzähle uns etwas über Dich:</h2>
-        <h3 class="headline-small">XING baller League</h3>
+        <h3 class="headline-small">XING Baller League</h3>
       </div>
       <div class="form-fields">
         <md-outlined-text-field
@@ -445,7 +445,7 @@ export class BallerFormSlide extends LitElement {
     <div class="form-container slide-hidden" data-slide="3">
       <div class="form-header">
         <h2 class="display-small">Zeig uns wer Du bist!</h2>
-        <h3 class="headline-small">Deine Social Media Auftritt</h3>
+        <h3 class="headline-small">Dein Social Media Auftritt</h3>
       </div>
       <div class="form-fields">
         <md-outlined-text-field
@@ -491,8 +491,8 @@ export class BallerFormSlide extends LitElement {
     return html`
     <div class="form-container slide-hidden" data-slide="4">
       <div class="form-header">
-        <h2 class="display-small">Achievements oder Anmerkungen</h2>
-        <h3 class="headline-small">Mochtest Du uns noch etwas sagen</h3>
+        <h2 class="display-small">Anmerkungen</h2>
+        <h3 class="headline-small">Möchtest Du uns noch etwas über Dich sagen?</h3>
       </div>
       <div class="form-fields">
         <md-outlined-text-field
@@ -503,7 +503,11 @@ export class BallerFormSlide extends LitElement {
         </md-outlined-text-field>
         <label class="label-medium inline-label">
           <md-checkbox touch-target="wrapper" @change=${this.handleLegalChange} data-element="tos"></md-checkbox>
-          Ich stimme den Datenschutz zu
+          Datenschutz Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut varius turpis, nec vestibulum massa. 
+          Curabitur ex odio, laoreet id quam sit amet, tempus finibus neque. Duis convallis lorem et ornare auctor. 
+          Nam efficitur elit urna, nec sollicitudin nisi suscipit vitae. Ut rhoncus vitae mi non ullamcorper. 
+          Vivamus lorem quam, hendrerit in enim ut, pretium sodales augue. 
+          Cras nisl velit, efficitur quis urna nec, eleifend sagittis felis. 
         </label>
       </div>
       <div class="form-image">

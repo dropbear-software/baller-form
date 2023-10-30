@@ -1,6 +1,5 @@
-import { html, LitElement, PropertyValues } from 'lit';
-import { customElement, property, query, queryAll, state } from 'lit/decorators.js';
-import { styleMap } from "lit/directives/style-map.js";
+import { html, LitElement } from 'lit';
+import { customElement, property, query } from 'lit/decorators.js';
 
 import type { MdFilledButton } from '@material/web/button/filled-button.js';
 import type { MdCheckbox } from '@material/web/checkbox/checkbox.js';
@@ -9,13 +8,6 @@ import type { MdOutlinedSelect } from '@material/web/select/outlined-select.js';
 
 import { typographyBaseline } from './design-system.css.js';
 import { componentStyles } from './baller-form.css.js';
-import {
-  AnimationTuple,
-  SLIDE_LEFT_IN,
-  SLIDE_LEFT_OUT,
-  SLIDE_RIGHT_IN,
-  SLIDE_RIGHT_OUT,
-} from "./constants.js";
 import { icons } from './icons.js';
 import { ApplicationData } from './application-data.js';
 import { EnrollmentService } from './application-enroller.js';
@@ -23,7 +15,6 @@ import { EnrollmentService } from './application-enroller.js';
 import '@material/web/button/filled-button.js';
 import '@material/web/button/filled-tonal-button.js';
 import '@material/web/textfield/outlined-text-field.js';
-import '@material/web/progress/linear-progress.js';
 import '@material/web/elevation/elevation.js';
 import '@material/web/checkbox/checkbox.js';
 import '@material/web/icon/icon.js';
@@ -51,8 +42,6 @@ export class BallerForm extends LitElement {
   @property({ type: Number }) slideIndex = 0;
 
   @property({ type: String, attribute: 'braze-key' }) brazeAPI = 'BRAZE-API-KEY-GOES-HERE';
-
-  @state() private containerHeight = 0;
 
   @query('md-filled-button[name="apply"]')
   submitButton!: MdFilledButton;
@@ -102,26 +91,20 @@ export class BallerForm extends LitElement {
   @query('[data-element="tos"]')
   termsOfServiceBox!: MdCheckbox;
 
-  @queryAll('[data-slide]')
-  private readonly slideElements!: HTMLElement[];
-
   private enrollmentService? :EnrollmentService;
 
   protected render() {
-    const containerStyles = {
-      height: `${this.containerHeight}px`,
-    };
-
     return html`
       <section id="form-wrapper">
         <form>
-          <p class="label-medium">Schritt ${this.slideIndex + 1} von ${this.slideElements.length}</p>
-          <md-linear-progress .value=${(this.slideIndex + 1)  / this.slideElements.length}></md-linear-progress>
-          <div class="slides-container" style="${styleMap(containerStyles)}">
+          <div>
             ${this._renderStepOne()}
             ${this._renderStepTwo()}
             ${this._renderStepThree()}
             ${this._renderStepFour()}
+          </div>
+          <div>
+            <md-filled-button trailing-icon @click=${this._handleSubmission} type="button" name="apply" disabled>Absenden ${icons.send}</md-filled-button>
           </div>
         </form>
       </section>
@@ -129,155 +112,8 @@ export class BallerForm extends LitElement {
   }
 
   override firstUpdated() {
-    this.containerHeight = BallerForm.getMaxElHeight(this.slideElements);
-    this.initializeSlides();
     this.enrollmentService = new EnrollmentService(this.brazeAPI);
     this.dispatchEvent(new CustomEvent('signup-form-displayed', {bubbles: true}));
-  }
-
-  override updated(changedProperties: PropertyValues<this>): void {
-    // If you want to drive animations from the
-    // 'slideindex' attribute and property, we can calculate the animation in
-    // the 'updated' lifecycle callback.
-    if (changedProperties.has("slideIndex")) {
-      const oldSlideIndex = changedProperties.get("slideIndex");
-      if (oldSlideIndex === undefined) {
-        return;
-      }
-      const isAdvancing = this.slideIndex > oldSlideIndex;
-
-      if (isAdvancing) {
-        // Animate forwards
-        this.navigateWithAnimation(1, SLIDE_LEFT_OUT, SLIDE_RIGHT_IN);
-      } else {
-        // Animate backwards
-        this.navigateWithAnimation(-1, SLIDE_RIGHT_OUT, SLIDE_LEFT_IN);
-      }
-    }
-  }
-
-  navigateToNextSlide() {
-    const currentSlide = this.slideElements[this.slideIndex];
-    const canProceed = BallerForm.isSlideDataValid(currentSlide);
-
-    if (canProceed) {
-      // Animation driven by the `updated` lifecycle.
-      this.slideIndex += 1;
-      const slideUpdatedEvent = new CustomEvent("next-form-step", {
-        detail: {
-          step: this.slideIndex + 1,
-        },
-        bubbles: true
-      });
-      this.dispatchEvent(slideUpdatedEvent);
-    }
-  }
-
-  navigateToPrevSlide() {
-    // Animation driven by the `updated` lifecycle.
-    this.slideIndex -= 1;
-    const slideUpdatedEvent = new CustomEvent("prev-form-step", {
-      detail: {
-        step: this.slideIndex + 1,
-      },
-      bubbles: true
-    });
-    this.dispatchEvent(slideUpdatedEvent);
-  }
-
-  static isSlideDataValid(currentSlide: HTMLElement): boolean {
-    const formFields = Array.from(currentSlide.querySelectorAll('.form-fields > *')!);
-    // eslint-disable-next-line consistent-return
-    const validFields = formFields.every((field) => {
-      if ('willValidate' in field && 'reportValidity' in field) {
-        // @ts-ignore
-        field.reportValidity();
-        // @ts-ignore
-        return field.checkValidity();
-      }
-      return true;
-    });
-    
-    return validFields;
-  }
-
-  /**
-   * Return slide index in the range of [0, slideElement.length)
-   */
-  get wrappedIndex(): number {
-    return BallerForm.wrapIndex(this.slideIndex, this.slideElements.length);
-  }
-
-  private static wrapIndex(idx: number, max: number): number {
-    return ((idx % max) + max) % max;
-  }
-
-  private static showSlide(el: HTMLElement) {
-    el.classList.remove("slide-hidden");
-  }
-
-  private static hideSlide(el: HTMLElement) {
-    el.classList.add("slide-hidden");
-  }
-
-  private static getMaxElHeight(els: HTMLElement[]): number {
-    const slideHeights = Array.from(els).map((el) => el.getBoundingClientRect().height);
-    return Math.max(0, ...slideHeights);
-  }
-
-  private async navigateWithAnimation(
-    nextSlideOffset: number,
-    leavingAnimation: AnimationTuple,
-    enteringAnimation: AnimationTuple
-  ) {
-    this.initializeSlides();
-    const leavingElIndex = BallerForm.wrapIndex(
-      this.slideIndex - nextSlideOffset,
-      this.slideElements.length
-    );
-    const elLeaving = this.slideElements[leavingElIndex];
-    BallerForm.showSlide(elLeaving);
-
-    // Animate out current element
-    const leavingAnim = elLeaving.animate(
-      leavingAnimation[0],
-      leavingAnimation[1]
-    );
-
-    // Entering slide
-    const newSlideEl = this.slideElements[this.wrappedIndex];
-
-    // Show the new slide
-    BallerForm.showSlide(newSlideEl);
-
-    // Teleport it out of view and animate it in
-    const enteringAnim = newSlideEl.animate(
-      enteringAnimation[0],
-      enteringAnimation[1]
-    );
-
-    try {
-      // Wait for animations
-      await Promise.all([leavingAnim.finished, enteringAnim.finished]);
-
-      // Hide the element that left
-      BallerForm.hideSlide(elLeaving);
-    } catch {
-      /* Animation was cancelled */
-    }
-  }
-
-  private initializeSlides() {
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < this.slideElements.length; i++) {
-      const slide = this.slideElements[i];
-      slide.getAnimations().forEach((anim) => anim.cancel());
-      if (i === this.wrappedIndex) {
-        BallerForm.showSlide(slide);
-      } else {
-        BallerForm.hideSlide(slide);
-      }
-    }
   }
 
   private _handleSubmission(e: SubmitEvent) {
@@ -323,12 +159,13 @@ export class BallerForm extends LitElement {
     
   }
 
+  // eslint-disable-next-line class-methods-use-this
   private _renderStepOne(){
     return html`
-    <div class="form-container" data-slide="1">
+    <div>
       <div class="form-header">
         <h2 class="display-small">Erzähle uns etwas über Dich:</h2>
-        <h3 class="headline-small">XING baller League</h3>
+        <h3 class="headline-small">XING Baller League</h3>
       </div>
       <div class="form-fields">
         <md-outlined-text-field
@@ -364,12 +201,6 @@ export class BallerForm extends LitElement {
             @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
       </div>
-      <div class="form-image">
-        <slot name="image-one"></slot>
-      </div>
-      <div class="form-footer">
-        <md-filled-button trailing-icon @click=${this.navigateToNextSlide} type="button">Weiter ${icons.forwardArrow}</md-filled-button>
-      </div>
     </div>
     `;
   }
@@ -379,9 +210,10 @@ export class BallerForm extends LitElement {
     event.target.reportValidity();
   }
 
+  // eslint-disable-next-line class-methods-use-this
   private _renderStepTwo(){
     return html`
-    <div class="form-container slide-hidden" data-slide="2">
+    <div>
       <div class="form-header">
         <h2 class="display-small">Welche Skills zeichnen Dich aus?</h2>
         <h3 class="headline-small">Deine Fußballerfahrung</h3>
@@ -429,23 +261,17 @@ export class BallerForm extends LitElement {
             @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
       </div>
-      <div class="form-image">
-        <slot name="image-two"></slot>
-      </div>
-      <div class="form-footer">
-        <md-filled-button trailing-icon @click=${this.navigateToNextSlide} type="button">Weiter ${icons.forwardArrow}</md-filled-button>
-        <md-filled-tonal-button @click=${this.navigateToPrevSlide} type="button">Back ${icons.backArrow}</md-filled-tonal-button>
-      </div>
     </div>
     `;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   private _renderStepThree(){
     return html`
-    <div class="form-container slide-hidden" data-slide="3">
+    <div>
       <div class="form-header">
         <h2 class="display-small">Zeig uns wer Du bist!</h2>
-        <h3 class="headline-small">Deine Social Media Auftritt</h3>
+        <h3 class="headline-small">Dein Social Media Auftritt</h3>
       </div>
       <div class="form-fields">
         <md-outlined-text-field
@@ -476,23 +302,16 @@ export class BallerForm extends LitElement {
             </md-icon>
           </md-outlined-text-field>
       </div>
-      <div class="form-image">
-        <slot name="image-three"></slot>
-      </div>
-      <div class="form-footer">
-        <md-filled-button trailing-icon @click=${this.navigateToNextSlide} type="button">Weiter ${icons.forwardArrow}</md-filled-button>
-        <md-filled-tonal-button @click=${this.navigateToPrevSlide} type="button">Back ${icons.backArrow}</md-filled-tonal-button>
-      </div>
     </div>
     `;
   }
 
   private _renderStepFour(){
     return html`
-    <div class="form-container slide-hidden" data-slide="4">
+    <div>
       <div class="form-header">
-        <h2 class="display-small">Achievements oder Anmerkungen</h2>
-        <h3 class="headline-small">Mochtest Du uns noch etwas sagen</h3>
+        <h2 class="display-small">Anmerkungen</h2>
+        <h3 class="headline-small">Möchtest Du uns noch etwas über Dich sagen?</h3>
       </div>
       <div class="form-fields">
         <md-outlined-text-field
@@ -502,16 +321,13 @@ export class BallerForm extends LitElement {
         >
         </md-outlined-text-field>
         <label class="label-medium inline-label">
-          <md-checkbox touch-target="wrapper" @change=${this.handleLegalChange} data-element="tos"></md-checkbox>
-          Ich stimme den Datenschutz zu
+          <md-checkbox touch-target="wrapper" @change=${this.handleLegalChange} data-element="tos" style="width: 4rem"></md-checkbox>
+          Datenschutz Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut varius turpis, nec vestibulum massa. 
+          Curabitur ex odio, laoreet id quam sit amet, tempus finibus neque. Duis convallis lorem et ornare auctor. 
+          Nam efficitur elit urna, nec sollicitudin nisi suscipit vitae. Ut rhoncus vitae mi non ullamcorper. 
+          Vivamus lorem quam, hendrerit in enim ut, pretium sodales augue. 
+          Cras nisl velit, efficitur quis urna nec, eleifend sagittis felis. 
         </label>
-      </div>
-      <div class="form-image">
-        <slot name="image-four"></slot>
-      </div>
-      <div class="form-footer">
-        <md-filled-button trailing-icon @click=${this._handleSubmission} type="button" name="apply" disabled>Absenden ${icons.send}</md-filled-button>
-        <md-filled-tonal-button @click=${this.navigateToPrevSlide} type="button">Back ${icons.backArrow}</md-filled-tonal-button>
       </div>
     </div>
     `;

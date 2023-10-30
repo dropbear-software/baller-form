@@ -19,7 +19,7 @@
     <script type="module" src="./analytics.js"></script>
     <baller-form-slide braze-key="BRAZE-API-KEY">
       <style>
-        baller-form picture[slot] > img{
+        baller-form-slide picture[slot] > img{
           width: 100%;
           height: auto;
           mask-image: url(./images/shape.svg);
@@ -61,7 +61,7 @@
     const isProduction = currentURL.host === 'baller-form.web.app';
 
     if (isProduction) {
-      await import('./baller-form-bundle-slide.js');
+      await import('./baller-form-bundle.js');
       bundleName.innerText = 'Production Bundle';
     } else {
       await import('../dist/src/baller-form-slide.js');
