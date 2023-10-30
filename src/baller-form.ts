@@ -103,6 +103,8 @@ export class BallerForm extends LitElement {
   @queryAll('[data-slide]')
   private readonly slideElements!: HTMLElement[];
 
+  private readonly enrollmentService = new EnrollmentService('BRAZE-API-KEY-GOES-HERE');
+
   protected render() {
     const containerStyles = {
       height: `${this.containerHeight}px`,
@@ -296,8 +298,8 @@ export class BallerForm extends LitElement {
         this.freeform.value,
         this.termsOfServiceBox.checked
       );
-      const enrollmentService = new EnrollmentService(applicationData);
-      enrollmentService.process();
+      
+      this.enrollmentService.process(applicationData);
 
       this.dispatchEvent(new CustomEvent('completed-application', {
         detail: {
