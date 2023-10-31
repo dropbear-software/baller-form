@@ -106,7 +106,7 @@ export class BallerForm extends LitElement {
             ${this._renderStepThree()}
             ${this._renderStepFour()}
           </div>
-          <div>
+          <div class="form-footer">
             <md-filled-button trailing-icon @click=${this._handleSubmission} type="button" name="apply" disabled>Absenden ${icons.send}</md-filled-button>
           </div>
         </form>

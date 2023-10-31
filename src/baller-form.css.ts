@@ -4,68 +4,66 @@ export const componentStyles = css`
   :host {
     display: block;
     padding: 25px;
-    color: var(--baller-form-text-color, var(--md-sys-color-on-surface));
-  }
-
-  md-linear-progress {
-    width: 100%;
+    color: var(--baller-form-color-on-surface, #1b1c17);
+    font-family: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
+    --md-sys-color-error: var(--baller-form-color-error, #ba1a1a);
+    --md-sys-color-error-container: var(--baller-form-color-error-container, #ffdad6);
+    --md-sys-color-on-error: var(--baller-form-color-on-error: #ffffff);
+    --md-sys-color-on-error-container: var(--baller-form-color-on-error-container: #410002);
+    --brand-sans-font: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
   }
 
   md-outlined-select {
-    --md-menu-item-label-text-color: var(--md-sys-color-secondary);
+    --md-menu-item-label-text-color: var(--baller-form-color-secondary, #5a6148);
+  }
+
+  md-checkbox {
+    --md-checkbox-outline-color: var(--baller-form-checkbox-outline-color, #45483c);
+    --md-checkbox-selected-container-color: var(--baller-form-selected-container-color, #4b6700);
+    --md-checkbox-selected-icon-color: var(--baller-form-selected-icon-color, #ffffff);
+  }
+
+  md-outlined-text-field {
+    --md-outlined-text-field-focus-outline-color: var(--baller-form-text-field-focus-outline-color, #4b6700);
+    --md-outlined-text-field-label-text-font: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
+    --md-outlined-text-field-input-text-font: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
+  }
+
+  md-filled-button {
+    --md-filled-button-container-color: var(--baller-form-filled-button-container-color, #4b6700);
+    --md-filled-button-container-shape: var(--baller-form-filled-button-container-shape, 9999px);
+  }
+
+  md-outlined-select {
+    --md-outlined-select-text-field-outline-color: var(--baller-form-outlined-select-text-field-outline-color, #76786b);
+    --md-outlined-select-text-field-input-text-color: var(--baller-form-outlined-select-text-field-input-text-color, #1b1c17);
+    --md-outlined-select-text-field-input-text-font: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
+  }
+
+  md-outlined-select::part(menu) {
+    --md-menu-container-color: var(--baller-form-menu-background, #f4fbfa);
   }
 
   #form-wrapper {
-    border: 1px solid var(--md-sys-color-outline);
+    background-color: var(--baller-form-color-surface, #fefcf4);
+    border: 1px solid var(--baller-form-color-outline, #76786b);
     padding: 1.5rem;
     border-radius: 5px;
     max-width: 750px;
     margin: 0 auto;
   }
 
-  .form-container {
-    display: grid; 
-    grid-template-columns: 1fr 1fr; 
-    grid-template-rows: 0fr 2fr 0fr; 
-    gap: 1em 1em; 
-    grid-template-areas: 
-      "form-header form-header"
-      "form-fields form-image"
-      "form-footer form-footer"; 
-  }
-  .form-image { grid-area: form-image; }
   .form-fields { 
-    grid-area: form-fields;
     display: flex;
     flex-direction: column;
     gap: 1em;
     justify-content: center;
   }
-  .form-header { grid-area: form-header; }
-  .form-footer { 
-    grid-area: form-footer;
+  .form-footer {
+    margin-top: 1rem;
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
-  }
-
-  .form-image img {
-    max-width: 100%;
-  }
-
-  .slide-hidden {
-    display: none;
-  }
-
-  .slides-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-
-    padding: 1em;
-    overflow: hidden;
-    position: relative;
   }
 
   .inline-label {
@@ -74,6 +72,6 @@ export const componentStyles = css`
   }
 
   h3 {
-    color: var(--md-sys-color-secondary);
+    color: var(--baller-form-color-secondary, #5a6148);
   }
 `;
