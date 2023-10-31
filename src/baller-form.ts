@@ -11,6 +11,7 @@ import { componentStyles } from './baller-form.css.js';
 import { icons } from './icons.js';
 import { ApplicationData } from './application-data.js';
 import { EnrollmentService } from './application-enroller.js';
+import { SpamService } from './spam-service.js';
 
 import '@material/web/button/filled-button.js';
 import '@material/web/button/filled-tonal-button.js';
@@ -39,9 +40,9 @@ import '@material/web/select/select-option.js';
 export class BallerForm extends LitElement {
   static styles = [typographyBaseline, componentStyles];
 
-  @property({ type: Number }) slideIndex = 0;
-
   @property({ type: String, attribute: 'braze-key' }) brazeAPI = 'BRAZE-API-KEY-GOES-HERE';
+
+  @property({ type: String, attribute: 'site-key' }) captchaSiteKey = 'RECAPTCHA-SITE-KEY';
 
   @query('md-filled-button[name="apply"]')
   submitButton!: MdFilledButton;
@@ -93,6 +94,8 @@ export class BallerForm extends LitElement {
 
   private enrollmentService? :EnrollmentService;
 
+  private spamService?: SpamService;
+
   protected render() {
     return html`
       <section id="form-wrapper">
@@ -114,11 +117,14 @@ export class BallerForm extends LitElement {
   override firstUpdated() {
     this.enrollmentService = new EnrollmentService(this.brazeAPI);
     this.dispatchEvent(new CustomEvent('signup-form-displayed', {bubbles: true}));
+    this.spamService = new SpamService(this.captchaSiteKey);
+    this.formElement.insertAdjacentElement('afterbegin', this.spamService.generateScriptElement());
   }
 
   private _handleSubmission(e: SubmitEvent) {
-    // Only submit the form if it is valid
     e.preventDefault();
+
+    // First check that the form data is valid before proceeding
     if (this.formElement.checkValidity()) {
 
       const applicationData = new ApplicationData(
@@ -137,16 +143,19 @@ export class BallerForm extends LitElement {
         this.freeform.value,
         this.termsOfServiceBox.checked
       );
-      
-      this.enrollmentService!.process(applicationData);
 
-      this.dispatchEvent(new CustomEvent('completed-application', {
-        detail: {
-          experience: applicationData.experience,
-          club: applicationData.clubName
-        },
-        bubbles: true
-      }));
+      // Do a final spam check before attempting to submit the form data
+      if (this.spamService?.isValidUser()) {
+        this.enrollmentService!.process(applicationData);
+
+        this.dispatchEvent(new CustomEvent('completed-application', {
+          detail: {
+            experience: applicationData.experience,
+            club: applicationData.clubName
+          },
+          bubbles: true
+        }));
+      }
     }
   }
 
