@@ -3,10 +3,8 @@
 /**
  * Sends a custom event to Braze.
  *
- * @param string $jsonBody The JSON object containing the event data.
+ * @param WP_REST_Request $incoming_request The JSON object containing the event data.
  * @return string The response from the Braze API.
- *
- * @throws Exception If the event cannot be sent to Braze.
  */
 function add_bl_application(WP_REST_Request $incoming_request): string
 {
