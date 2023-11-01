@@ -18,7 +18,7 @@ import {
 } from "./constants.js";
 import { icons } from './icons.js';
 import { ApplicationData } from './application-data.js';
-import { EnrollmentService } from './application-enroller.js';
+import { EnrollmentService } from './enrollment-service.js';
 
 import '@material/web/button/filled-button.js';
 import '@material/web/button/filled-tonal-button.js';
