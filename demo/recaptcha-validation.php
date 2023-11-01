@@ -57,7 +57,11 @@ function recaptcha_check(): string
 
   try {
     // Validate the token.
-    return validateRecaptchaToken($token);
+    $validation_response = validateRecaptchaToken($token);
+    header('Content-Type: application/json');
+    // As far as I am aware this should *already* be JSON 
+    // Source: https://developers.google.com/recaptcha/docs/verify#api-response
+    echo $validation_response;
   } catch (Exception $e) {
     // Return a JSON error.
     header('Content-Type: application/json');
