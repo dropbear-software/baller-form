@@ -31,7 +31,7 @@ export class SpamService {
   constructor(siteKey: string, endpoint: string) {
     this.siteKey = siteKey;
     this.scriptURL = SpamService.generateScriptUrl(siteKey);
-    this.serverSideValidationEndpoint = new URL(endpoint);
+    this.serverSideValidationEndpoint = new URL(endpoint, window.location.origin);
   }
 
   /**

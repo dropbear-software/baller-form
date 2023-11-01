@@ -72,6 +72,9 @@ export class BallerForm extends LitElement {
   @query('md-outlined-select[name="experience"]')
   experience!: MdOutlinedSelect;
 
+  @query('md-outlined-text-field[name="other-experience"]')
+  otherExperience!: MdOutlinedTextField;
+
   @query('md-outlined-text-field[name="club"]')
   clubName!: MdOutlinedTextField;
 
@@ -103,6 +106,17 @@ export class BallerForm extends LitElement {
 
   private spamService?: SpamService;
 
+  // Method Overrides
+
+  override firstUpdated() {
+    this.initializeServices();
+    this.dispatchEvent(
+      new CustomEvent('signup-form-displayed', { bubbles: true })
+    );
+  }
+
+  // Protected Methods
+
   protected render() {
     return html`
       <section id="form-wrapper">
@@ -118,7 +132,7 @@ export class BallerForm extends LitElement {
               type="button"
               name="apply"
               disabled
-              >
+            >
               Absenden ${icons.send}
             </md-filled-button>
           </div>
@@ -128,12 +142,14 @@ export class BallerForm extends LitElement {
     `;
   }
 
-  override firstUpdated() {
-    this.initializeServices();
-    this.dispatchEvent(
-      new CustomEvent('signup-form-displayed', { bubbles: true })
-    );
+  // Private Static Methods
+
+  private static reportFieldValidity(event: FocusEvent) {
+    // @ts-ignore
+    event.target.reportValidity();
   }
+
+  // Private Methods
 
   private initializeServices(){
     this.enrollmentService = new EnrollmentService(this.brazeEndpoint);
@@ -154,22 +170,7 @@ export class BallerForm extends LitElement {
 
     // First check that the form data is valid before proceeding
     if (this.applicationFormElement.checkValidity()) {
-      const applicationData = new ApplicationData(
-        this.firstName.value,
-        this.familyName.value,
-        this.email.value,
-        this.tel.value,
-        this.birthday.valueAsDate!,
-        this.experience.value,
-        this.clubName.value,
-        this.highlightTape.value,
-        this.transfermarkt.value,
-        this.youtube.value,
-        this.instagram.value,
-        this.tiktok.value,
-        this.freeform.value,
-        this.termsOfServiceBox.checked
-      );
+      const applicationData = this.normalizeData();
 
       try {
         // Do a final spam check before attempting to submit the form data
@@ -177,6 +178,7 @@ export class BallerForm extends LitElement {
           this.enrollmentService!.process(applicationData);
           this.handleSuccessfulApplication(applicationData);
         } else {
+          // TODO: Figure out what to do here
           throw new Error("User did not meet the reCAPTCHA requirements");
         }
       } catch (error) {
@@ -185,12 +187,33 @@ export class BallerForm extends LitElement {
     }
   }
 
+  // Take all the fields in the form and put them into a class to normalize the data
+  private normalizeData(): ApplicationData {
+    const applicationData = new ApplicationData(
+      this.firstName.value,
+      this.familyName.value,
+      this.email.value,
+      this.tel.value,
+      this.birthday.valueAsDate!,
+      this.experience.value,
+      this.otherExperience.value,
+      this.clubName.value,
+      this.highlightTape.value,
+      this.transfermarkt.value,
+      this.youtube.value,
+      this.instagram.value,
+      this.tiktok.value,
+      this.freeform.value,
+      this.termsOfServiceBox.checked
+    );
+
+    return applicationData;
+  }
+
   private handleLegalChange() {
     // TODO: Also check if the age checkbox is ticked
     if (this.termsOfServiceBox.checked) {
       this.submitButton.disabled = false;
-      // TODO: This is only here for testing. Move it later.
-      this.successDialog.show();
     } else {
       this.submitButton.disabled = true;
     }
@@ -231,6 +254,18 @@ export class BallerForm extends LitElement {
   private handleDialogClose(){
     this.successDialog.close();
     this.applicationFormElement.reset();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private handleExperienceSelection(e: Event){
+    // @ts-ignore
+    if (e.target.value === 'sonstiges') {
+      this.otherExperience.hidden = false;
+      this.otherExperience.classList.remove('hidden');
+    } else {
+      this.otherExperience.hidden = true;
+      this.otherExperience.classList.add('hidden');
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -279,11 +314,6 @@ export class BallerForm extends LitElement {
     `;
   }
 
-  private static reportFieldValidity(event: FocusEvent) {
-    // @ts-ignore
-    event.target.reportValidity();
-  }
-
   // eslint-disable-next-line class-methods-use-this
   private _renderStepTwo() {
     return html`
@@ -297,6 +327,7 @@ export class BallerForm extends LitElement {
             label="Deine höchste Spielklasse"
             supporting-text="Aktuelles oder vorheriges Level"
             name="experience"
+            @change=${this.handleExperienceSelection}
           >
             <md-select-option selected value="regionalliga">
               <div slot="headline">Regionalliga</div>
@@ -320,6 +351,12 @@ export class BallerForm extends LitElement {
               <div slot="headline">Sonstiges</div>
             </md-select-option>
           </md-outlined-select>
+          <md-outlined-text-field
+            label="Einzelheiten"
+            name="other-experience"
+            hidden
+            class="hidden"
+          ></md-outlined-text-field>
           <md-outlined-text-field
             label="In welchem Verein spielst du"
             required

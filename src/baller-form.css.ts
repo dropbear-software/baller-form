@@ -70,6 +70,10 @@ export const componentStyles = css`
     align-items: center;
   }
 
+  .hidden {
+    display: none;
+  }
+
   /* Typography */
   .display-small {
     font-family: var(--baller-form-display-headline-large-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);

@@ -10,7 +10,7 @@ export class EnrollmentService {
   readonly endpoint: URL;
 
   constructor(endpoint: string) {
-    this.endpoint = new URL(endpoint);
+    this.endpoint = new URL(endpoint, window.location.origin);
   }
 
   /**

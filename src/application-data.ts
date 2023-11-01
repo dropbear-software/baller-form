@@ -32,6 +32,7 @@ export class ApplicationData {
     telephone: string,
     birthDate: Date,
     experience: string,
+    otherExperience: string,
     clubName: string,
     highlightTape: string,
     transfermarktProfile: string,
@@ -50,7 +51,7 @@ export class ApplicationData {
     this.telephone = telephone;
     this.email = email;
     this.birthDate = ApplicationData.normalizeBirthDate(birthDate);
-    this.experience = ApplicationData.normalizeExperience(experience, 'REPLACE LATER WITH USER SUPPLIED VALUE');
+    this.experience = ApplicationData.normalizeExperience(experience, otherExperience);
     this.clubName = clubName;
     this.highlightTape = highlightTape;
     this.transfermarktProfile = transfermarktProfile;
