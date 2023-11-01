@@ -48,8 +48,6 @@ function validateRecaptchaToken(string $token): string
  * Returns a string containing the reCAPTCHA API response, or a JSON error
  * if the token cannot be validated.
  *
- * @throws Exception If the reCAPTCHA token cannot be validated.
- *
  * @return string The reCAPTCHA API response, or a JSON error if the token cannot be validated.
  */
 function recaptcha_check(): string
