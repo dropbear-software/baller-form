@@ -8,6 +8,10 @@
  */
 function add_bl_application(WP_REST_Request $incoming_request): string
 {
+  $braze_endpoint = "https://rest.api.appboy.eu/users/track";
+
+  $braze_secrect_key = "YOUR_BRAZE_SECRET_KEY";
+
   // Make sure the incoming request is infact JSON
   if ($incoming_request->get_content_type() != "application/json") {
     error_log('Invalid content-type');
@@ -17,10 +21,6 @@ function add_bl_application(WP_REST_Request $incoming_request): string
 
   // QUESTION: This should already be a JSON string at this point do I need to wrap with json_encode?
   $jsonBody = $incoming_request->get_body();
-
-  $braze_endpoint = "https://rest.api.appboy.eu/users/track";
-
-  $braze_secrect_key = "YOUR_BRAZE_SECRET_KEY";
 
   $braze_request = array(
     'headers' => array(
