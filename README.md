@@ -13,7 +13,12 @@ npm i baller-form
 ```html
 <script type="module" src="path/to/baller-form-bundle.js"></script>
 
-<baller-form></baller-form>
+<baller-form 
+  site-key="RECAPTCHA_V3_SITE_KEY" 
+  captcha-endpoint="RECAPTCHA_TOKEN_VALIDATION_ENDPOINT"
+  braze-endpoint="BRAZE_SERVER_SIDE_ENDPOINT"
+>
+</baller-form>
 ```
 
 ## Linting and formatting
