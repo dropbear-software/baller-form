@@ -5,6 +5,7 @@ import type { MdFilledButton } from '@material/web/button/filled-button.js';
 import type { MdCheckbox } from '@material/web/checkbox/checkbox.js';
 import type { MdOutlinedTextField } from '@material/web/textfield/outlined-text-field.js';
 import type { MdOutlinedSelect } from '@material/web/select/outlined-select.js';
+import type { MdDialog } from '@material/web/dialog/dialog.js';
 
 import { componentStyles } from './baller-form.css.js';
 import { icons } from './icons.js';
@@ -20,13 +21,14 @@ import '@material/web/checkbox/checkbox.js';
 import '@material/web/icon/icon.js';
 import '@material/web/select/outlined-select.js';
 import '@material/web/select/select-option.js';
+import '@material/web/dialog/dialog.js';
 
 /**
  * @tagname baller-form
  *
  * @summary The Baller League Player Registration Form
  *
- * @property {string} brazeAPI - The client side API key for Braze Web SDK
+ * @property {string} brazeEndpoint - The URL we will send the application form to
  * @property {string} captchaSiteKey - The Recaptcha v3 site key
  * @property {string} captchaEndpoint - The URL we will validate our Recaptcha token at
  *
@@ -41,7 +43,7 @@ export class BallerForm extends LitElement {
     'RECAPTCHA-SITE-KEY';
 
   @property({ type: String, attribute: 'captcha-endpoint' }) captchaEndpoint =
-    'https://blgx.site/';
+    '/ballerleague/v1/spam_check';
 
   @property({ type: String, attribute: 'braze-endpoint' }) brazeEndpoint =
     '/ballerleague/v1/submit_application';
@@ -49,8 +51,8 @@ export class BallerForm extends LitElement {
   @query('md-filled-button[name="apply"]')
   submitButton!: MdFilledButton;
 
-  @query('form')
-  formElement!: HTMLFormElement;
+  @query('form#application-form')
+  applicationFormElement!: HTMLFormElement;
 
   @query('md-outlined-text-field[autocomplete="given-name"]')
   firstName!: MdOutlinedTextField;
@@ -94,6 +96,9 @@ export class BallerForm extends LitElement {
   @query('[data-element="tos"]')
   termsOfServiceBox!: MdCheckbox;
 
+  @query('md-dialog[data-reason="success"]')
+  successDialog!: MdDialog;
+
   private enrollmentService?: EnrollmentService;
 
   private spamService?: SpamService;
@@ -101,7 +106,7 @@ export class BallerForm extends LitElement {
   protected render() {
     return html`
       <section id="form-wrapper">
-        <form>
+        <form id="application-form">
           <div>
             ${this._renderStepOne()} ${this._renderStepTwo()}
             ${this._renderStepThree()} ${this._renderStepFour()}
@@ -113,24 +118,32 @@ export class BallerForm extends LitElement {
               type="button"
               name="apply"
               disabled
-              >Absenden ${icons.send}</md-filled-button
-            >
+              >
+              Absenden ${icons.send}
+            </md-filled-button>
           </div>
         </form>
       </section>
+      ${this._renderSuccessDialog()}
     `;
   }
 
   override firstUpdated() {
-    this.enrollmentService = new EnrollmentService(this.brazeEndpoint);
+    this.initializeServices();
     this.dispatchEvent(
       new CustomEvent('signup-form-displayed', { bubbles: true })
     );
+  }
+
+  private initializeServices(){
+    this.enrollmentService = new EnrollmentService(this.brazeEndpoint);
     this.spamService = new SpamService(
       this.captchaSiteKey,
       this.captchaEndpoint
     );
-    this.formElement.insertAdjacentElement(
+
+    // Add the reCAPTCHA script to the page
+    this.applicationFormElement.insertAdjacentElement(
       'afterbegin',
       this.spamService.generateScriptElement()
     );
@@ -140,7 +153,7 @@ export class BallerForm extends LitElement {
     e.preventDefault();
 
     // First check that the form data is valid before proceeding
-    if (this.formElement.checkValidity()) {
+    if (this.applicationFormElement.checkValidity()) {
       const applicationData = new ApplicationData(
         this.firstName.value,
         this.familyName.value,
@@ -160,18 +173,9 @@ export class BallerForm extends LitElement {
 
       try {
         // Do a final spam check before attempting to submit the form data
-        if (this.spamService?.isValidUser()) {
+        if (this.spamService!.isValidUser()) {
           this.enrollmentService!.process(applicationData);
-
-          this.dispatchEvent(
-            new CustomEvent('completed-application', {
-              detail: {
-                experience: applicationData.experience,
-                club: applicationData.clubName,
-              },
-              bubbles: true,
-            })
-          );
+          this.handleSuccessfulApplication(applicationData);
         } else {
           throw new Error("User did not meet the reCAPTCHA requirements");
         }
@@ -182,11 +186,51 @@ export class BallerForm extends LitElement {
   }
 
   private handleLegalChange() {
+    // TODO: Also check if the age checkbox is ticked
     if (this.termsOfServiceBox.checked) {
       this.submitButton.disabled = false;
+      // TODO: This is only here for testing. Move it later.
+      this.successDialog.show();
     } else {
       this.submitButton.disabled = true;
     }
+  }
+
+  private handleSuccessfulApplication(applicationData: ApplicationData){
+    // Open the confirmation dialog
+    this.successDialog.show();
+    
+    // Send an event for analytics integration
+    this.dispatchEvent(
+      new CustomEvent('completed-application', {
+        detail: {
+          experience: applicationData.experience,
+          club: applicationData.clubName,
+        },
+        bubbles: true,
+      })
+    );
+  }
+
+  private _renderSuccessDialog(){
+    return html`
+      <md-dialog type="alert" data-reason="success">
+        <div slot="headline" class="display-small">Glückwunsch</div>
+        <form slot="content" id="form-id" method="dialog">
+          Wir haben Ihre Bewerbung erhalten.
+        </form>
+        <div slot="actions">
+          <md-filled-button form="form-id" value="close" @click=${this.handleDialogClose}>
+            Schließen
+          </md-filled-button>
+        </div>
+      </md-dialog>
+    `;
+  }
+
+  private handleDialogClose(){
+    this.successDialog.close();
+    this.applicationFormElement.reset();
   }
 
   // eslint-disable-next-line class-methods-use-this
