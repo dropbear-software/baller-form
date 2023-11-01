@@ -1,7 +1,5 @@
 <?php
 
-$token = 'YOUR_RECAPTCHA_TOKEN';
-
 /**
  * Validates a reCAPTCHA v3 token.
  *
