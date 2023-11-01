@@ -1,6 +1,6 @@
 # Baller Form
 
-This webcomponent follows the [open-wc](https://github.com/open-wc/open-wc) recommendation.
+The Baller League Sign up application form implemented as a self contained HTML Web Component
 
 ## Installation
 
@@ -11,6 +11,7 @@ npm i baller-form
 ## Usage
 
 ```html
+<!-- NOTE: You can see an example in demo/index.html -->
 <script type="module" src="path/to/baller-form-bundle.js"></script>
 
 <baller-form 
