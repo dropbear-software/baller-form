@@ -3,6 +3,7 @@
 .colors {
   display: flex;
   gap: 1rem;
+  display: none;
 }
 
 .color-swatch {
@@ -40,5 +41,5 @@ header button {
 
 body {
   margin: 0 auto;
-  max-width: 1200px;
+  max-width: 850px;
 }

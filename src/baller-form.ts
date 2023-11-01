@@ -6,7 +6,6 @@ import type { MdCheckbox } from '@material/web/checkbox/checkbox.js';
 import type { MdOutlinedTextField } from '@material/web/textfield/outlined-text-field.js';
 import type { MdOutlinedSelect } from '@material/web/select/outlined-select.js';
 
-import { typographyBaseline } from './design-system.css.js';
 import { componentStyles } from './baller-form.css.js';
 import { icons } from './icons.js';
 import { ApplicationData } from './application-data.js';
@@ -27,18 +26,15 @@ import '@material/web/select/select-option.js';
  *
  * @summary The Baller League Player Registration Form
  *
- * @property {number} currentStep - The current step of the form the user is completing
- *
- * @cssproperty --baller-form-text-color - Controls the color of the text
+ * @property {string} brazeAPI - The client side API key for Braze Web SDK
+ * @property {string} captchaSiteKey - The Recaptcha v3 site key
  *
  * @fires {CustomEvent} completed-application - When the form is successfully submitted
  * @fires {CustomEvent} signup-form-displayed - When the form is first shown to the user
- * @fires {CustomEvent} next-form-step - When the user proceeds to the next step of the form
- * @fires {CustomEvent} prev-form-step - When the user proceeds to the previous step of the form
  */
 @customElement('baller-form')
 export class BallerForm extends LitElement {
-  static styles = [typographyBaseline, componentStyles];
+  static styles = [componentStyles];
 
   @property({ type: String, attribute: 'braze-key' }) brazeAPI = 'BRAZE-API-KEY-GOES-HERE';
 

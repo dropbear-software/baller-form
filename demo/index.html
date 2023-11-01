@@ -20,9 +20,6 @@
     <baller-form braze-key="BRAZE-API-KEY-GOES-HERE" site-key="6Lc_quMoAAAAAMIrwXA8oqigA4uC29IDtyGtJo78">
       <style>
         baller-form {
-          /* Typography */
-          --baller-form-font-family: "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif;
-
           /* Component Color Palette */
           --baller-form-color-primary: #4b6700;
           --baller-form-color-on-primary: #ffffff;
@@ -44,9 +41,6 @@
           --baller-form-color-on-error: #ffffff;
           --baller-form-color-on-error-container: #410002;
 
-          --baller-form-color-background: #fefcf4;
-          --baller-form-color-on-background: #1b1c17;
-
           --baller-form-color-surface: #fefcf4;
           --baller-form-color-on-surface: #1b1c17;
           --baller-form-color-surface-variant: #e2e4d4;
@@ -57,6 +51,10 @@
           --baller-form-color-surface-tint: #4b6700;
           --baller-form-color-outline-variant: #c6c8b9;
           --baller-form-color-scrim: #000000;
+
+          /* Overall styles */
+          --baller-form-color-background: var(--baller-form-color-surface);
+          --baller-form-color-on-background: var(--baller-form-color-on-surface);
 
           /* Checkbox styling */
           --baller-form-checkbox-outline-color: var(--baller-form-color-on-surface-variant);
@@ -74,6 +72,30 @@
           --baller-form-outlined-select-text-field-outline-color: var(--baller-form-color-outline);
           --baller-form-outlined-select-text-field-input-text-color: var(--baller-form-color-on-surface);
           --baller-form-menu-background: var(--baller-form-color-surface-variant);
+
+          /* Typography */
+          --baller-form-font-family: "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif;
+          
+          --baller-form-display-headline-large-font-size: 36px;
+          --baller-form-display-headline-large-font-weight: 700;
+          --baller-form-display-headline-large-line-height: 44px;
+          --baller-form-display-headline-large-letter-spacing: 0px;
+          --baller-form-display-headline-large-color: var(--baller-form-color-on-background);
+          --baller-form-display-headline-large-font-family: var(--baller-form-font-family);
+
+          --baller-form-display-headline-small-font-size: 24px;
+          --baller-form-display-headline-small-font-weight: 100;
+          --baller-form-display-headline-small-line-height: 32px;
+          --baller-form-display-headline-small-letter-spacing: 0px;
+          --baller-form-display-headline-small-color: var(--baller-form-color-secondary);
+          --baller-form-display-headline-small-font-family: var(--baller-form-font-family);
+
+          --baller-form-display-label-medium-font-size: 12px;
+          --baller-form-display-label-medium-font-weight: 500;
+          --baller-form-display-label-medium-line-height: 16px;
+          --baller-form-display-label-medium-letter-spacing: 0.5px;
+          --baller-form-display-label-medium-color: var(--baller-form-color-on-background);
+          --baller-form-display-label-medium-font-family: var(--baller-form-font-family);
         }
       </style>
     </baller-form>
