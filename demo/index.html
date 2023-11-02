@@ -5,7 +5,51 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./demo-styles.css" id="demo-styles">
+  <style>
+    .colors {
+      display: flex;
+      gap: 1rem;
+      display: none;
+    }
+
+    .color-swatch {
+      display: inline-block;
+      height: 25px;
+      width: 25px;
+      border-radius: 50%;
+      border: 3px solid var(--md-sys-color-scrim);
+    }
+
+    .color-palette {
+      list-style: none;
+    }
+
+    .color-palette li {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-block-end: 1rem;
+    }
+
+    header {
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header button {
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid var(--md-sys-color-outline);
+      margin-inline-start: 1rem;
+    }
+
+    body {
+      margin: 0 auto;
+      max-width: 850px;
+    }
+  </style>
 </head>
 <body class="surface on-surface-text">
   <header class="surface-variant on-surface-variant-text">
@@ -16,7 +60,6 @@
   </header>
 
   <div id="demo">
-    <script type="module" src="./analytics.js"></script>
     <baller-form 
       site-key="6Lc_quMoAAAAAMIrwXA8oqigA4uC29IDtyGtJo78" 
       captcha-endpoint="/ballerleague/v1/spam_check"
@@ -105,23 +148,6 @@
     </baller-form>
   </div>
 
-  <script type="module">
-    // Load the bundled version if the URL has a `prod` URL parameter
-    const currentURL = new URL(window.location.href);
-    const bundleName = document.getElementById('bundle-name');
-    const demoStyles = document.getElementById('demo-styles');
-    const isProduction = currentURL.host === 'baller-form.web.app';
-
-    if (isProduction) {
-      await import('./baller-form-bundle.js');
-      bundleName.innerText = 'Production Bundle';
-    } else {
-      await import('../dist/src/baller-form.js');
-      bundleName.innerText = 'Development Bundle';
-      demoStyles.href = "/demo/demo-styles.css";
-    }
-  </script>
-
   <h3 class="display-small">Color Palette</h3>
   <section class="colors">
     <div class="color-role">
@@ -167,5 +193,41 @@
       </ul>
     </div>
   </section>
+
+
+  <script type="module">
+    const isProduction = window.location.hostname === 'baller-form.web.app';
+
+    function loadStyle(url){
+      // const themeStyles = await import("./demo/theme.css", { with: { type: "css" }});
+      // document.adoptedStyleSheets.push(themeStyles);
+      const linkTag = document.createElement('link');
+      linkTag.href = url;
+      linkTag.rel = 'stylesheet';
+      document.head.insertAdjacentElement('beforeend', linkTag);
+    }
+
+    async function loadProduction(){
+      console.log('Loading production bundle');
+      await import('./baller-form-bundle.js');
+      await import('./analytics.js');
+      loadStyle("./theme.css");
+    }
+
+    async function loadDevelopment(){
+      console.log('Loading development bundle');
+      await import('./demo/analytics.js');
+      await import('../dist/src/baller-form.js');
+      loadStyle("./demo/theme.css");
+    }
+
+    
+
+    if (isProduction) {
+      loadProduction();
+    } else {
+      loadDevelopment();
+    } 
+  </script>
 </body>
 </html>
