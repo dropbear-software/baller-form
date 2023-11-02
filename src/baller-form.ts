@@ -158,11 +158,13 @@ export class BallerForm extends LitElement {
       this.captchaEndpoint
     );
 
-    // Add the reCAPTCHA script to the page
-    this.applicationFormElement.insertAdjacentElement(
-      'afterbegin',
-      this.spamService.generateScriptElement()
-    );
+    // Add the reCAPTCHA script to the page if the feature is enabled
+    if (this.spamService.featureEnabled) {
+      this.applicationFormElement.insertAdjacentElement(
+        'afterbegin',
+        this.spamService.generateScriptElement()
+      );
+    }
   }
 
   private _handleSubmission(e: SubmitEvent) {
@@ -183,6 +185,13 @@ export class BallerForm extends LitElement {
         }
       } catch (error) {
         // TODO: Handle things if something went wrong with reCAPTCHA or Braze
+      }
+    } else {
+      // Some field in the form isn't valid so find it and scroll to it
+      const fieldWithError = this.applicationFormElement.querySelector('[error]');
+      if (fieldWithError) {
+        // @ts-ignore
+        fieldWithError.focus({preventScroll: false});
       }
     }
   }
@@ -233,6 +242,36 @@ export class BallerForm extends LitElement {
         bubbles: true,
       })
     );
+  }
+
+  private validateAge(){
+    const dateInputFieldValue = this.birthday.value;
+    let isOldEnough = false;
+
+    // Calculate the difference between the date input field and today's date.
+    const today = new Date();
+    const dateInputFieldDate = new Date(dateInputFieldValue);
+    const differenceInDays = (today.getTime() - dateInputFieldDate.getTime()) / (1000 * 60 * 60 * 24);
+
+    // Check if the number of days since the date input field value is greater than or equal to 18 years.
+    if (differenceInDays >= 18 * 365.25) {
+      isOldEnough = true;
+      
+      this.birthday.setCustomValidity('');
+      this.birthday.error = false;
+      this.birthday.errorText = '';
+
+      this.birthday.reportValidity();
+    }
+
+    if (!isOldEnough) {
+      this.birthday.error = true;
+      this.birthday.errorText = 'Sie müssen mindestens 18 Jahre alt sein.'
+      this.birthday.setCustomValidity('Sie müssen mindestens 18 Jahre alt sein.');
+      this.birthday.dispatchEvent(new Event('invalid'));
+      
+      this.birthday.reportValidity();      
+    }
   }
 
   private _renderSuccessDialog(){
@@ -307,7 +346,7 @@ export class BallerForm extends LitElement {
             required
             autocomplete="bday"
             type="date"
-            @blur=${BallerForm.reportFieldValidity}
+            @blur=${this.validateAge}
           ></md-outlined-text-field>
         </div>
       </div>

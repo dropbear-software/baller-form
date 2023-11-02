@@ -93,5 +93,6 @@ export class EnrollmentService {
   // eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-unused-vars
   private handleBrazeResponse(response: object) {
     // TODO: Handle the response here so we can show a confirmation message
+    console.log(`Braze Response \n ${response}`);
   }
 }
