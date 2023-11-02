@@ -198,13 +198,17 @@
   <script type="module">
     const isProduction = window.location.hostname === 'baller-form.web.app';
 
-    function loadStyle(url){
-      // const themeStyles = await import("./demo/theme.css", { with: { type: "css" }});
-      // document.adoptedStyleSheets.push(themeStyles);
-      const linkTag = document.createElement('link');
-      linkTag.href = url;
-      linkTag.rel = 'stylesheet';
-      document.head.insertAdjacentElement('beforeend', linkTag);
+    async function loadStyle(url){
+      try {
+        const themeStyles = await import(url, { with: { type: "css" }});
+        document.adoptedStyleSheets.push(themeStyles);
+      } catch (error) {
+        console.info('Using CSS loading fallback technique');
+        const linkTag = document.createElement('link');
+        linkTag.href = url;
+        linkTag.rel = 'stylesheet';
+        document.head.insertAdjacentElement('beforeend', linkTag);
+      }
     }
 
     async function loadProduction(){
