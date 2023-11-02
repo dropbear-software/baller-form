@@ -9,6 +9,8 @@ export class ApplicationData {
 
   readonly birthDate: string;
 
+  readonly shirt: string;
+
   readonly experience: string;
 
   readonly clubName: string;
@@ -31,6 +33,7 @@ export class ApplicationData {
     email: string,
     telephone: string,
     birthDate: Date,
+    shirt: string,
     experience: string,
     otherExperience: string,
     clubName: string,
@@ -51,6 +54,7 @@ export class ApplicationData {
     this.telephone = telephone;
     this.email = email;
     this.birthDate = ApplicationData.normalizeBirthDate(birthDate);
+    this.shirt = shirt;
     this.experience = ApplicationData.normalizeExperience(experience, otherExperience);
     this.clubName = clubName;
     this.highlightTape = highlightTape;
@@ -63,7 +67,8 @@ export class ApplicationData {
   
   // Normalize the DOB with the appropriate locale
   private static normalizeBirthDate(birthDate: Date) : string {
-    return birthDate.toLocaleDateString('de');
+    // return birthDate.toLocaleDateString('de');
+    return birthDate.toString();
   }
 
   // We allow users to choose 'other' as an experience level and instead provide a string

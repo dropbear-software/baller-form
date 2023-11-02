@@ -41,5 +41,9 @@ export const icons = {
     </svg>`,
   forwardArrow: html`<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" slot="icon"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>`,
   backArrow: html`<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" slot="icon"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>`,
-  send: html`<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" slot="icon"><path d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z"/></svg>`
+  send: html`<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" slot="icon"><path d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z"/></svg>`,
+  xing: html`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 590.6 621.4" style="enable-background:new 0 0 590.6 621.4" xml:space="preserve">
+  <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#0698a0" d="m205.7 237.7 28 49.7-41.9 73.3h50l41.6-73.3-28-49.7z"/>
+  <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#b7df4b" d="m354.5 191.8-80.8 143 52.1 94.8h50.7l-53-94.8 80.9-143z"/>
+</svg>`
 }

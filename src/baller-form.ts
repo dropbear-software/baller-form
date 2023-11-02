@@ -69,6 +69,9 @@ export class BallerForm extends LitElement {
   @query('md-outlined-text-field[autocomplete="bday"]')
   birthday!: MdOutlinedTextField;
 
+  @query('md-outlined-select[name="shirt-size"]')
+  shirt!: MdOutlinedSelect
+
   @query('md-outlined-select[name="experience"]')
   experience!: MdOutlinedSelect;
 
@@ -98,6 +101,9 @@ export class BallerForm extends LitElement {
 
   @query('[data-element="tos"]')
   termsOfServiceBox!: MdCheckbox;
+
+  @query('[data-element="teilnahmebedingungen"]')
+  teilnahmebedingungenBox!: MdCheckbox;
 
   @query('md-dialog[data-reason="success"]')
   successDialog!: MdDialog;
@@ -204,6 +210,7 @@ export class BallerForm extends LitElement {
       this.email.value,
       this.tel.value,
       this.birthday.valueAsDate!,
+      this.shirt.value,
       this.experience.value,
       this.otherExperience.value,
       this.clubName.value,
@@ -220,8 +227,7 @@ export class BallerForm extends LitElement {
   }
 
   private handleLegalChange() {
-    // TODO: Also check if the age checkbox is ticked
-    if (this.termsOfServiceBox.checked) {
+    if (this.shouldEnableSubmit()) {
       this.submitButton.disabled = false;
     } else {
       this.submitButton.disabled = true;
@@ -245,12 +251,11 @@ export class BallerForm extends LitElement {
   }
 
   private validateAge(){
-    const dateInputFieldValue = this.birthday.value;
     let isOldEnough = false;
 
     // Calculate the difference between the date input field and today's date.
     const today = new Date();
-    const dateInputFieldDate = new Date(dateInputFieldValue);
+    const dateInputFieldDate = new Date(this.birthday.value);
     const differenceInDays = (today.getTime() - dateInputFieldDate.getTime()) / (1000 * 60 * 60 * 24);
 
     // Check if the number of days since the date input field value is greater than or equal to 18 years.
@@ -266,12 +271,19 @@ export class BallerForm extends LitElement {
 
     if (!isOldEnough) {
       this.birthday.error = true;
-      this.birthday.errorText = 'Sie müssen mindestens 18 Jahre alt sein.'
+      this.birthday.errorText = 'Du musst mindestens 18 Jahre alt sein.'
       this.birthday.setCustomValidity('Sie müssen mindestens 18 Jahre alt sein.');
       this.birthday.dispatchEvent(new Event('invalid'));
       
       this.birthday.reportValidity();      
     }
+  }
+
+  private shouldEnableSubmit(): boolean {
+    const hasAcceptedDatenschutz = this.termsOfServiceBox.checked;
+    const hasAcceptedTeilnahmebedingungen = this.teilnahmebedingungenBox.checked;
+
+    return hasAcceptedDatenschutz && hasAcceptedTeilnahmebedingungen;
   }
 
   private _renderSuccessDialog(){
@@ -320,34 +332,56 @@ export class BallerForm extends LitElement {
             label="Vorname"
             required
             autocomplete="given-name"
+            max="250"
             @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Nachname"
             required
+            max="250"
             autocomplete="family-name"
             @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
-            label="Email"
+            label="E-mail"
             required
             autocomplete="email"
             type="email"
+            max="250"
             @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Phone"
             autocomplete="tel"
             type="tel"
+            max="20"
             @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Geburtsdatum"
             required
             autocomplete="bday"
+            max="8"
             type="date"
             @blur=${this.validateAge}
           ></md-outlined-text-field>
+          <md-outlined-select
+            label="T-Shirt Size"
+            name="shirt-size"
+          >
+          <md-select-option selected value="bundesliga">
+            <div slot="headline">S</div>
+           </md-select-option>
+            <md-select-option value="2-bundesliga">
+             <div slot="headline">M</div>
+            </md-select-option>
+            <md-select-option value="3-bundesliga">
+              <div slot="headline">L</div>
+            </md-select-option>
+            <md-select-option value="regionalliga">
+              <div slot="headline">XL</div>
+            </md-select-option>
+          </md-outlined-select>
         </div>
       </div>
     `;
@@ -368,7 +402,16 @@ export class BallerForm extends LitElement {
             name="experience"
             @change=${this.handleExperienceSelection}
           >
-            <md-select-option selected value="regionalliga">
+            <md-select-option selected value="bundesliga">
+              <div slot="headline">Bundesliga</div>
+            </md-select-option>
+            <md-select-option value="2-bundesliga">
+              <div slot="headline">2. Bundesliga</div>
+            </md-select-option>
+            <md-select-option value="3-bundesliga">
+              <div slot="headline">3. Bundesliga</div>
+            </md-select-option>
+            <md-select-option value="regionalliga">
               <div slot="headline">Regionalliga</div>
             </md-select-option>
             <md-select-option value="oberliga">
@@ -391,27 +434,31 @@ export class BallerForm extends LitElement {
             </md-select-option>
           </md-outlined-select>
           <md-outlined-text-field
-            label="Einzelheiten"
+            label="Welche sonstige Spielklasse?"
             name="other-experience"
             hidden
+            max="250"
             class="hidden"
           ></md-outlined-text-field>
           <md-outlined-text-field
-            label="In welchem Verein spielst du"
+            label="In welchem Verein spielst Du"
             required
             name="club"
+            max="250"
             @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Highlight Tape (URL)"
             type="url"
             name="highlight-tape"
+            max="250"
             @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
             label="Link Transfermarkt"
             type="url"
             name="transfermarkt"
+            max="250"
             @blur=${BallerForm.reportFieldValidity}
           ></md-outlined-text-field>
         </div>
@@ -431,6 +478,7 @@ export class BallerForm extends LitElement {
           <md-outlined-text-field
             label="YouTube"
             autocomplete="username"
+            max="250"
             name="youtube"
           >
             <md-icon slot="trailing-icon"> ${icons.youtube} </md-icon>
@@ -438,6 +486,7 @@ export class BallerForm extends LitElement {
           <md-outlined-text-field
             label="Instagram"
             autocomplete="username"
+            max="250"
             name="instagram"
           >
             <md-icon slot="trailing-icon"> ${icons.instagram} </md-icon>
@@ -445,9 +494,18 @@ export class BallerForm extends LitElement {
           <md-outlined-text-field
             label="TikTok"
             autocomplete="username"
+            max="250"
             name="tiktok"
           >
             <md-icon slot="trailing-icon"> ${icons.tiktok} </md-icon>
+          </md-outlined-text-field>
+          <md-outlined-text-field
+            label="XING"
+            autocomplete="username"
+            max="250"
+            name="xing"
+          >
+            <md-icon slot="trailing-icon"> ${icons.xing} </md-icon>
           </md-outlined-text-field>
         </div>
       </div>
@@ -471,9 +529,27 @@ export class BallerForm extends LitElement {
               touch-target="wrapper"
               @change=${this.handleLegalChange}
               data-element="tos"
+              max="250"
               style="width: 4rem"
             ></md-checkbox>
             Datenschutz Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Aenean ut varius turpis, nec vestibulum massa. Curabitur ex odio,
+            laoreet id quam sit amet, tempus finibus neque. Duis convallis lorem
+            et ornare auctor. Nam efficitur elit urna, nec sollicitudin nisi
+            suscipit vitae. Ut rhoncus vitae mi non ullamcorper. Vivamus lorem
+            quam, hendrerit in enim ut, pretium sodales augue. Cras nisl velit,
+            efficitur quis urna nec, eleifend sagittis felis.
+          </label>
+
+          <label class="label-medium inline-label">
+            <md-checkbox
+              touch-target="wrapper"
+              @change=${this.handleLegalChange}
+              data-element="teilnahmebedingungen"
+              max="250"
+              style="width: 4rem"
+            ></md-checkbox>
+            Teilnahmebedingungen Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Aenean ut varius turpis, nec vestibulum massa. Curabitur ex odio,
             laoreet id quam sit amet, tempus finibus neque. Duis convallis lorem
             et ornare auctor. Nam efficitur elit urna, nec sollicitudin nisi
