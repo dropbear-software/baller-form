@@ -209,19 +209,17 @@
 
     async function loadProduction(){
       console.log('Loading production bundle');
-      await import('./baller-form-bundle.js');
       await import('./analytics.js');
+      import('./baller-form-bundle.js');
       loadStyle("./theme.css");
     }
 
     async function loadDevelopment(){
       console.log('Loading development bundle');
       await import('./demo/analytics.js');
-      await import('../dist/src/baller-form.js');
+      import('../dist/src/baller-form.js');
       loadStyle("./demo/theme.css");
     }
-
-    
 
     if (isProduction) {
       loadProduction();
