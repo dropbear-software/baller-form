@@ -9,7 +9,7 @@ import type { MdDialog } from '@material/web/dialog/dialog.js';
 
 import { componentStyles } from './baller-form.css.js';
 import { icons } from './icons.js';
-import { ApplicationData } from './application-data.js';
+import { ApplicationData, ApplicationDataInit } from './application-data.js';
 import { EnrollmentService } from './enrollment-service.js';
 import { SpamService } from './spam-service.js';
 
@@ -204,24 +204,27 @@ export class BallerForm extends LitElement {
 
   // Take all the fields in the form and put them into a class to normalize the data
   private normalizeData(): ApplicationData {
-    const applicationData = new ApplicationData(
-      this.firstName.value,
-      this.familyName.value,
-      this.email.value,
-      this.tel.value,
-      this.birthday.valueAsDate!,
-      this.shirt.value,
-      this.experience.value,
-      this.otherExperience.value,
-      this.clubName.value,
-      this.highlightTape.value,
-      this.transfermarkt.value,
-      this.youtube.value,
-      this.instagram.value,
-      this.tiktok.value,
-      this.freeform.value,
-      this.termsOfServiceBox.checked
-    );
+    const userData: ApplicationDataInit = {
+      familyName: this.familyName.value,
+      givenName: this.firstName.value,
+      email: this.email.value,
+      telephone: this.tel.value,
+      birthDate: this.birthday.valueAsDate!,
+      shirtSize: this.shirt.value,
+      highestLeague: this.experience.value,
+      otherExperience: this.otherExperience.value,
+      clubName: this.clubName.value,
+      highlightTape: this.highlightTape.value,
+      transfermarktProfile: this.transfermarkt.value,
+      youTube: this.youtube.value,
+      instagram: this.instagram.value,
+      tiktok: this.tiktok.value,
+      comments: this.freeform.value,
+      acceptedPrivacy: this.termsOfServiceBox.checked,
+      acceptedTos: this.teilnahmebedingungenBox.checked
+    };
+
+    const applicationData = new ApplicationData(userData);
 
     return applicationData;
   }
@@ -369,16 +372,19 @@ export class BallerForm extends LitElement {
             label="T-Shirt Size"
             name="shirt-size"
           >
-          <md-select-option selected value="bundesliga">
-            <div slot="headline">S</div>
+          <md-select-option selected value="XS">
+            <div slot="headline">XS</div>
            </md-select-option>
-            <md-select-option value="2-bundesliga">
+           <md-select-option value="S">
+             <div slot="headline">S</div>
+            </md-select-option>
+            <md-select-option value="M">
              <div slot="headline">M</div>
             </md-select-option>
-            <md-select-option value="3-bundesliga">
+            <md-select-option value="L">
               <div slot="headline">L</div>
             </md-select-option>
-            <md-select-option value="regionalliga">
+            <md-select-option value="XL">
               <div slot="headline">XL</div>
             </md-select-option>
           </md-outlined-select>

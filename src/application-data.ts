@@ -1,3 +1,23 @@
+export interface ApplicationDataInit {
+  givenName: string,
+  familyName: string,
+  email: string,
+  telephone: string,
+  birthDate: Date,
+  shirtSize: string,
+  highestLeague: string,
+  otherExperience: string,
+  clubName: string,
+  highlightTape: string,
+  transfermarktProfile: string,
+  youTube: string,
+  instagram: string,
+  tiktok: string,
+  comments: string,
+  acceptedTos: boolean,
+  acceptedPrivacy: boolean
+}
+
 export class ApplicationData {
   readonly givenName: string;
 
@@ -25,50 +45,44 @@ export class ApplicationData {
 
   readonly tikTok: string;
 
-  readonly freeform: string;
+  readonly comments: string;
 
   constructor(
-    givenName: string,
-    familyName: string,
-    email: string,
-    telephone: string,
-    birthDate: Date,
-    shirt: string,
-    experience: string,
-    otherExperience: string,
-    clubName: string,
-    highlightTape: string,
-    transfermarktProfile: string,
-    youTube: string,
-    instagram: string,
-    tikTok: string,
-    freeform: string,
-    acceptedTOS: boolean
+    args: ApplicationDataInit
   ) {
-    if (!acceptedTOS) {
+    if (!args.acceptedPrivacy || !args.acceptedTos) {
       throw new Error("Unable to create an application until you accept the terms of service");
     }
 
-    this.givenName = givenName;
-    this.familyName = familyName;
-    this.telephone = telephone;
-    this.email = email;
-    this.birthDate = ApplicationData.normalizeBirthDate(birthDate);
-    this.shirt = shirt;
-    this.experience = ApplicationData.normalizeExperience(experience, otherExperience);
-    this.clubName = clubName;
-    this.highlightTape = highlightTape;
-    this.transfermarktProfile = transfermarktProfile;
-    this.youTube = youTube;
-    this.instagram = instagram;
-    this.tikTok = tikTok;
-    this.freeform = freeform;
+    this.givenName = args.givenName;
+    this.familyName = args.familyName;
+    this.telephone = args.telephone;
+    this.email = args.email;
+    this.birthDate = ApplicationData.normalizeBirthDate(args.birthDate);
+    this.shirt = args.shirtSize;
+    this.experience = ApplicationData.normalizeExperience(args.highestLeague, args.otherExperience);
+    this.clubName = args.clubName;
+    this.highlightTape = args.highlightTape;
+    this.transfermarktProfile = args.transfermarktProfile;
+    this.youTube = args.youTube;
+    this.instagram = args.instagram;
+    this.tikTok = args.tiktok;
+    this.comments = args.comments;
   }
   
-  // Normalize the DOB with the appropriate locale
+  // Normalize the DOB with the appropriate YYYY-MM-DD formatting
   private static normalizeBirthDate(birthDate: Date) : string {
-    // return birthDate.toLocaleDateString('de');
-    return birthDate.toString();
+    // Get the year, month, and day of the date.
+    const year = birthDate.getFullYear();
+    const month = birthDate.getMonth() + 1; // Months are zero-indexed, so we need to add one.
+    const day = birthDate.getDate();
+
+    // Add leading zeros to the month and day if necessary.
+    const formattedMonth = month < 10 ? `0${month}` : month;
+    const formattedDay = day < 10 ? `0${day}` : day;
+
+    // Return the formatted date string.
+    return `${year}-${formattedMonth}-${formattedDay}`;
   }
 
   // We allow users to choose 'other' as an experience level and instead provide a string

@@ -21,6 +21,7 @@ export class EnrollmentService {
    */
   async process(data: ApplicationData) {
     const jsonData = EnrollmentService.prepareDataForBraze(data);
+    console.log(`[DEBUG]: Sending the followig data to Braze \n ${JSON.stringify(jsonData, null, "\t")}`);
     const brazeResponse = await this.sendDataToBraze(jsonData);
     this.handleBrazeResponse(brazeResponse);
   }
@@ -68,6 +69,7 @@ export class EnrollmentService {
           last_name: data.familyName,
           phone: data.telephone,
           dob: data.birthDate,
+          shirt_size: data.shirt,
           highest_league: data.experience,
           soccer_club: data.clubName,
           highlight_tape_url: data.highlightTape,
@@ -75,7 +77,7 @@ export class EnrollmentService {
           youtube_link: data.youTube,
           instagram_link: data.instagram,
           tiktok_link: data.tikTok,
-          comment: data.freeform,
+          comment: data.comments,
         },
       ],
     };
@@ -93,6 +95,6 @@ export class EnrollmentService {
   // eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-unused-vars
   private handleBrazeResponse(response: object) {
     // TODO: Handle the response here so we can show a confirmation message
-    console.log(`Braze Response \n ${response}`);
+    console.log(`[DEBUG] Server Response \n ${response}`);
   }
 }
