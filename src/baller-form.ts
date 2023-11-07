@@ -322,7 +322,6 @@ export class BallerForm extends LitElement {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
   private _renderStepOne() {
     return html`
       <div>
@@ -393,7 +392,6 @@ export class BallerForm extends LitElement {
     `;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   private _renderStepTwo() {
     return html`
       <div>
