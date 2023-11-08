@@ -41,7 +41,8 @@ export const icons = {
     </svg>`,
   forwardArrow: html`<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" slot="icon"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>`,
   backArrow: html`<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" slot="icon"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>`,
-  send: html`<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" slot="icon"><path d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z"/></svg>`,
+  hourglass: html`<svg slot="icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M320-160h320v-120q0-66-47-113t-113-47q-66 0-113 47t-47 113v120ZM160-80v-80h80v-120q0-61 28.5-114.5T348-480q-51-32-79.5-85.5T240-680v-120h-80v-80h640v80h-80v120q0 61-28.5 114.5T612-480q51 32 79.5 85.5T720-280v120h80v80H160Z"/></svg>`,
+  send: html`<svg slot="icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z"/></svg>`,
   xing: html`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 590.6 621.4" style="enable-background:new 0 0 590.6 621.4" xml:space="preserve">
   <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#0698a0" d="m205.7 237.7 28 49.7-41.9 73.3h50l41.6-73.3-28-49.7z"/>
   <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#b7df4b" d="m354.5 191.8-80.8 143 52.1 94.8h50.7l-53-94.8 80.9-143z"/>

@@ -50,10 +50,6 @@ export class ApplicationData {
   constructor(
     args: ApplicationDataInit
   ) {
-    if (!args.acceptedPrivacy || !args.acceptedTos) {
-      throw new Error("Unable to create an application until you accept the terms of service");
-    }
-
     this.givenName = args.givenName;
     this.familyName = args.familyName;
     this.telephone = args.telephone;

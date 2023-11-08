@@ -26,6 +26,7 @@
     "deploy": "firebase deploy"
   },
   "dependencies": {
+    "@lit/task": "^1.0.0",
     "@material/web": "^1.0.0",
     "lit": "^2.7.4"
   },
