@@ -87,6 +87,12 @@ export class BallerFormNg extends LitElement {
   @query('md-outlined-select[name="experience"]')
   experience!: MdOutlinedSelect;
 
+  @query('md-outlined-select[name="bundesland"]')
+  bundesland!: MdOutlinedSelect;
+
+  @query('md-outlined-select[name="position"]')
+  position!: MdOutlinedSelect;
+
   @query('md-outlined-text-field[name="other-experience"]')
   otherExperience!: MdOutlinedTextField;
 
@@ -196,6 +202,8 @@ export class BallerFormNg extends LitElement {
       telephone: this.tel.value,
       birthDate: this.birthday.valueAsDate!,
       shirtSize: this.shirt.value,
+      bundesland: this.bundesland.value,
+      position: this.position.value,
       highestLeague: this.experience.value,
       otherExperience: this.otherExperience.value,
       clubName: this.clubName.value,
@@ -430,7 +438,7 @@ export class BallerFormNg extends LitElement {
             @blur=${this._validateAge}
           ></md-outlined-text-field>
           <md-outlined-select
-            label="T-Shirt Size"
+            label="Kleidergröße"
             name="shirt-size"
           >
           <md-select-option selected value="XS">
@@ -449,6 +457,60 @@ export class BallerFormNg extends LitElement {
               <div slot="headline">XL</div>
             </md-select-option>
           </md-outlined-select>
+
+          <md-outlined-select
+            label="In welchem Bundesland wohnst Du?"
+            name="bundesland"
+          >
+          <md-select-option selected value="Baden-Württemberg">
+            <div slot="headline">Baden-Württemberg</div>
+           </md-select-option>
+           <md-select-option value="Bavaria">
+             <div slot="headline">Bavaria</div>
+            </md-select-option>
+            <md-select-option value="Berlin">
+             <div slot="headline">Berlin</div>
+            </md-select-option>
+            <md-select-option value="Brandenburg">
+              <div slot="headline">Brandenburg</div>
+            </md-select-option>
+            <md-select-option value="Bremen">
+              <div slot="headline">Bremen</div>
+            </md-select-option>
+            <md-select-option value="Hamburg">
+              <div slot="headline">Hamburg</div>
+            </md-select-option>
+            <md-select-option value="Hessen">
+              <div slot="headline">Hessen</div>
+            </md-select-option>
+            <md-select-option value="Mecklenburg-Vorpommern">
+              <div slot="headline">Mecklenburg-Vorpommern</div>
+            </md-select-option>
+            <md-select-option value="Niedersachsen">
+              <div slot="headline">Niedersachsen</div>
+            </md-select-option>
+            <md-select-option value="Nordrhein-Westfalen">
+              <div slot="headline">Nordrhein-Westfalen</div>
+            </md-select-option>
+            <md-select-option value="Rheinland-Pfalz">
+              <div slot="headline">Rheinland-Pfalz</div>
+            </md-select-option>
+            <md-select-option value="Saarland">
+              <div slot="headline">Saarland</div>
+            </md-select-option>
+            <md-select-option value="Sachsen">
+              <div slot="headline">Sachsen</div>
+            </md-select-option>
+            <md-select-option value="Sachsen-Anhalt">
+              <div slot="headline">Sachsen-Anhalt</div>
+            </md-select-option>
+            <md-select-option value="Schleswig-Holstein">
+              <div slot="headline">Schleswig-Holstein</div>
+            </md-select-option>
+            <md-select-option value="Thüringen">
+              <div slot="headline">Thüringen</div>
+            </md-select-option>
+          </md-outlined-select>
         </div>
       </div>
     `;
@@ -462,6 +524,23 @@ export class BallerFormNg extends LitElement {
         <h3 class="headline-small">Deine Fußballerfahrung</h3>
       </div>
       <div class="form-fields">
+        <md-outlined-select
+          label="Deine Position"
+          name="position"
+        >
+          <md-select-option selected value="stürmer">
+            <div slot="headline">Stürmer</div>
+          </md-select-option>
+          <md-select-option value="mittelfeldspieler">
+            <div slot="headline">Mittelfeldspieler</div>
+          </md-select-option>
+          <md-select-option value="verteidiger">
+            <div slot="headline">Verteidiger</div>
+          </md-select-option>
+          <md-select-option value="torwart">
+            <div slot="headline">Torwart</div>
+          </md-select-option>
+        </md-outlined-select>
         <md-outlined-select
           label="Deine höchste Spielklasse"
           supporting-text="Aktuelles oder vorheriges Level"

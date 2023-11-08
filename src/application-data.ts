@@ -5,6 +5,8 @@ export interface ApplicationDataInit {
   telephone: string,
   birthDate: Date,
   shirtSize: string,
+  bundesland: string,
+  position: string,
   highestLeague: string,
   otherExperience: string,
   clubName: string,
@@ -28,6 +30,10 @@ export class ApplicationData {
   readonly telephone: string;
 
   readonly birthDate: string;
+
+  readonly bundesland: string;
+
+  readonly position: string;
 
   readonly shirt: string;
 
@@ -56,6 +62,8 @@ export class ApplicationData {
     this.email = args.email;
     this.birthDate = ApplicationData.normalizeBirthDate(args.birthDate);
     this.shirt = args.shirtSize;
+    this.bundesland = args.bundesland;
+    this.position = args.position;
     this.experience = ApplicationData.normalizeExperience(args.highestLeague, args.otherExperience);
     this.clubName = args.clubName;
     this.highlightTape = args.highlightTape;

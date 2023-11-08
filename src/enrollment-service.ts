@@ -70,6 +70,8 @@ export class EnrollmentService {
           phone: data.telephone,
           dob: data.birthDate,
           shirt_size: data.shirt,
+          bundesland: data.bundesland,
+          position: data.position,
           highest_league: data.experience,
           soccer_club: data.clubName,
           highlight_tape_url: data.highlightTape,
