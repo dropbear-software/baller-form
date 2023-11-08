@@ -173,7 +173,7 @@ export class BallerForm extends LitElement {
     }
   }
 
-  private _handleSubmission(e: SubmitEvent) {
+  private async _handleSubmission(e: SubmitEvent) {
     e.preventDefault();
 
     // First check that the form data is valid before proceeding
@@ -181,8 +181,9 @@ export class BallerForm extends LitElement {
       const applicationData = this.normalizeData();
 
       try {
+        const isValidUser = await this.spamService?.isValidUser();
         // Do a final spam check before attempting to submit the form data
-        if (this.spamService!.isValidUser()) {
+        if (isValidUser) {
           this.enrollmentService!.process(applicationData);
           this.handleSuccessfulApplication(applicationData);
         } else {

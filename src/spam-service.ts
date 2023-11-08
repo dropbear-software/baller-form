@@ -59,7 +59,7 @@ export class SpamService {
    * @link https://developers.google.com/recaptcha/v3/
    * @link https://developers.google.com/recaptcha/docs/v3#programmatically_invoke_the_challenge
    */
-  isValidUser() {
+  async isValidUser() {
     let calculatedScore = 0;
     if (this.featureEnabled && 'grecaptcha' in window) {
       // @ts-ignore
