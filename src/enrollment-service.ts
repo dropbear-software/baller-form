@@ -53,6 +53,38 @@ export class EnrollmentService {
    * @returns {object} The data prepared for sending to Braze.
    */
   private static prepareDataForBraze(data: ApplicationData) {
+    // const brazeEvent = {
+    //   events: [
+    //     {
+    //       email: data.email,
+    //       app_id: '220983e3-8db5-49d5-8272-620b09b1f7fa',
+    //       name: 'Submit_BallerLeague_Application',
+    //       time: new Date().toISOString(),
+    //     },
+    //   ],
+    //   attributes: [
+    //     {
+    //       email: data.email,
+    //       first_name: data.givenName,
+    //       last_name: data.familyName,
+    //       phone: data.telephone,
+    //       dob: data.birthDate,
+    //       shirt_size: data.shirt,
+    //       bundesland: data.bundesland,
+    //       country: data.currentCountry,
+    //       position: data.position,
+    //       highest_league: data.experience,
+    //       soccer_club: data.clubName,
+    //       highlight_tape_url: data.highlightTape,
+    //       link_transfermarket: data.transfermarktProfile,
+    //       youtube_link: data.youTube,
+    //       instagram_link: data.instagram,
+    //       tiktok_link: data.tikTok,
+    //       comment: data.comments,
+    //     },
+    //   ],
+    // };
+
     const brazeEvent = {
       events: [
         {
@@ -65,24 +97,41 @@ export class EnrollmentService {
       attributes: [
         {
           email: data.email,
-          first_name: data.givenName,
-          last_name: data.familyName,
-          phone: data.telephone,
-          dob: data.birthDate,
-          shirt_size: data.shirt,
-          bundesland: data.bundesland,
-          position: data.position,
-          highest_league: data.experience,
-          soccer_club: data.clubName,
-          highlight_tape_url: data.highlightTape,
-          link_transfermarket: data.transfermarktProfile,
-          youtube_link: data.youTube,
-          instagram_link: data.instagram,
-          tiktok_link: data.tikTok,
-          comment: data.comments,
-        },
-      ],
-    };
+          personal_details: {
+            first_name: data.givenName,
+            last_name: data.familyName,
+            email: data.email,
+            tel: data.telephone,
+            dob: data.birthDate,
+            bundesland: data.bundesland,
+            current_country: data.currentCountry,
+            clothes_size: data.shirt
+          },
+          experience_level: {
+            position: data.position,
+            current_status: {
+              land: data.currentTeamCountry,
+              association: data.clubName,
+              team_type: data.currentTeamType,
+              league: data.currentLeague
+            },
+            highest_status: {
+              land: data.highestTeamCountry,
+              league: data.highestTeamLeague,
+            }
+          },
+          other_details: {
+            highlight_tape: data.highlightTape,
+            link_transfermarket: data.transfermarktProfile,
+            youtube_link: data.youTube,
+            instagram_link: data.instagram,
+            tiktok_link: data.tikTok,
+            comment: data.comments,
+          }
+        }
+        
+      ]
+    }
 
     return brazeEvent;
   }

@@ -6,9 +6,18 @@ export interface ApplicationDataInit {
   birthDate: Date,
   shirtSize: string,
   bundesland: string,
+  customCurrentCountry: string,
   position: string,
-  highestLeague: string,
+  currentPlayingStatus: string,
+  currentFootballCountry: string,
+  teamType: string
+  germanLeague: string,
+  internationalLeague: string,
   otherExperience: string,
+  highestDomesticLeague: string,
+  highestInternationalCountry: string,
+  highestInternationalLeague: string,
+  highestExperience: string,
   clubName: string,
   highlightTape: string,
   transfermarktProfile: string,
@@ -31,13 +40,23 @@ export class ApplicationData {
 
   readonly birthDate: string;
 
+  readonly shirt: string;
+
   readonly bundesland: string;
+
+  readonly currentCountry: string;
 
   readonly position: string;
 
-  readonly shirt: string;
+  readonly currentLeague: string;
 
-  readonly experience: string;
+  readonly currentTeamType: string;
+
+  readonly currentTeamCountry: string;
+
+  readonly highestTeamCountry: string;
+
+  readonly highestTeamLeague: string;
 
   readonly clubName: string;
 
@@ -63,8 +82,13 @@ export class ApplicationData {
     this.birthDate = ApplicationData.normalizeBirthDate(args.birthDate);
     this.shirt = args.shirtSize;
     this.bundesland = args.bundesland;
+    this.currentCountry = ApplicationData.normalizeCountry(args.bundesland, args.customCurrentCountry);
     this.position = args.position;
-    this.experience = ApplicationData.normalizeExperience(args.highestLeague, args.otherExperience);
+    this.currentTeamCountry = args.currentPlayingStatus;
+    this.currentTeamType = args.teamType;
+    this.currentLeague = ApplicationData.normalizeLeague(args.currentPlayingStatus, args.germanLeague, args.internationalLeague);
+    this.highestTeamCountry = ApplicationData.normalizeHighestCountry(args.currentPlayingStatus, args.highestInternationalCountry);
+    this.highestTeamLeague = ApplicationData.normalizeHighestLeague(args.highestExperience, args.highestDomesticLeague, args.highestInternationalLeague)
     this.clubName = args.clubName;
     this.highlightTape = args.highlightTape;
     this.transfermarktProfile = args.transfermarktProfile;
@@ -91,11 +115,50 @@ export class ApplicationData {
 
   // We allow users to choose 'other' as an experience level and instead provide a string
   // this function will put the apporpriate version into the right field.
-  private static normalizeExperience(dropdownValue: string, customValue: string){
-    if (dropdownValue === 'sonstiges') {
-      return customValue;
+  private static normalizeLeague(location: string, germanLeague: string, internationalLeague: string){
+    if (location === 'deutschland') {
+      return germanLeague;
     } 
     
-    return dropdownValue;
+    if (location === 'international') {
+      return internationalLeague;
+    }
+    
+    return '';
+  }
+
+  private static normalizeHighestCountry(currentStatus: string, currentTeamCountry: string){
+    if (currentStatus === 'deutschland') {
+      return 'Deutschland';
+    } 
+    
+    if (currentStatus === 'international') {
+      return currentTeamCountry;
+    }
+    
+    return '';
+  }
+
+  private static normalizeHighestLeague(currentStatus: string, domesticLeague: string, internationalLeague: string){
+    if (currentStatus === 'deutschland') {
+      return domesticLeague;
+    } 
+    
+    if (currentStatus === 'international') {
+      return internationalLeague;
+    }
+    
+    return 'Same as current';
+  }
+  
+
+  // We allow users to choose 'other' as an experience level and instead provide a string
+  // this function will put the apporpriate version into the right field.
+  private static normalizeCountry(stateValue: string, countryValue: string){
+    if (stateValue === 'Ausland') {
+      return countryValue;
+    } 
+    
+    return 'Deutschland';
   }
 }

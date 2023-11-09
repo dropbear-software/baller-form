@@ -60,7 +60,7 @@
   </header>
 
   <div id="demo">
-    <baller-form-ng 
+    <baller-form 
       site-key="6Lc_quMoAAAAAMIrwXA8oqigA4uC29IDtyGtJo78" 
       captcha-endpoint="/ballerleague/v1/spam_check"
       braze-endpoint="/ballerleague/v1/submit_application"
@@ -145,7 +145,7 @@
           --baller-form-display-label-medium-font-family: var(--baller-form-font-family);
         }
       </style>
-    </baller-form-ng>
+    </baller-form>
   </div>
 
   <h3 class="display-small">Color Palette</h3>
@@ -221,7 +221,7 @@
     async function loadDevelopment(){
       console.log('Loading development bundle');
       await import('./demo/analytics.js');
-      import('../dist/src/baller-form-ng.js');
+      import('../dist/src/baller-form.js');
       loadStyle("./demo/theme.css");
     }
 
