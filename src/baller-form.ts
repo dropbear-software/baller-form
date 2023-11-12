@@ -144,6 +144,9 @@ export class BallerForm extends LitElement {
   @query('md-outlined-text-field[name="tiktok"]')
   tiktok!: MdOutlinedTextField;
 
+  @query('md-outlined-text-field[name="xing"]')
+  xing!: MdOutlinedTextField;
+
   @query('md-outlined-text-field[name="freeform"]')
   freeform!: MdOutlinedTextField;
 
@@ -254,6 +257,7 @@ export class BallerForm extends LitElement {
       youTube: this.youtube.value,
       instagram: this.instagram.value,
       tiktok: this.tiktok.value,
+      xing: this.xing.value,
       comments: this.freeform.value,
       acceptedPrivacy: this.termsOfServiceBox.checked,
       acceptedTos: this.teilnahmebedingungenBox.checked
@@ -1054,7 +1058,7 @@ export class BallerForm extends LitElement {
   private _renderHistoricalExperience(){
     return html`
     <md-outlined-select
-      label="Dine höchstgespiete spielklassen"
+      label="Deine höchstgespielte Spielklasse"
       name="highest-experience"
       @change=${this._handleHighestExperienceSelection}
     >

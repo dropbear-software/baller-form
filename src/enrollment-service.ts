@@ -1,5 +1,13 @@
 import { ApplicationData } from './application-data.js';
 
+interface BrazeResponse {
+  message: string,
+  errors?: Array<object>,
+  attributes_processed?: number
+  events_processed?: number
+  purchases_processed?: number
+}
+
 /**
  * A service for processing and sending application data to Braze.
  *
@@ -14,6 +22,23 @@ export class EnrollmentService {
   }
 
   /**
+   * Handles the response from Braze.
+   *
+   * @param {object} response The response from Braze.
+   *
+   * @returns {void}
+   */
+  private static handleBrazeResponse(response: BrazeResponse) {
+    console.log(`[DEBUG] Server Response \n ${response}`);
+
+    if (response.errors) {
+      console.error(response);
+      throw new Error("Invalid Braze API response.");
+    }
+
+  }
+
+  /**
    * Processes an application data object and sends it to Braze.
    * @param {ApplicationData} data The application data object to process.
    * 
@@ -23,7 +48,8 @@ export class EnrollmentService {
     const jsonData = EnrollmentService.prepareDataForBraze(data);
     console.log(`[DEBUG]: Sending the followig data to Braze \n ${JSON.stringify(jsonData, null, "\t")}`);
     const brazeResponse = await this.sendDataToBraze(jsonData);
-    this.handleBrazeResponse(brazeResponse);
+    const parsedResponse = JSON.parse(brazeResponse);
+    EnrollmentService.handleBrazeResponse(parsedResponse);
   }
 
   /**
@@ -53,38 +79,6 @@ export class EnrollmentService {
    * @returns {object} The data prepared for sending to Braze.
    */
   private static prepareDataForBraze(data: ApplicationData) {
-    // const brazeEvent = {
-    //   events: [
-    //     {
-    //       email: data.email,
-    //       app_id: '220983e3-8db5-49d5-8272-620b09b1f7fa',
-    //       name: 'Submit_BallerLeague_Application',
-    //       time: new Date().toISOString(),
-    //     },
-    //   ],
-    //   attributes: [
-    //     {
-    //       email: data.email,
-    //       first_name: data.givenName,
-    //       last_name: data.familyName,
-    //       phone: data.telephone,
-    //       dob: data.birthDate,
-    //       shirt_size: data.shirt,
-    //       bundesland: data.bundesland,
-    //       country: data.currentCountry,
-    //       position: data.position,
-    //       highest_league: data.experience,
-    //       soccer_club: data.clubName,
-    //       highlight_tape_url: data.highlightTape,
-    //       link_transfermarket: data.transfermarktProfile,
-    //       youtube_link: data.youTube,
-    //       instagram_link: data.instagram,
-    //       tiktok_link: data.tikTok,
-    //       comment: data.comments,
-    //     },
-    //   ],
-    // };
-
     const brazeEvent = {
       events: [
         {
@@ -126,6 +120,7 @@ export class EnrollmentService {
             youtube_link: data.youTube,
             instagram_link: data.instagram,
             tiktok_link: data.tikTok,
+            xing: data.xing,
             comment: data.comments,
           }
         }
@@ -135,17 +130,5 @@ export class EnrollmentService {
 
     return brazeEvent;
   }
-
-  /**
-   * Handles the response from Braze.
-   *
-   * @param {object} response The response from Braze.
-   *
-   * @returns {void}
-   */
-  // eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-unused-vars
-  private handleBrazeResponse(response: object) {
-    // TODO: Handle the response here so we can show a confirmation message
-    console.log(`[DEBUG] Server Response \n ${response}`);
-  }
 }
+

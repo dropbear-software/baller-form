@@ -24,6 +24,7 @@ export interface ApplicationDataInit {
   youTube: string,
   instagram: string,
   tiktok: string,
+  xing: string,
   comments: string,
   acceptedTos: boolean,
   acceptedPrivacy: boolean
@@ -70,6 +71,8 @@ export class ApplicationData {
 
   readonly tikTok: string;
 
+  readonly xing: string;
+
   readonly comments: string;
 
   constructor(
@@ -84,10 +87,10 @@ export class ApplicationData {
     this.bundesland = args.bundesland;
     this.currentCountry = ApplicationData.normalizeCountry(args.bundesland, args.customCurrentCountry);
     this.position = args.position;
-    this.currentTeamCountry = args.currentPlayingStatus;
-    this.currentTeamType = args.teamType;
+    this.currentTeamCountry = ApplicationData.normalizeCurrentTeamCountry(args.currentPlayingStatus, args.currentFootballCountry);
+    this.currentTeamType = ApplicationData.normalizeTeamType(args.currentPlayingStatus, args.teamType);
     this.currentLeague = ApplicationData.normalizeLeague(args.currentPlayingStatus, args.germanLeague, args.internationalLeague);
-    this.highestTeamCountry = ApplicationData.normalizeHighestCountry(args.currentPlayingStatus, args.highestInternationalCountry);
+    this.highestTeamCountry = ApplicationData.normalizeHighestCountry(args.highestExperience, args.highestInternationalCountry);
     this.highestTeamLeague = ApplicationData.normalizeHighestLeague(args.highestExperience, args.highestDomesticLeague, args.highestInternationalLeague)
     this.clubName = args.clubName;
     this.highlightTape = args.highlightTape;
@@ -95,6 +98,7 @@ export class ApplicationData {
     this.youTube = args.youTube;
     this.instagram = args.instagram;
     this.tikTok = args.tiktok;
+    this.xing = args.xing;
     this.comments = args.comments;
   }
   
@@ -127,13 +131,33 @@ export class ApplicationData {
     return '';
   }
 
-  private static normalizeHighestCountry(currentStatus: string, currentTeamCountry: string){
+  private static normalizeHighestCountry(currentStatus: string, highestTeamCountry: string){
     if (currentStatus === 'deutschland') {
       return 'Deutschland';
     } 
     
     if (currentStatus === 'international') {
-      return currentTeamCountry;
+      return highestTeamCountry;
+    }
+    
+    return '';
+  }
+
+  private static normalizeCurrentTeamCountry(currentStatus: string, highestTeamCountry: string){
+    if (currentStatus === 'deutschland') {
+      return 'Deutschland';
+    } 
+    
+    if (currentStatus === 'international') {
+      return highestTeamCountry;
+    }
+    
+    return '';
+  }
+
+  private static normalizeTeamType(currentStatus: string, teamType: string){
+    if (currentStatus === 'deutschland') {
+      return teamType;
     }
     
     return '';
