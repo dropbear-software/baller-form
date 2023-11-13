@@ -29,7 +29,7 @@ export class EnrollmentService {
    * @returns {void}
    */
   private static handleBrazeResponse(response: BrazeResponse) {
-    console.log(`[DEBUG] Server Response \n ${response}`);
+    console.log(`[DEBUG] Server Response \n ${JSON.stringify(response, null, "\t")}`);
 
     if (response.errors) {
       console.error(response);
@@ -124,7 +124,6 @@ export class EnrollmentService {
             comment: data.comments,
           }
         }
-        
       ]
     }
 
