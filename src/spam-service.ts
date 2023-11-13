@@ -23,7 +23,7 @@ export class SpamService {
 
   readonly scriptURL: URL;
 
-  readonly minimumTrustRequired = 0.5;
+  readonly minimumTrustRequired = 0.4;
 
   // Simple flag to set if we are actually using this feature or not
   featureEnabled = true;
@@ -59,23 +59,25 @@ export class SpamService {
    * @link https://developers.google.com/recaptcha/v3/
    * @link https://developers.google.com/recaptcha/docs/v3#programmatically_invoke_the_challenge
    */
-  async isValidUser() {
-    let calculatedScore = 0;
-    if (this.featureEnabled && 'grecaptcha' in window) {
-      // @ts-ignore
-      window.grecaptcha
-        .execute(this.siteKey, { action: 'submit' })
-        .then(async (token: string) => {
-          // TODO: Handle errors here if something goes wrong with the server validation
-          const response = await this.validateTokenWithServer(token);
-          calculatedScore = response.score;
-        });
-    } else {
-      // Simulate a valid score here for now
-      calculatedScore = 1;
+  async isValidUser(): Promise<boolean> {
+    if (!this.featureEnabled) {
+      return true;
     }
 
-    return calculatedScore >= this.minimumTrustRequired;
+    if (!('grecaptcha' in window)) {
+      throw new Error("reCAPTCHA object not found");
+    }
+
+    // @ts-ignore
+    const token = await window.grecaptcha.execute(this.siteKey, {action: 'submit'});
+
+    try {
+      const response = await this.validateTokenWithServer(token);
+      return response.score >= this.minimumTrustRequired;
+    } catch (err) {
+      console.error(err);
+      throw new Error("Problem communicating with reCAPTCHA endpoint.");
+    }
   }
 
   /**
@@ -87,8 +89,8 @@ export class SpamService {
   private async validateTokenWithServer(
     token: string
   ): Promise<RecaptchaValidationResponse> {
-    // Time out after 5 seconds if we don't already have a response
-    const abortSignal = AbortSignal.timeout(5000); // milliseconds
+    // Time out after 10 seconds if we don't already have a response
+    const abortSignal = AbortSignal.timeout(10000); // milliseconds
 
     const response = await fetch(this.serverSideValidationEndpoint, {
       method: 'POST',
