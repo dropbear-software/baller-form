@@ -6,6 +6,8 @@ export const componentStyles = css`
     padding: 25px;
     color: var(--baller-form-color-on-background, #1b1c17);
     font-family: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
+    --md-sys-color-primary: var(--baller-form-color-primary);
+    --md-sys-color-on-primary: var(--baller-form-color-on-primary);
     --md-sys-color-error: var(--baller-form-color-error, #ba1a1a);
     --md-sys-color-error-container: var(--baller-form-color-error-container, #ffdad6);
     --md-sys-color-on-error: var(--baller-form-color-on-error: #ffffff);

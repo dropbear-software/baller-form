@@ -67,11 +67,20 @@
     >
       <style>
         baller-form {
+          --brand-color-black: rgb(29 33 36);
+          --brand-color-light-grey: rgb(220 226 228);
+          --brand-color-red: rgb(244 21 78);
+          --brand-color-lighter-grey: rgb(233 238 240);
+          --brand-color-white: rgb(255 255 255);
+
           /* Component Color Palette */
-          --baller-form-color-primary: #4b6700;
-          --baller-form-color-on-primary: #ffffff;
-          --baller-form-color-primary-container: #c6f16d;
-          --baller-form-color-on-primary-container: #141f00;
+          /* --baller-form-color-primary: #4b6700; */
+          --baller-form-color-primary: var(--brand-color-black);
+          --baller-form-color-on-primary: var(--brand-color-white);
+          /* --baller-form-color-primary-container: #c6f16d; */
+          --baller-form-color-primary-container: var(--brand-color-black);
+          /* --baller-form-color-on-primary-container: #141f00; */
+          --baller-form-color-on-primary-container: var(--brand-color-white);
 
           --baller-form-color-secondary: #5a6148;
           --baller-form-color-on-secondary: #ffffff;
@@ -83,17 +92,21 @@
           --baller-form-color-tertiary-container: #bcece4;
           --baller-form-color-on-tertiary-container: #00201d;
 
-          --baller-form-color-error: #ba1a1a;
+          /* --baller-form-color-error: #ba1a1a; */
+          --baller-form-color-error: var(--brand-color-red);
           --baller-form-color-error-container: #ffdad6;
           --baller-form-color-on-error: #ffffff;
           --baller-form-color-on-error-container: #410002;
 
-          --baller-form-color-surface: #fefcf4;
-          --baller-form-color-on-surface: #1b1c17;
+          /* --baller-form-color-surface: #fefcf4; */
+          --baller-form-color-surface: var(--brand-color-white);
+          /* --baller-form-color-on-surface: #1b1c17; */
+          --baller-form-color-on-surface: var(--brand-color-black);
           --baller-form-color-surface-variant: #e2e4d4;
           --baller-form-color-on-surface-variant: #45483c;
 
-          --baller-form-color-outline: #76786b;
+          /* --baller-form-color-outline: #76786b; */
+          --baller-form-color-outline: var(--brand-color-black);
           --baller-form-color-shadow: #000000;
           --baller-form-color-surface-tint: #4b6700;
           --baller-form-color-outline-variant: #c6c8b9;
@@ -104,12 +117,12 @@
           --baller-form-color-on-background: var(--baller-form-color-on-surface);
 
           /* Checkbox styling */
-          --baller-form-checkbox-outline-color: var(--baller-form-color-on-surface-variant);
+          --baller-form-checkbox-outline-color: var(--baller-form-color-outline);
           --baller-form-selected-container-color: var(--baller-form-color-primary);
           --baller-form-selected-icon-color: var(--baller-form-color-on-primary);
 
           /* Textfield Styling */
-          --baller-form-text-field-focus-outline-color: var(--baller-form-color-primary);
+          --baller-form-text-field-focus-outline-color: var(--baller-form-color-outline);
 
           /* Button Styling */
           --baller-form-filled-button-container-color: var(--baller-form-color-primary);
@@ -141,7 +154,7 @@
           --baller-form-display-label-medium-font-weight: 500;
           --baller-form-display-label-medium-line-height: 16px;
           --baller-form-display-label-medium-letter-spacing: 0.5px;
-          --baller-form-display-label-medium-color: var(--baller-form-color-on-background);
+          --baller-form-display-label-medium-color: var(--brand-color-black);
           --baller-form-display-label-medium-font-family: var(--baller-form-font-family);
         }
       </style>
@@ -222,7 +235,7 @@
       console.log('Loading development bundle');
       await import('./demo/analytics.js');
       import('../dist/src/baller-form.js');
-      loadStyle("./demo/theme.css");
+      // loadStyle("./demo/theme.css");
     }
 
     if (isProduction) {
