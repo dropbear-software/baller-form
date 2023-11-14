@@ -65,3 +65,9 @@ document.addEventListener('prev-form-step', (event) => {
     "data": event.detail.step
   });
 });
+
+// When the user attempts to submit the form but an error occurs
+document.addEventListener('submission_error', (event) => {
+  console.log(`The specific error details of what went wrong are: \n ${event.detail}`)
+});
+

@@ -35,6 +35,7 @@ import '@material/web/dialog/dialog.js';
  *
  * @fires {CustomEvent} completed-application - When the form is successfully submitted
  * @fires {CustomEvent} signup-form-displayed - When the form is first shown to the user
+ * @fires {CustomEvent} submission_error - When the user attempts to submit the form but an error occurs
  */
 @customElement('baller-form')
 export class BallerForm extends LitElement {
@@ -454,13 +455,16 @@ export class BallerForm extends LitElement {
 
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, class-methods-use-this
   private _renderSuccessState(data: void){
-    this.successDialog.open = true;
+    // this.successDialog.open = true;
+    const successPage = new URL('/bewerbung-erfolgreich/', window.location.origin);
+    window.location.href = successPage.href;
   }
 
   // eslint-disable-next-line class-methods-use-this
   private _renderErrorState(error: unknown){
+    this.dispatchEvent(new CustomEvent('submission_error', {detail: error}));
     console.error(error);
     this.errorDialog.open = true;
   }
@@ -548,7 +552,7 @@ export class BallerForm extends LitElement {
             @blur=${BallerForm._reportFieldValidity}
           ></md-outlined-text-field>
           <md-outlined-text-field
-            label="E-mail"
+            label="E-Mail"
             required
             autocomplete="email"
             type="email"
@@ -739,7 +743,6 @@ export class BallerForm extends LitElement {
     `;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   private _renderTeamTypeDropdown(){
     return html`
       <md-outlined-select
@@ -888,7 +891,7 @@ export class BallerForm extends LitElement {
               @change=${this._handleLegalChange}
               data-element="tos"
               
-              style="width: 4rem"
+              style="min-width: 1rem"
             ></md-checkbox>
             Ja, in bin jederzeit widerruflich damit einverstanden, dass die von mir angegeben Daten an 
             die Baller League GmbH für meine Anmeldung zur Baller League übertragen werden und ich 
@@ -902,7 +905,7 @@ export class BallerForm extends LitElement {
               @change=${this._handleLegalChange}
               data-element="teilnahmebedingungen"
               max="250"
-              style="width: 4rem"
+              style="min-width: 1rem"
             ></md-checkbox>
             Teilnahmebedingungen Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Aenean ut varius turpis, nec vestibulum massa. Curabitur ex odio,
