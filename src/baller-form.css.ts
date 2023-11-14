@@ -103,4 +103,50 @@ export const componentStyles = css`
     line-height: var(--baller-form-display-label-medium-line-height, 16px);
     color: var(--baller-form-display-label-medium-color, #1b1c17);
   }
+
+  /* Tooltip */
+  .field-with-tooltip {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .tooltip-toggle {
+    cursor: pointer;
+    position: relative;
+  }
+
+  .tooltip-toggle svg {
+    height: 18px;
+    width: 18px;
+  }
+  
+  .tooltip-toggle::before {
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    background-color: var(--baller-form-color-surface-variant);
+    border-radius: 5px;
+    color: #fff;
+    content: attr(aria-label);
+    padding: 1rem;
+    text-transform: none;
+    transition: all 0.5s ease;
+    min-width: 160px;
+    z-index:50;
+    border: 1px solid var(--baller-form-color-outline);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  }
+  
+  .tooltip-toggle::before, .tooltip-toggle::after {
+    color: var(--baller-form-color-on-surface-variant);
+    opacity: 0;
+    pointer-events: none;
+    text-align: center;
+  }
+  
+  .tooltip-toggle:focus::before, .tooltip-toggle:focus::after, .tooltip-toggle:hover::before, .tooltip-toggle:hover::after {
+    opacity: 1;
+    transition: all 0.75s ease;
+  }
 `;

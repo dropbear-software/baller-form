@@ -13,6 +13,7 @@ import { ApplicationData, ApplicationDataInit } from './application-data.js';
 import { EnrollmentService } from './enrollment-service.js';
 import { SpamService } from './spam-service.js';
 import { icons } from './icons.js';
+import { tooltipMessages } from './tooltips.js';
 
 import '@material/web/button/filled-button.js';
 import '@material/web/button/filled-tonal-button.js';
@@ -559,13 +560,18 @@ export class BallerForm extends LitElement {
             max="250"
             @blur=${BallerForm._reportFieldValidity}
           ></md-outlined-text-field>
-          <md-outlined-text-field
-            label="Phone"
-            autocomplete="tel"
-            type="tel"
-            max="20"
-            @blur=${BallerForm._reportFieldValidity}
-          ></md-outlined-text-field>
+          <div class="field-with-tooltip">
+            <md-outlined-text-field
+              label="Phone"
+              autocomplete="tel"
+              type="tel"
+              max="20"
+              @blur=${BallerForm._reportFieldValidity}
+              style="width: 100%"
+            ></md-outlined-text-field>
+          ${this._renderTooltip(tooltipMessages.phone)}
+          </div>
+          
           <md-outlined-text-field
             label="Geburtsdatum"
             required
@@ -574,27 +580,31 @@ export class BallerForm extends LitElement {
             type="date"
             @blur=${this._validateAge}
           ></md-outlined-text-field>
-          <md-outlined-select
-            label="Kleidergröße"
-            name="shirt-size"
-          >
-          <md-select-option selected value="XS">
-            <div slot="headline">XS</div>
-           </md-select-option>
-           <md-select-option value="S">
-             <div slot="headline">S</div>
+          
+          <div class="field-with-tooltip">
+            <md-outlined-select
+              label="Kleidergröße"
+              name="shirt-size"
+              style="width: 100%;"
+            >
+            <md-select-option selected value="XS">
+              <div slot="headline">XS</div>
             </md-select-option>
-            <md-select-option value="M">
-             <div slot="headline">M</div>
-            </md-select-option>
-            <md-select-option value="L">
-              <div slot="headline">L</div>
-            </md-select-option>
-            <md-select-option value="XL">
-              <div slot="headline">XL</div>
-            </md-select-option>
-          </md-outlined-select>
-
+            <md-select-option value="S">
+              <div slot="headline">S</div>
+              </md-select-option>
+              <md-select-option value="M">
+              <div slot="headline">M</div>
+              </md-select-option>
+              <md-select-option value="L">
+                <div slot="headline">L</div>
+              </md-select-option>
+              <md-select-option value="XL">
+                <div slot="headline">XL</div>
+              </md-select-option>
+            </md-outlined-select>
+            ${this._renderTooltip(tooltipMessages.clothes)}
+          </div>
           <md-outlined-select
             label="In welchem Bundesland wohnst Du?"
             name="bundesland"
@@ -843,13 +853,17 @@ export class BallerForm extends LitElement {
             max="250"
             @blur=${BallerForm._reportFieldValidity}
           ></md-outlined-text-field>
+          <div class="field-with-tooltip">
           <md-outlined-text-field
             label="Link Transfermarkt"
             type="url"
             name="transfermarkt"
             max="250"
+            style="width: 100%"
             @blur=${BallerForm._reportFieldValidity}
           ></md-outlined-text-field>
+          ${this._renderTooltip(tooltipMessages.highlight)}
+          </div>
           <md-outlined-text-field
             label="YouTube"
             autocomplete="username"
@@ -1009,13 +1023,13 @@ export class BallerForm extends LitElement {
   private _renderSpielklasse() {
 
     return html`
-    <md-outlined-select
-      label="Spielklasse"
-      name="spielklasse"
-      @change=${this._handleExperienceSelection}
-    >
-    ${this.leageOptions}
-    </md-outlined-select>
+      <md-outlined-select
+        label="Spielklasse"
+        name="spielklasse"
+        @change=${this._handleExperienceSelection}
+      >
+      ${this.leageOptions}
+      </md-outlined-select>
     `;
   }
 
@@ -1060,21 +1074,25 @@ export class BallerForm extends LitElement {
 
   private _renderHistoricalExperience(){
     return html`
-    <md-outlined-select
-      label="Deine höchstgespielte Spielklasse"
-      name="highest-experience"
-      @change=${this._handleHighestExperienceSelection}
-    >
-      <md-select-option value="dasselbe">
-        <div slot="headline">die, in der ich jetzt gerade spiele</div>
-      </md-select-option>
-      <md-select-option value="deutschland">
-        <div slot="headline">Im Deutschland</div>
-      </md-select-option>
-      <md-select-option value="international">
-        <div slot="headline">Im Ausland</div>
-      </md-select-option>
-    </md-outlined-select>
+    <div class="field-with-tooltip">
+      <md-outlined-select
+        label="Deine höchstgespielte Spielklasse"
+        name="highest-experience"
+        @change=${this._handleHighestExperienceSelection}
+        style="width: 100%"
+      >
+        <md-select-option value="dasselbe">
+          <div slot="headline">die, in der ich jetzt gerade spiele</div>
+        </md-select-option>
+        <md-select-option value="deutschland">
+          <div slot="headline">Im Deutschland</div>
+        </md-select-option>
+        <md-select-option value="international">
+          <div slot="headline">Im Ausland</div>
+        </md-select-option>
+      </md-outlined-select>
+      ${this._renderTooltip(tooltipMessages.experience)}
+    </div>
     `;
   }
 
@@ -1106,6 +1124,20 @@ export class BallerForm extends LitElement {
     >
       ${this.leageOptions}
     </md-outlined-select>
+    `;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private _renderTooltip(message: string){
+    return html`
+      <span class="tooltip-toggle" aria-label="${message}" tabindex="0">
+        <svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg">
+          <g fill="currentColor" fill-rule="evenodd">
+            <path d="M13.5 27C20.956 27 27 20.956 27 13.5S20.956 0 13.5 0 0 6.044 0 13.5 6.044 27 13.5 27zm0-2C7.15 25 2 19.85 2 13.5S7.15 2 13.5 2 25 7.15 25 13.5 19.85 25 13.5 25z"/>
+            <path d="M12.05 7.64c0-.228.04-.423.12-.585.077-.163.185-.295.32-.397.138-.102.298-.177.48-.227.184-.048.383-.073.598-.073.203 0 .398.025.584.074.186.05.35.126.488.228.14.102.252.234.336.397.084.162.127.357.127.584 0 .22-.043.412-.127.574-.084.163-.196.297-.336.4-.14.106-.302.185-.488.237-.186.053-.38.08-.584.08-.215 0-.414-.027-.597-.08-.182-.05-.342-.13-.48-.235-.135-.104-.243-.238-.32-.4-.08-.163-.12-.355-.12-.576zm-1.02 11.517c.134 0 .275-.013.424-.04.148-.025.284-.08.41-.16.124-.082.23-.198.313-.35.085-.15.127-.354.127-.61v-5.423c0-.238-.042-.43-.127-.57-.084-.144-.19-.254-.318-.332-.13-.08-.267-.13-.415-.153-.148-.024-.286-.036-.414-.036h-.21v-.95h4.195v7.463c0 .256.043.46.127.61.084.152.19.268.314.35.125.08.263.135.414.16.15.027.29.04.418.04h.21v.95H10.82v-.95h.21z"/>
+          </g>
+        </svg>
+      </span>
     `;
   }
 
