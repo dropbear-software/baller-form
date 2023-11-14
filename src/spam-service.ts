@@ -29,7 +29,8 @@ export class SpamService {
   featureEnabled = true;
 
   constructor(siteKey: string, endpoint: string) {
-    this.siteKey = siteKey;
+    // this.siteKey = siteKey;
+    this.siteKey = '6Lfdww4pAAAAAMtqH6OaFgVZ5QfYGOI4FznDea3l';
     this.scriptURL = SpamService.generateScriptUrl(siteKey);
     this.serverSideValidationEndpoint = new URL(endpoint, window.location.origin);
   }
