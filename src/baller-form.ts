@@ -17,6 +17,7 @@ import { tooltipMessages } from './tooltips.js';
 
 import '@material/web/button/filled-button.js';
 import '@material/web/button/filled-tonal-button.js';
+import '@material/web/button/outlined-button.js';
 import '@material/web/textfield/outlined-text-field.js';
 import '@material/web/elevation/elevation.js';
 import '@material/web/checkbox/checkbox.js';
@@ -482,13 +483,13 @@ export class BallerForm extends LitElement {
         </div>
         <div class="form-footer">
           <md-filled-button
-            trailing-icon
             @click=${this._onSubmitEvent}
             type="button"
             name="apply"
             disabled
+            style="width: 100%"
           >
-          Absenden ${icons.send}
+          Jetz bewerben
           </md-filled-button>
         </div>
       </form>
@@ -536,31 +537,42 @@ export class BallerForm extends LitElement {
       <div>
         <div class="form-header">
           <h2 class="display-small">Erzähle uns etwas über Dich:</h2>
-          <h3 class="headline-small">XING Baller League</h3>
         </div>
         <div class="form-fields">
-          <md-outlined-text-field
-            label="Vorname"
-            required
-            autocomplete="given-name"
-            max="250"
-            @blur=${BallerForm._reportFieldValidity}
-          ></md-outlined-text-field>
-          <md-outlined-text-field
-            label="Nachname"
-            required
-            max="250"
-            autocomplete="family-name"
-            @blur=${BallerForm._reportFieldValidity}
-          ></md-outlined-text-field>
-          <md-outlined-text-field
-            label="E-Mail"
-            required
-            autocomplete="email"
-            type="email"
-            max="250"
-            @blur=${BallerForm._reportFieldValidity}
-          ></md-outlined-text-field>
+          <div class="field-with-tooltip">
+            <md-outlined-text-field
+              label="Vorname"
+              required
+              autocomplete="given-name"
+              max="250"
+              style="width: 100%"
+              @blur=${BallerForm._reportFieldValidity}
+            ></md-outlined-text-field>
+            <div class="invisible-icon"></div>
+          </div>
+          <div class="field-with-tooltip">
+            <md-outlined-text-field
+              label="Nachname"
+              required
+              max="250"
+              autocomplete="family-name"
+              style="width: 100%"
+              @blur=${BallerForm._reportFieldValidity}
+            ></md-outlined-text-field>
+            <div class="invisible-icon"></div>
+          </div>
+          <div class="field-with-tooltip">
+            <md-outlined-text-field
+              label="E-Mail"
+              required
+              autocomplete="email"
+              type="email"
+              max="250"
+              style="width: 100%"
+              @blur=${BallerForm._reportFieldValidity}
+            ></md-outlined-text-field>
+            <div class="invisible-icon"></div>
+          </div>
           <div class="field-with-tooltip">
             <md-outlined-text-field
               label="Phone"
@@ -573,14 +585,18 @@ export class BallerForm extends LitElement {
           ${this._renderTooltip(tooltipMessages.phone)}
           </div>
           
-          <md-outlined-text-field
-            label="Geburtsdatum"
-            required
-            autocomplete="bday"
-            max="8"
-            type="date"
-            @blur=${this._validateAge}
-          ></md-outlined-text-field>
+          <div class="field-with-tooltip">
+            <md-outlined-text-field
+              label="Geburtsdatum"
+              required
+              autocomplete="bday"
+              max="8"
+              type="date"
+              style="width: 100%"
+              @blur=${this._validateAge}
+            ></md-outlined-text-field>
+          <div class="invisible-icon"></div>
+          </div>
           
           <div class="field-with-tooltip">
             <md-outlined-select
@@ -606,10 +622,13 @@ export class BallerForm extends LitElement {
             </md-outlined-select>
             ${this._renderTooltip(tooltipMessages.clothes)}
           </div>
+
+          <div class="field-with-tooltip">
           <md-outlined-select
             label="In welchem Bundesland wohnst Du?"
             name="bundesland"
             @change=${this._handleFederalStateSelection}
+            style="width: 100%"
           >
           <md-select-option selected value="Baden-Württemberg">
             <div slot="headline">Baden-Württemberg</div>
@@ -663,92 +682,98 @@ export class BallerForm extends LitElement {
               <div slot="headline">Ich wohne im Ausland</div>
             </md-select-option>
           </md-outlined-select>
+          <div class="invisible-icon"></div>
+          </div>
 
-          <md-outlined-select
-            label="Land"
-            name="current-country"
-            class="hidden"
-          >
+          <div class="field-with-tooltip">
+            <md-outlined-select
+              label="Land"
+              name="current-country"
+              class="hidden"
+              style="width: 100%"
+            >
 
-          <md-select-option selected value="Belgien">
-            <div slot="headline">Belgien</div>
-           </md-select-option>
-           <md-select-option value="Bulgarien">
-             <div slot="headline">Bulgarien</div>
+            <md-select-option selected value="Belgien">
+              <div slot="headline">Belgien</div>
             </md-select-option>
-            <md-select-option value="Dänemark">
-             <div slot="headline">Dänemark</div>
-            </md-select-option>
-            <md-select-option value="Estland">
-              <div slot="headline">Estland</div>
-            </md-select-option>
-            <md-select-option value="Finnland">
-              <div slot="headline">Finnland</div>
-            </md-select-option>
-            <md-select-option value="Frankreich">
-              <div slot="headline">Frankreich</div>
-            </md-select-option>
-            <md-select-option value="Griechenland">
-              <div slot="headline">Griechenland</div>
-            </md-select-option>
-            <md-select-option value="Irland">
-              <div slot="headline">Irland</div>
-            </md-select-option>
-            <md-select-option value="Italien">
-              <div slot="headline">Italien</div>
-            </md-select-option>
-            <md-select-option value="Kroatien">
-              <div slot="headline">Kroatien</div>
-            </md-select-option>
-            <md-select-option value="Lettland">
-              <div slot="headline">Lettland</div>
-            </md-select-option>
-            <md-select-option value="Litauen">
-              <div slot="headline">Litauen</div>
-            </md-select-option>
-            <md-select-option value="Luxemburg">
-              <div slot="headline">Luxemburg</div>
-            </md-select-option>
-            <md-select-option value="Malta">
-              <div slot="headline">Malta</div>
-            </md-select-option>
-            <md-select-option value="Niederlande">
-              <div slot="headline">Niederlande</div>
-            </md-select-option>
-            <md-select-option value="Polen">
-              <div slot="headline">Polen</div>
-            </md-select-option>
-            <md-select-option value="Portugal">
-              <div slot="headline">Portugal</div>
-            </md-select-option>
-            <md-select-option value="Rumänien">
-              <div slot="headline">Rumänien</div>
-            </md-select-option>
-            <md-select-option value="Schweden">
-              <div slot="headline">Schweden</div>
-            </md-select-option>
-            <md-select-option value="Slowakei">
-              <div slot="headline">Slowakei</div>
-            </md-select-option>
-            <md-select-option value="Slowenien">
-              <div slot="headline">Slowenien</div>
-            </md-select-option>
-            <md-select-option value="Spanien">
-              <div slot="headline">Spanien</div>
-            </md-select-option>
-            <md-select-option value="Tschechische Republik">
-              <div slot="headline">Tschechische Republik</div>
-            </md-select-option>
-            <md-select-option value="Ungarn">
-              <div slot="headline">Ungarn</div>
-            </md-select-option>
-            <md-select-option value="Zypern">
-              <div slot="headline">Zypern</div>
-            </md-select-option>
-            <md-select-option value="Österreich">
-              <div slot="headline">Österreich</div>
-            </md-select-option>
-          </md-outlined-select>
+            <md-select-option value="Bulgarien">
+              <div slot="headline">Bulgarien</div>
+              </md-select-option>
+              <md-select-option value="Dänemark">
+              <div slot="headline">Dänemark</div>
+              </md-select-option>
+              <md-select-option value="Estland">
+                <div slot="headline">Estland</div>
+              </md-select-option>
+              <md-select-option value="Finnland">
+                <div slot="headline">Finnland</div>
+              </md-select-option>
+              <md-select-option value="Frankreich">
+                <div slot="headline">Frankreich</div>
+              </md-select-option>
+              <md-select-option value="Griechenland">
+                <div slot="headline">Griechenland</div>
+              </md-select-option>
+              <md-select-option value="Irland">
+                <div slot="headline">Irland</div>
+              </md-select-option>
+              <md-select-option value="Italien">
+                <div slot="headline">Italien</div>
+              </md-select-option>
+              <md-select-option value="Kroatien">
+                <div slot="headline">Kroatien</div>
+              </md-select-option>
+              <md-select-option value="Lettland">
+                <div slot="headline">Lettland</div>
+              </md-select-option>
+              <md-select-option value="Litauen">
+                <div slot="headline">Litauen</div>
+              </md-select-option>
+              <md-select-option value="Luxemburg">
+                <div slot="headline">Luxemburg</div>
+              </md-select-option>
+              <md-select-option value="Malta">
+                <div slot="headline">Malta</div>
+              </md-select-option>
+              <md-select-option value="Niederlande">
+                <div slot="headline">Niederlande</div>
+              </md-select-option>
+              <md-select-option value="Polen">
+                <div slot="headline">Polen</div>
+              </md-select-option>
+              <md-select-option value="Portugal">
+                <div slot="headline">Portugal</div>
+              </md-select-option>
+              <md-select-option value="Rumänien">
+                <div slot="headline">Rumänien</div>
+              </md-select-option>
+              <md-select-option value="Schweden">
+                <div slot="headline">Schweden</div>
+              </md-select-option>
+              <md-select-option value="Slowakei">
+                <div slot="headline">Slowakei</div>
+              </md-select-option>
+              <md-select-option value="Slowenien">
+                <div slot="headline">Slowenien</div>
+              </md-select-option>
+              <md-select-option value="Spanien">
+                <div slot="headline">Spanien</div>
+              </md-select-option>
+              <md-select-option value="Tschechische Republik">
+                <div slot="headline">Tschechische Republik</div>
+              </md-select-option>
+              <md-select-option value="Ungarn">
+                <div slot="headline">Ungarn</div>
+              </md-select-option>
+              <md-select-option value="Zypern">
+                <div slot="headline">Zypern</div>
+              </md-select-option>
+              <md-select-option value="Österreich">
+                <div slot="headline">Österreich</div>
+              </md-select-option>
+            </md-outlined-select>
+            <div class="invisible-icon"></div>
+          </div>
         </div>
       </div>
     `;
@@ -756,24 +781,28 @@ export class BallerForm extends LitElement {
 
   private _renderTeamTypeDropdown(){
     return html`
-      <md-outlined-select
-        label="Teamtyp"
-        name="team-type"
-        @change=${this._handleTeamTypeSelection}
-      >
-        <md-select-option selected value="herren">
-          <div slot="headline">Herren</div>
-        </md-select-option>
-        <md-select-option selected value="a-junioren">
-          <div slot="headline">A-Junioren</div>
-        </md-select-option>
-        <md-select-option selected value="frauen">
-          <div slot="headline">Frauen</div>
-        </md-select-option>
-        <md-select-option selected value="a-juniorinnen">
-          <div slot="headline">A-Juniorinnen</div>
-        </md-select-option>
-      </md-outlined-select>
+      <div class="field-with-tooltip">
+        <md-outlined-select
+          label="Teamtyp"
+          name="team-type"
+          @change=${this._handleTeamTypeSelection}
+          style="width: 100%"
+        >
+          <md-select-option selected value="herren">
+            <div slot="headline">Herren</div>
+          </md-select-option>
+          <md-select-option selected value="a-junioren">
+            <div slot="headline">A-Junioren</div>
+          </md-select-option>
+          <md-select-option selected value="frauen">
+            <div slot="headline">Frauen</div>
+          </md-select-option>
+          <md-select-option selected value="a-juniorinnen">
+            <div slot="headline">A-Juniorinnen</div>
+          </md-select-option>
+        </md-outlined-select>
+      <div class="invisible-icon"></div>
+      </div>
     `;
   }
 
@@ -781,13 +810,14 @@ export class BallerForm extends LitElement {
     return html`
     <div>
       <div class="form-header">
-        <h2 class="display-small">Welche Skills zeichnen Dich aus?</h2>
-        <h3 class="headline-small">Deine Fußballerfahrung</h3>
+        <h2 class="display-small">Deine Fußballerfahrung</h2>
       </div>
       <div class="form-fields">
+      <div class="field-with-tooltip">
         <md-outlined-select
           label="Deine Position"
           name="position"
+          style="width: 100%"
         >
           <md-select-option selected value="stürmer">
             <div slot="headline">Stürmer</div>
@@ -802,6 +832,8 @@ export class BallerForm extends LitElement {
             <div slot="headline">Torwart</div>
           </md-select-option>
         </md-outlined-select>
+        <div class="invisible-icon"></div>
+      </div>
         ${this._renderActiveExperience()}
         <div id="international-active-experience" class="hidden form-fields">
           ${this._renderInternationalActiveExperience()}
@@ -810,6 +842,7 @@ export class BallerForm extends LitElement {
           ${this._renderTeamTypeDropdown()}
           ${this._renderSpielklasse()}
         </div>
+
         <md-outlined-text-field
           label="Welche sonstige Spielklasse?"
           name="other-experience"
@@ -817,13 +850,15 @@ export class BallerForm extends LitElement {
           max="250"
           class="hidden"
         ></md-outlined-text-field>
-        <md-outlined-text-field
-          label="In welchem Verein spielst Du"
-          name="club"
-          max="250"
-          @blur=${BallerForm._reportFieldValidity}
-          class="hidden"
-        ></md-outlined-text-field>
+        
+          <md-outlined-text-field
+            label="In welchem Verein spielst Du"
+            name="club"
+            max="250"
+            style="width: 100%"
+            @blur=${BallerForm._reportFieldValidity}
+            class="hidden"
+          ></md-outlined-text-field>
 
         ${this._renderHistoricalExperience()}
         <div id="domestic-historical-experience" class="hidden form-fields">
@@ -847,13 +882,17 @@ export class BallerForm extends LitElement {
           <h3 class="headline-small">Um so mehr wir von Dir wissen, um so höher sind Deine Chancen</h3>
         </div>
         <div class="form-fields">
+        <div class="field-with-tooltip">
           <md-outlined-text-field
             label="Highlight Tape (URL)"
             type="url"
             name="highlight-tape"
             max="250"
+            style="width: 100%"
             @blur=${BallerForm._reportFieldValidity}
           ></md-outlined-text-field>
+          <div class="invisible-icon"></div>
+        </div>
           <div class="field-with-tooltip">
           <md-outlined-text-field
             label="Link Transfermarkt"
@@ -865,38 +904,58 @@ export class BallerForm extends LitElement {
           ></md-outlined-text-field>
           ${this._renderTooltip(tooltipMessages.highlight)}
           </div>
-          <md-outlined-text-field
-            label="YouTube"
-            autocomplete="username"
-            max="250"
-            name="youtube"
-          >
-            <md-icon slot="trailing-icon"> ${icons.youtube} </md-icon>
-          </md-outlined-text-field>
-          <md-outlined-text-field
-            label="Instagram"
-            autocomplete="username"
-            max="250"
-            name="instagram"
-          >
-            <md-icon slot="trailing-icon"> ${icons.instagram} </md-icon>
-          </md-outlined-text-field>
-          <md-outlined-text-field
-            label="TikTok"
-            autocomplete="username"
-            max="250"
-            name="tiktok"
-          >
-            <md-icon slot="trailing-icon"> ${icons.tiktok} </md-icon>
-          </md-outlined-text-field>
-          <md-outlined-text-field
-            label="XING"
-            autocomplete="username"
-            max="250"
-            name="xing"
-          >
-            <md-icon slot="trailing-icon"> ${icons.xing} </md-icon>
-          </md-outlined-text-field>
+
+          <div class="field-with-tooltip">
+            <md-outlined-text-field
+              label="YouTube"
+              autocomplete="username"
+              max="250"
+              name="youtube"
+              style="width: 100%"
+            >
+              <md-icon slot="trailing-icon"> ${icons.youtube} </md-icon>
+            </md-outlined-text-field>
+            <div class="invisible-icon"></div>
+          </div>
+
+          <div class="field-with-tooltip">
+            <md-outlined-text-field
+              label="Instagram"
+              autocomplete="username"
+              max="250"
+              name="instagram"
+              style="width: 100%"
+            >
+              <md-icon slot="trailing-icon"> ${icons.instagram} </md-icon>
+            </md-outlined-text-field>
+            <div class="invisible-icon"></div>
+          </div>
+
+          <div class="field-with-tooltip">
+            <md-outlined-text-field
+              label="TikTok"
+              autocomplete="username"
+              max="250"
+              name="tiktok"
+              style="width: 100%"
+            >
+              <md-icon slot="trailing-icon"> ${icons.tiktok} </md-icon>
+            </md-outlined-text-field>
+            <div class="invisible-icon"></div>
+          </div>
+
+          <div class="field-with-tooltip">
+            <md-outlined-text-field
+              label="XING"
+              autocomplete="username"
+              max="250"
+              name="xing"
+              style="width: 100%"
+            >
+              <md-icon slot="trailing-icon"> ${icons.xing} </md-icon>
+            </md-outlined-text-field>
+            <div class="invisible-icon"></div>
+          </div>
 
           <md-outlined-text-field type="textarea" rows="10" name="freeform" label="Achievements oder Anmerkungen" maxLength=250>
           </md-outlined-text-field>
@@ -905,7 +964,6 @@ export class BallerForm extends LitElement {
               touch-target="wrapper"
               @change=${this._handleLegalChange}
               data-element="tos"
-              
               style="min-width: 1rem"
             ></md-checkbox>
             Ja, in bin jederzeit widerruflich damit einverstanden, dass die von mir angegeben Daten an 
@@ -919,7 +977,6 @@ export class BallerForm extends LitElement {
               touch-target="wrapper"
               @change=${this._handleLegalChange}
               data-element="teilnahmebedingungen"
-              max="250"
               style="min-width: 1rem"
             ></md-checkbox>
             Teilnahmebedingungen Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -1024,52 +1081,68 @@ export class BallerForm extends LitElement {
   private _renderSpielklasse() {
 
     return html`
+    <div class="field-with-tooltip">
       <md-outlined-select
         label="Spielklasse"
         name="spielklasse"
         @change=${this._handleExperienceSelection}
+        style="width: 100%;"
       >
       ${this.leageOptions}
       </md-outlined-select>
+      <div class="invisible-icon"></div>
+    </div>
     `;
   }
 
   private _renderActiveExperience(){
     return html`
-    <md-outlined-select
-      label="Wie bist Du gerade aktiv"
-      name="active-experience"
-      @change=${this._handleActiveExperienceSelection}
-    >
-      <md-select-option value="deutschland">
-        <div slot="headline">Ich spiele in Deutschland</div>
-      </md-select-option>
-      <md-select-option value="vereinslos">
-        <div slot="headline">Bin aktuell vereinslos</div>
-      </md-select-option>
-      <md-select-option value="international">
-        <div slot="headline">Ich spiele im Ausland</div>
-      </md-select-option>
-    </md-outlined-select>
+    <div class="field-with-tooltip">
+      <md-outlined-select
+        label="Wie bist Du gerade aktiv"
+        name="active-experience"
+        @change=${this._handleActiveExperienceSelection}
+        style="width: 100%;"
+      >
+        <md-select-option value="deutschland">
+          <div slot="headline">Ich spiele in Deutschland</div>
+        </md-select-option>
+        <md-select-option value="vereinslos">
+          <div slot="headline">Bin aktuell vereinslos</div>
+        </md-select-option>
+        <md-select-option value="international">
+          <div slot="headline">Ich spiele im Ausland</div>
+        </md-select-option>
+      </md-outlined-select>
+      <div class="invisible-icon"></div>
+    </div>
     `;
   }
 
   // eslint-disable-next-line class-methods-use-this
   private _renderInternationalActiveExperience(){
     return html`
+    <div class="field-with-tooltip">
       <md-outlined-text-field
         label="Land"
         maxLength="100"
         @blur=${BallerForm._reportFieldValidity}
         name="international-current-team-country"
+        style="width: 100%;"
       ></md-outlined-text-field>
+      <div class="invisible-icon"></div>
+    </div>
 
+    <div class="field-with-tooltip">
       <md-outlined-text-field
         label="Liga"
         maxLength="100"
         @blur=${BallerForm._reportFieldValidity}
         name="current-international-league"
+        style="width: 100%;"
       ></md-outlined-text-field>
+      <div class="invisible-icon"></div>
+    </div>
     `;
   }
 
@@ -1100,31 +1173,43 @@ export class BallerForm extends LitElement {
    // eslint-disable-next-line class-methods-use-this
    private _renderInternationalHistoricalExperience(){
     return html`
+    <div class="field-with-tooltip">
       <md-outlined-text-field
         label="Land"
         maxLength="100"
         @blur=${BallerForm._reportFieldValidity}
         name="historical-experience-country"
+        style="width: 100%"
       ></md-outlined-text-field>
+      <div class="invisible-icon"></div>
+    </div>
 
+    <div class="field-with-tooltip">
       <md-outlined-text-field
         label="Liga"
         maxLength="100"
         @blur=${BallerForm._reportFieldValidity}
         name="historical-experience-league"
+        style="width: 100%"
       ></md-outlined-text-field>
+      <div class="invisible-icon"></div>
+    </div>
     `;
   }
 
   // eslint-disable-next-line class-methods-use-this
   private _renderDomesticHistoricalExperience(){
     return html`
+    <div class="field-with-tooltip">
       <md-outlined-select
-      label="Deine höchstgespielte Spielklasse"
-      name="highest-domestic-experience"
-    >
-      ${this.leageOptions}
-    </md-outlined-select>
+        label="Deine höchstgespielte Spielklasse"
+        name="highest-domestic-experience"
+        style="width: 100%"
+      >
+        ${this.leageOptions}
+      </md-outlined-select>
+      <div class="invisible-icon"></div>
+    </div>
     `;
   }
 

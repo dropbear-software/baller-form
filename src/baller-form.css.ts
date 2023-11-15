@@ -6,12 +6,32 @@ export const componentStyles = css`
     padding: 25px;
     color: var(--baller-form-color-on-background, #1b1c17);
     font-family: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
+
     --md-sys-color-primary: var(--baller-form-color-primary);
     --md-sys-color-on-primary: var(--baller-form-color-on-primary);
+    --md-sys-color-primary-container: var(--baller-form-color-primary-container);
+    --md-sys-color-on-primary-container: var(--baller-form-color-on-primary-container);
+
     --md-sys-color-error: var(--baller-form-color-error, #ba1a1a);
-    --md-sys-color-error-container: var(--baller-form-color-error-container, #ffdad6);
     --md-sys-color-on-error: var(--baller-form-color-on-error: #ffffff);
+    --md-sys-color-error-container: var(--baller-form-color-error-container, #ffdad6);
     --md-sys-color-on-error-container: var(--baller-form-color-on-error-container: #410002);
+
+    --md-sys-color-secondary: var(--baller-form-color-secondary);
+    --md-sys-color-on-secondary: var(--baller-form-color-on-secondary);
+    --md-sys-color-secondary-container: var(--baller-form-color-secondary-container);
+    --md-sys-color-on-secondary-container: var(--baller-form-color-on-secondary-container);
+
+    --md-sys-color-tertiary: var(--baller-form-color-tertiary);
+    --md-sys-color-on-tertiary: var(--baller-form-color-on-tertiary);
+    --md-sys-color-tertiary-container: var(--baller-form-color-tertiary-container);
+    --md-sys-color-on-tertiary-container: var(--baller-form-color-on-tertiary-container);
+
+    --md-sys-color-surface: var(--baller-form-color-surface);
+    --md-sys-color-on-surface: var(--baller-form-color-on-surface);
+    --md-sys-color-surface-container: var(--baller-form-color-surface-container);
+    --md-sys-color-on-surface-container: var(--baller-form-color-on-surface-container);
+
     --md-ref-typeface-plain: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
   }
 
@@ -48,9 +68,9 @@ export const componentStyles = css`
 
   #form-wrapper {
     background-color: var(--baller-form-color-background, #fefcf4);
-    border: 1px solid var(--baller-form-color-outline, #76786b);
+    /* border: 1px solid var(--baller-form-color-outline, #76786b); */
     padding: 1.5rem;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     margin: 0 auto;
   }
 
@@ -74,6 +94,11 @@ export const componentStyles = css`
 
   .hidden {
     display: none;
+  }
+
+  .invisible-icon {
+    height: 18px;
+    width: 18px;
   }
 
   /* Typography */
