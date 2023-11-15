@@ -217,8 +217,9 @@ export class BallerForm extends LitElement {
 
   private _initializeServices(){
     this._enrollmentService = new EnrollmentService(this.brazeEndpoint);
+    const siteKey = '6Lfdww4pAAAAAMtqH6OaFgVZ5QfYGOI4FznDea3l';
     this._spamService = new SpamService(
-      this.captchaSiteKey,
+      siteKey,
       this.captchaEndpoint
     );
 

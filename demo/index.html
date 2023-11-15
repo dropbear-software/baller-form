@@ -204,24 +204,24 @@
   <script type="module">
     const isProduction = window.location.hostname === 'baller-form.web.app';
 
-    async function loadStyle(url){
-      try {
-        const themeStyles = await import(url, { with: { type: "css" }});
-        document.adoptedStyleSheets.push(themeStyles);
-      } catch (error) {
-        console.info('Using CSS loading fallback technique');
-        const linkTag = document.createElement('link');
-        linkTag.href = url;
-        linkTag.rel = 'stylesheet';
-        document.head.insertAdjacentElement('beforeend', linkTag);
-      }
-    }
+    // async function loadStyle(url){
+    //   try {
+    //     const themeStyles = await import(url, { with: { type: "css" }});
+    //     document.adoptedStyleSheets.push(themeStyles);
+    //   } catch (error) {
+    //     console.info('Using CSS loading fallback technique');
+    //     const linkTag = document.createElement('link');
+    //     linkTag.href = url;
+    //     linkTag.rel = 'stylesheet';
+    //     document.head.insertAdjacentElement('beforeend', linkTag);
+    //   }
+    // }
 
     async function loadProduction(){
       console.log('Loading production bundle');
       await import('./analytics.js');
       import('./baller-form-bundle.js');
-      loadStyle("./theme.css");
+      // loadStyle("./theme.css");
     }
 
     async function loadDevelopment(){
