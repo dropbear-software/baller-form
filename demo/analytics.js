@@ -71,3 +71,7 @@ document.addEventListener('submission_error', (event) => {
   console.log(`The specific error details of what went wrong are: \n ${event.detail}`)
 });
 
+
+document.addEventListener('invalid-field', (event) => {
+  console.log(`The specific error details of what went wrong are: \n ${event.detail}`)
+});

@@ -218,9 +218,8 @@ export class BallerForm extends LitElement {
 
   private _initializeServices(){
     this._enrollmentService = new EnrollmentService(this.brazeEndpoint);
-    const siteKey = '6Lfdww4pAAAAAMtqH6OaFgVZ5QfYGOI4FznDea3l';
     this._spamService = new SpamService(
-      siteKey,
+      this.captchaSiteKey,
       this.captchaEndpoint
     );
 
@@ -308,6 +307,8 @@ export class BallerForm extends LitElement {
     return hasAcceptedDatenschutz && hasAcceptedTeilnahmebedingungen;
   }
 
+  
+
   // Event Handlers
 
   private _onSuccessDialogClose(){
@@ -330,10 +331,16 @@ export class BallerForm extends LitElement {
       const formFields = this.applicationFormElement.querySelectorAll('md-outlined-text-field, md-outlined-select');
       
       for (const field of Array.from(formFields)) {
-          // @ts-ignore
+        // @ts-ignore
         if (!field.checkValidity()) {
           // @ts-ignore
           field.focus({preventScroll: false});
+
+          this.dispatchEvent(new CustomEvent('invalid-field', {
+            detail: field.localName,
+            bubbles: true
+          }));
+
           break;
         }
       }
@@ -465,7 +472,6 @@ export class BallerForm extends LitElement {
     window.location.href = successPage.href;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   private _renderErrorState(error: unknown){
     this.dispatchEvent(new CustomEvent('submission_error', {detail: error}));
     console.error(error);
@@ -536,7 +542,7 @@ export class BallerForm extends LitElement {
     return html`
       <div>
         <div class="form-header">
-          <h2 class="display-small">Erzähle uns etwas über Dich:</h2>
+          <h2 class="display-small">Über Dich:</h2>
         </div>
         <div class="form-fields">
           <div class="field-with-tooltip">
@@ -964,7 +970,7 @@ export class BallerForm extends LitElement {
               touch-target="wrapper"
               @change=${this._handleLegalChange}
               data-element="tos"
-              style="min-width: 1rem"
+              style="min-width: 1.2rem"
             ></md-checkbox>
             Ja, in bin jederzeit widerruflich damit einverstanden, dass die von mir angegeben Daten an 
             die Baller League GmbH für meine Anmeldung zur Baller League übertragen werden und ich 
@@ -977,7 +983,7 @@ export class BallerForm extends LitElement {
               touch-target="wrapper"
               @change=${this._handleLegalChange}
               data-element="teilnahmebedingungen"
-              style="min-width: 1rem"
+              style="min-width: 1.2rem"
             ></md-checkbox>
             Teilnahmebedingungen Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Aenean ut varius turpis, nec vestibulum massa. Curabitur ex odio,

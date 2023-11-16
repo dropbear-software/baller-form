@@ -29,7 +29,7 @@ export class EnrollmentService {
    * @returns {void}
    */
   private static handleBrazeResponse(response: BrazeResponse) {
-    console.log(`[DEBUG] Server Response \n ${JSON.stringify(response, null, "\t")}`);
+    // console.log(`[DEBUG] Server Response \n ${JSON.stringify(response, null, "\t")}`);
 
     if (response.errors) {
       console.error(response);
@@ -46,7 +46,7 @@ export class EnrollmentService {
    */
   async process(data: ApplicationData) {
     const jsonData = EnrollmentService.prepareDataForBraze(data);
-    console.log(`[DEBUG]: Sending the followig data to Braze \n ${JSON.stringify(jsonData, null, "\t")}`);
+    // console.log(`[DEBUG]: Sending the followig data to Braze \n ${JSON.stringify(jsonData, null, "\t")}`);
     const brazeResponse = await this.sendDataToBraze(jsonData);
     const parsedResponse = JSON.parse(brazeResponse);
     EnrollmentService.handleBrazeResponse(parsedResponse);
