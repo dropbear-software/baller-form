@@ -19,6 +19,7 @@ import '@material/web/button/filled-button.js';
 import '@material/web/button/filled-tonal-button.js';
 import '@material/web/button/outlined-button.js';
 import '@material/web/textfield/outlined-text-field.js';
+import '@material/web/textfield/filled-text-field.js';
 import '@material/web/elevation/elevation.js';
 import '@material/web/checkbox/checkbox.js';
 import '@material/web/icon/icon.js';
@@ -69,19 +70,19 @@ export class BallerForm extends LitElement {
   @query('form#application-form')
   applicationFormElement!: HTMLFormElement;
 
-  @query('md-outlined-text-field[autocomplete="given-name"]')
+  @query('md-filled-text-field[autocomplete="given-name"]')
   firstName!: MdOutlinedTextField;
 
-  @query('md-outlined-text-field[autocomplete="family-name"]')
+  @query('md-filled-text-field[autocomplete="family-name"]')
   familyName!: MdOutlinedTextField;
 
-  @query('md-outlined-text-field[autocomplete="email"]')
+  @query('md-filled-text-field[autocomplete="email"]')
   email!: MdOutlinedTextField;
 
-  @query('md-outlined-text-field[autocomplete="tel"]')
+  @query('md-filled-text-field[autocomplete="tel"]')
   tel!: MdOutlinedTextField;
 
-  @query('md-outlined-text-field[autocomplete="bday"]')
+  @query('md-filled-text-field[autocomplete="bday"]')
   birthday!: MdOutlinedTextField;
 
   @query('md-outlined-select[name="shirt-size"]')
@@ -102,10 +103,10 @@ export class BallerForm extends LitElement {
   @query('md-outlined-select[name="active-experience"]')
   activeExperience!: MdOutlinedSelect;
 
-  @query('md-outlined-text-field[name="international-current-team-country"]')
+  @query('md-filled-text-field[name="international-current-team-country"]')
   currentInternationalTeamCountry!: MdOutlinedSelect;
 
-  @query('md-outlined-text-field[name="current-international-league"]')
+  @query('md-filled-text-field[name="current-international-league"]')
   currentInternationalLeague!: MdOutlinedSelect;
 
   @query('md-outlined-select[name="team-type"]')
@@ -114,7 +115,7 @@ export class BallerForm extends LitElement {
   @query('md-outlined-select[name="spielklasse"]')
   spielklasse!: MdOutlinedSelect;
 
-  @query('md-outlined-text-field[name="other-experience"]')
+  @query('md-filled-text-field[name="other-experience"]')
   otherExperience!: MdOutlinedTextField;
 
   @query('md-outlined-select[name="highest-domestic-experience"]')
@@ -123,34 +124,34 @@ export class BallerForm extends LitElement {
   @query('md-outlined-select[name="highest-experience"]')
   highestExperience!: MdOutlinedSelect;
 
-  @query('md-outlined-text-field[name="historical-experience-country"]')
+  @query('md-filled-text-field[name="historical-experience-country"]')
   highestExperienceCountry!: MdOutlinedTextField;
 
-  @query('md-outlined-text-field[name="historical-experience-league"]')
+  @query('md-filled-text-field[name="historical-experience-league"]')
   highestExperienceLeague!: MdOutlinedTextField;
 
-  @query('md-outlined-text-field[name="club"]')
+  @query('md-filled-text-field[name="club"]')
   clubName!: MdOutlinedTextField;
 
-  @query('md-outlined-text-field[name="highlight-tape"]')
+  @query('md-filled-text-field[name="highlight-tape"]')
   highlightTape!: MdOutlinedTextField;
 
-  @query('md-outlined-text-field[name="transfermarkt"]')
+  @query('md-filled-text-field[name="transfermarkt"]')
   transfermarkt!: MdOutlinedTextField;
 
-  @query('md-outlined-text-field[name="youtube"]')
+  @query('md-filled-text-field[name="youtube"]')
   youtube!: MdOutlinedTextField;
 
-  @query('md-outlined-text-field[name="instagram"]')
+  @query('md-filled-text-field[name="instagram"]')
   instagram!: MdOutlinedTextField;
 
-  @query('md-outlined-text-field[name="tiktok"]')
+  @query('md-filled-text-field[name="tiktok"]')
   tiktok!: MdOutlinedTextField;
 
-  @query('md-outlined-text-field[name="xing"]')
+  @query('md-filled-text-field[name="xing"]')
   xing!: MdOutlinedTextField;
 
-  @query('md-outlined-text-field[name="freeform"]')
+  @query('md-filled-text-field[name="freeform"]')
   freeform!: MdOutlinedTextField;
 
   @query('[data-element="tos"]')
@@ -328,7 +329,7 @@ export class BallerForm extends LitElement {
       this._submissionTask.run();
     } else {
       // Some field in the form isn't valid so find it and scroll to it
-      const formFields = this.applicationFormElement.querySelectorAll('md-outlined-text-field, md-outlined-select');
+      const formFields = this.applicationFormElement.querySelectorAll('md-filled-text-field, md-outlined-select');
       
       for (const field of Array.from(formFields)) {
         // @ts-ignore
@@ -546,29 +547,29 @@ export class BallerForm extends LitElement {
         </div>
         <div class="form-fields">
           <div class="field-with-tooltip">
-            <md-outlined-text-field
+            <md-filled-text-field
               label="Vorname"
               required
               autocomplete="given-name"
               max="250"
               style="width: 100%"
               @blur=${BallerForm._reportFieldValidity}
-            ></md-outlined-text-field>
+            ></md-filled-text-field>
             <div class="invisible-icon"></div>
           </div>
           <div class="field-with-tooltip">
-            <md-outlined-text-field
+            <md-filled-text-field
               label="Nachname"
               required
               max="250"
               autocomplete="family-name"
               style="width: 100%"
               @blur=${BallerForm._reportFieldValidity}
-            ></md-outlined-text-field>
+            ></md-filled-text-field>
             <div class="invisible-icon"></div>
           </div>
           <div class="field-with-tooltip">
-            <md-outlined-text-field
+            <md-filled-text-field
               label="E-Mail"
               required
               autocomplete="email"
@@ -576,23 +577,23 @@ export class BallerForm extends LitElement {
               max="250"
               style="width: 100%"
               @blur=${BallerForm._reportFieldValidity}
-            ></md-outlined-text-field>
+            ></md-filled-text-field>
             <div class="invisible-icon"></div>
           </div>
           <div class="field-with-tooltip">
-            <md-outlined-text-field
+            <md-filled-text-field
               label="Phone"
               autocomplete="tel"
               type="tel"
               max="20"
               @blur=${BallerForm._reportFieldValidity}
               style="width: 100%"
-            ></md-outlined-text-field>
+            ></md-filled-text-field>
           ${this._renderTooltip(tooltipMessages.phone)}
           </div>
           
           <div class="field-with-tooltip">
-            <md-outlined-text-field
+            <md-filled-text-field
               label="Geburtsdatum"
               required
               autocomplete="bday"
@@ -600,7 +601,7 @@ export class BallerForm extends LitElement {
               type="date"
               style="width: 100%"
               @blur=${this._validateAge}
-            ></md-outlined-text-field>
+            ></md-filled-text-field>
           <div class="invisible-icon"></div>
           </div>
           
@@ -849,22 +850,22 @@ export class BallerForm extends LitElement {
           ${this._renderSpielklasse()}
         </div>
 
-        <md-outlined-text-field
+        <md-filled-text-field
           label="Welche sonstige Spielklasse?"
           name="other-experience"
           hidden
           max="250"
           class="hidden"
-        ></md-outlined-text-field>
+        ></md-filled-text-field>
         
-          <md-outlined-text-field
+          <md-filled-text-field
             label="In welchem Verein spielst Du"
             name="club"
             max="250"
             style="width: 100%"
             @blur=${BallerForm._reportFieldValidity}
             class="hidden"
-          ></md-outlined-text-field>
+          ></md-filled-text-field>
 
         ${this._renderHistoricalExperience()}
         <div id="domestic-historical-experience" class="hidden form-fields">
@@ -889,30 +890,30 @@ export class BallerForm extends LitElement {
         </div>
         <div class="form-fields">
         <div class="field-with-tooltip">
-          <md-outlined-text-field
+          <md-filled-text-field
             label="Highlight Tape (URL)"
             type="url"
             name="highlight-tape"
             max="250"
             style="width: 100%"
             @blur=${BallerForm._reportFieldValidity}
-          ></md-outlined-text-field>
+          ></md-filled-text-field>
           <div class="invisible-icon"></div>
         </div>
           <div class="field-with-tooltip">
-          <md-outlined-text-field
+          <md-filled-text-field
             label="Link Transfermarkt"
             type="url"
             name="transfermarkt"
             max="250"
             style="width: 100%"
             @blur=${BallerForm._reportFieldValidity}
-          ></md-outlined-text-field>
+          ></md-filled-text-field>
           ${this._renderTooltip(tooltipMessages.highlight)}
           </div>
 
           <div class="field-with-tooltip">
-            <md-outlined-text-field
+            <md-filled-text-field
               label="YouTube"
               autocomplete="username"
               max="250"
@@ -920,12 +921,12 @@ export class BallerForm extends LitElement {
               style="width: 100%"
             >
               <md-icon slot="trailing-icon"> ${icons.youtube} </md-icon>
-            </md-outlined-text-field>
+            </md-filled-text-field>
             <div class="invisible-icon"></div>
           </div>
 
           <div class="field-with-tooltip">
-            <md-outlined-text-field
+            <md-filled-text-field
               label="Instagram"
               autocomplete="username"
               max="250"
@@ -933,12 +934,12 @@ export class BallerForm extends LitElement {
               style="width: 100%"
             >
               <md-icon slot="trailing-icon"> ${icons.instagram} </md-icon>
-            </md-outlined-text-field>
+            </md-filled-text-field>
             <div class="invisible-icon"></div>
           </div>
 
           <div class="field-with-tooltip">
-            <md-outlined-text-field
+            <md-filled-text-field
               label="TikTok"
               autocomplete="username"
               max="250"
@@ -946,12 +947,12 @@ export class BallerForm extends LitElement {
               style="width: 100%"
             >
               <md-icon slot="trailing-icon"> ${icons.tiktok} </md-icon>
-            </md-outlined-text-field>
+            </md-filled-text-field>
             <div class="invisible-icon"></div>
           </div>
 
           <div class="field-with-tooltip">
-            <md-outlined-text-field
+            <md-filled-text-field
               label="XING"
               autocomplete="username"
               max="250"
@@ -959,12 +960,12 @@ export class BallerForm extends LitElement {
               style="width: 100%"
             >
               <md-icon slot="trailing-icon"> ${icons.xing} </md-icon>
-            </md-outlined-text-field>
+            </md-filled-text-field>
             <div class="invisible-icon"></div>
           </div>
 
-          <md-outlined-text-field type="textarea" rows="10" name="freeform" label="Achievements oder Anmerkungen" maxLength=250>
-          </md-outlined-text-field>
+          <md-filled-text-field type="textarea" rows="10" name="freeform" label="Achievements oder Anmerkungen" maxLength=250>
+          </md-filled-text-field>
           <label class="label-medium inline-label">
             <md-checkbox
               touch-target="wrapper"
@@ -1129,24 +1130,24 @@ export class BallerForm extends LitElement {
   private _renderInternationalActiveExperience(){
     return html`
     <div class="field-with-tooltip">
-      <md-outlined-text-field
+      <md-filled-text-field
         label="Land"
         maxLength="100"
         @blur=${BallerForm._reportFieldValidity}
         name="international-current-team-country"
         style="width: 100%;"
-      ></md-outlined-text-field>
+      ></md-filled-text-field>
       <div class="invisible-icon"></div>
     </div>
 
     <div class="field-with-tooltip">
-      <md-outlined-text-field
+      <md-filled-text-field
         label="Liga"
         maxLength="100"
         @blur=${BallerForm._reportFieldValidity}
         name="current-international-league"
         style="width: 100%;"
-      ></md-outlined-text-field>
+      ></md-filled-text-field>
       <div class="invisible-icon"></div>
     </div>
     `;
@@ -1180,24 +1181,24 @@ export class BallerForm extends LitElement {
    private _renderInternationalHistoricalExperience(){
     return html`
     <div class="field-with-tooltip">
-      <md-outlined-text-field
+      <md-filled-text-field
         label="Land"
         maxLength="100"
         @blur=${BallerForm._reportFieldValidity}
         name="historical-experience-country"
         style="width: 100%"
-      ></md-outlined-text-field>
+      ></md-filled-text-field>
       <div class="invisible-icon"></div>
     </div>
 
     <div class="field-with-tooltip">
-      <md-outlined-text-field
+      <md-filled-text-field
         label="Liga"
         maxLength="100"
         @blur=${BallerForm._reportFieldValidity}
         name="historical-experience-league"
         style="width: 100%"
-      ></md-outlined-text-field>
+      ></md-filled-text-field>
       <div class="invisible-icon"></div>
     </div>
     `;
