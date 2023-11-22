@@ -43,7 +43,8 @@ export const componentStyles = css`
   }
 
   md-checkbox {
-    --md-checkbox-outline-color: var(--baller-form-checkbox-outline-color, #45483c);
+    
+    --md-checkbox-outline-color: #BCC9D1;
     --md-checkbox-selected-container-color: var(--baller-form-selected-container-color, #4b6700);
     --md-checkbox-selected-icon-color: var(--baller-form-selected-icon-color, #ffffff);
   }
