@@ -955,15 +955,18 @@ export class BallerForm extends LitElement {
               label="XING"
               autocomplete="username"
               max="250"
-              name="xing"
+              name="xing" 
               style="width: 100%"
             >
             </md-filled-text-field>
             <div class="invisible-icon"></div>
           </div>
 
-          <md-filled-text-field type="textarea" rows="10" name="freeform" label="Achievements oder Anmerkungen" maxLength=250>
-          </md-filled-text-field>
+          <div class="field-with-tooltip">
+            <md-filled-text-field type="textarea" rows="10" name="freeform" label="Achievements oder Anmerkungen" maxLength=250 style="width: 100%">
+            </md-filled-text-field>
+            <div class="invisible-icon"></div>
+          </div>
           <label class="label-medium inline-label">
             <md-checkbox
               touch-target="wrapper"
