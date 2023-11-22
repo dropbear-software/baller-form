@@ -3,7 +3,6 @@ import { css } from 'lit';
 export const componentStyles = css`
   :host {
     display: block;
-    padding: 25px;
     color: var(--baller-form-color-on-background, #1b1c17);
     font-family: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
 
