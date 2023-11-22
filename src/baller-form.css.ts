@@ -112,29 +112,29 @@ export const componentStyles = css`
   /* Typography */
   .display-small {
     font-family: var(--baller-form-display-headline-large-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
-    font-weight: var(--baller-form-display-headline-large-font-weight, 700);
+    font-weight: 700;
     font-size: 32px;
     letter-spacing: var(--baller-form-display-headline-large-letter-spacing, 0px);
-    line-height: var(--baller-form-display-headline-large-line-height, 44px);
-    color: var(--baller-form-display-headline-large-color, #1b1c17);
+    line-height: 38px;
+    color: #1D2124;
   }
 
   .headline-small {
     font-family: var(--baller-form-display-headline-small-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
-    font-weight: var(--baller-form-display-headline-small-font-weight, 100);
+    font-weight: 400;
     font-size: 18px;
     letter-spacing: var(--baller-form-display-headline-small-letter-spacing, 0px);
-    line-height: var(--baller-form-display-headline-small-line-height, 32px);
-    color: var(--baller-form-display-headline-small-color, #5a6148);
+    line-height: 27px;
+    color: #1D2124;
   }
 
   .label-medium {
     font-family: var(--baller-form-display-label-medium-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
-    font-weight: var(--baller-form-display-label-medium-font-weight, 500);
-    font-size: var(--baller-form-display-label-medium-font-size, 12px);
+    font-weight: 400;
+    font-size: 16px;
     letter-spacing: var(--baller-form-display-label-medium-letter-spacing, 0.5px);
-    line-height: var(--baller-form-display-label-medium-line-height, 16px);
-    color: var(--baller-form-display-label-medium-color, #1b1c17);
+    line-height: 20px;
+    color: #1D2124;
   }
 
   /* Tooltip */

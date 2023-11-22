@@ -12,7 +12,6 @@ import { componentStyles } from './baller-form.css.js';
 import { ApplicationData, ApplicationDataInit } from './application-data.js';
 import { EnrollmentService } from './enrollment-service.js';
 import { SpamService } from './spam-service.js';
-import { icons } from './icons.js';
 import { tooltipMessages } from './tooltips.js';
 
 import '@material/web/button/filled-button.js';
@@ -919,7 +918,6 @@ export class BallerForm extends LitElement {
               name="youtube"
               style="width: 100%"
             >
-              <md-icon slot="trailing-icon"> ${icons.youtube} </md-icon>
             </md-filled-text-field>
             <div class="invisible-icon"></div>
           </div>
@@ -932,7 +930,6 @@ export class BallerForm extends LitElement {
               name="instagram"
               style="width: 100%"
             >
-              <md-icon slot="trailing-icon"> ${icons.instagram} </md-icon>
             </md-filled-text-field>
             <div class="invisible-icon"></div>
           </div>
@@ -945,7 +942,6 @@ export class BallerForm extends LitElement {
               name="tiktok"
               style="width: 100%"
             >
-              <md-icon slot="trailing-icon"> ${icons.tiktok} </md-icon>
             </md-filled-text-field>
             <div class="invisible-icon"></div>
           </div>
@@ -958,7 +954,6 @@ export class BallerForm extends LitElement {
               name="xing"
               style="width: 100%"
             >
-              <md-icon slot="trailing-icon"> ${icons.xing} </md-icon>
             </md-filled-text-field>
             <div class="invisible-icon"></div>
           </div>
