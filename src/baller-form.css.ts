@@ -35,8 +35,11 @@ export const componentStyles = css`
     --md-ref-typeface-plain: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
   }
 
-  md-outlined-select {
-    --md-menu-item-label-text-color: var(--baller-form-color-secondary, #5a6148);
+  md-filled-select {
+    --md-filled-select-text-field-container-color: #F4F4F5;
+    --md-filled-select-text-field-input-text-color: #5E737D;
+    --md-filled-select-text-field-label-text-color: #5E737D;
+    --md-menu-item-label-text-color: var(--baller-form-color-secondary, #5E737D);
   }
 
   md-checkbox {
@@ -45,10 +48,15 @@ export const componentStyles = css`
     --md-checkbox-selected-icon-color: var(--baller-form-selected-icon-color, #ffffff);
   }
 
-  md-outlined-text-field {
-    --md-outlined-text-field-focus-outline-color: var(--baller-form-text-field-focus-outline-color, #4b6700);
-    --md-outlined-text-field-label-text-font: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
-    --md-outlined-text-field-input-text-font: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
+  md-filled-text-field {
+    --md-filled-text-field-container-color: #F4F4F5;
+    --md-filled-text-field-input-text-color: #5E737D;
+    --md-filled-field-label-text-color: #5E737D;
+    --md-filled-field-hover-label-text-color: #5E737D;
+    --md-filled-field-hover-input-text-color: #5E737D;
+    --md-filled-text-field-focus-outline-color: var(--baller-form-text-field-focus-outline-color, #4b6700);
+    --md-filled-text-field-label-text-font: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
+    --md-filled-text-field-input-text-font: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
   }
 
   md-filled-button {
@@ -105,7 +113,7 @@ export const componentStyles = css`
   .display-small {
     font-family: var(--baller-form-display-headline-large-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
     font-weight: var(--baller-form-display-headline-large-font-weight, 700);
-    font-size: var(--baller-form-display-headline-large-font-size, 36px);
+    font-size: 32px;
     letter-spacing: var(--baller-form-display-headline-large-letter-spacing, 0px);
     line-height: var(--baller-form-display-headline-large-line-height, 44px);
     color: var(--baller-form-display-headline-large-color, #1b1c17);
@@ -114,7 +122,7 @@ export const componentStyles = css`
   .headline-small {
     font-family: var(--baller-form-display-headline-small-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
     font-weight: var(--baller-form-display-headline-small-font-weight, 100);
-    font-size: var(--baller-form-display-headline-small-font-size, 24px);
+    font-size: 18px;
     letter-spacing: var(--baller-form-display-headline-small-letter-spacing, 0px);
     line-height: var(--baller-form-display-headline-small-line-height, 32px);
     color: var(--baller-form-display-headline-small-color, #5a6148);
