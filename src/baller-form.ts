@@ -593,7 +593,7 @@ export class BallerForm extends LitElement {
           </div>
           <div class="field-with-tooltip">
             <md-filled-text-field
-              label="Phone"
+              label="Telefon"
               autocomplete="tel"
               type="tel"
               max="20"
