@@ -659,7 +659,7 @@
           </div>
           <div class="field-with-tooltip">
             <md-filled-text-field
-              label="Phone"
+              label="Telefon"
               autocomplete="tel"
               type="tel"
               max="20"
@@ -673,6 +673,7 @@
             <md-filled-select
               label="Kleidergröße"
               name="shirt-size"
+              required
               style="width: 100%;"
             >
             <md-select-option value="XS">
@@ -696,8 +697,9 @@
 
           <div class="field-with-tooltip">
           <md-filled-select
-            label="In welchem Bundesland wohnst Du?"
+            label="Dein Bundesland"
             name="bundesland"
+            required
             @change=${this._handleFederalStateSelection}
             style="width: 100%"
           >
@@ -880,6 +882,7 @@
         <md-filled-select
           label="Deine Position"
           name="position"
+          required
           style="width: 100%"
         >
           <md-select-option value="stürmer">
@@ -1104,6 +1107,7 @@
       <md-filled-select
         label="Spielklasse"
         name="spielklasse"
+        required
         @change=${this._handleExperienceSelection}
         style="width: 100%;"
       >
@@ -1116,6 +1120,7 @@
       <md-filled-select
         label="Wie bist Du gerade aktiv"
         name="active-experience"
+        required
         @change=${this._handleActiveExperienceSelection}
         style="width: 100%;"
       >
@@ -1158,6 +1163,7 @@
       <md-filled-select
         label="Deine höchstgespielte Spielklasse"
         name="highest-experience"
+        required
         @change=${this._handleHighestExperienceSelection}
         style="width: 100%"
       >
