@@ -157,7 +157,7 @@ export const componentStyles = css`
   .tooltip-toggle::before {
     position: absolute;
     top: -100px;
-    left: -100px;
+    left: -250px;
     background-color: var(--baller-form-color-surface-variant);
     border-radius: 5px;
     color: #fff;

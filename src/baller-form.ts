@@ -576,7 +576,7 @@ export class BallerForm extends LitElement {
               style="width: 100%"
               @blur=${this._validateAge}
             ></md-filled-text-field>
-          <div class="invisible-icon"></div>
+            ${this._renderTooltip(tooltipMessages.birthday)}
           </div>
 
           <div class="field-with-tooltip">
@@ -899,7 +899,8 @@ export class BallerForm extends LitElement {
             style="width: 100%"
             @blur=${BallerForm._reportFieldValidity}
           ></md-filled-text-field>
-          <div class="invisible-icon"></div>
+          
+          ${this._renderTooltip(tooltipMessages.highlight)}
         </div>
           <div class="field-with-tooltip">
           <md-filled-text-field
@@ -910,7 +911,7 @@ export class BallerForm extends LitElement {
             style="width: 100%"
             @blur=${BallerForm._reportFieldValidity}
           ></md-filled-text-field>
-          ${this._renderTooltip(tooltipMessages.highlight)}
+            <div class="invisible-icon"></div>
           </div>
 
           <div class="field-with-tooltip">
