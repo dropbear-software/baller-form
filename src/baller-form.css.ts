@@ -60,7 +60,12 @@ export const componentStyles = css`
     --md-filled-text-field-input-text-font: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
   }
 
-  md-filled-button {
+  md-outlined-button {
+    --md-outlined-button-label-text-size: 18px;
+    --md-outlined-button-label-text-weight: 700;
+    --md-outlined-button-outline-width: 2px;
+    --md-outlined-button-outline-color: var(--baller-form-color-primary);
+    --md-outlined-button-label-text-color: var(--baller-form-color-primary);
     --md-filled-button-container-color: var(--baller-form-filled-button-container-color, #4b6700);
     --md-filled-button-container-shape: var(--baller-form-filled-button-container-shape, 9999px);
   }

@@ -62,7 +62,7 @@ export class BallerForm extends LitElement {
   @property({ type: String, attribute: 'braze-endpoint' }) brazeEndpoint =
     '/ballerleague/v1/submit_application';
 
-  @query('md-filled-button[name="apply"]')
+  @query('md-outlined-button[name="apply"]')
   submitButton!: MdFilledButton;
 
   @query('form#application-form')
@@ -487,7 +487,7 @@ export class BallerForm extends LitElement {
           ${this._renderSocialQuestions()}
         </div>
         <div class="form-footer">
-          <md-filled-button
+          <md-outlined-button
             @click=${this._onSubmitEvent}
             type="button"
             name="apply"
@@ -495,7 +495,7 @@ export class BallerForm extends LitElement {
             style="width: 100%"
           >
           Jetz bewerben
-          </md-filled-button>
+          </md-outlined-button>
         </div>
       </form>
     </section>
