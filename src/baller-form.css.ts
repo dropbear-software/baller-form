@@ -36,6 +36,9 @@ export const componentStyles = css`
   }
 
   md-filled-select {
+    --md-filled-select-text-field-active-indicator-color: #5E737D;
+    --md-filled-select-text-field-trailing-icon-color: #5E737D;
+    --md-filled-select-text-field-hover-trailing-icon-color: #5E737D;
     --md-filled-select-text-field-container-color: #F4F4F5;
     --md-filled-select-text-field-input-text-color: #5E737D;
     --md-filled-select-text-field-label-text-color: #5E737D;
@@ -43,18 +46,20 @@ export const componentStyles = css`
   }
 
   md-checkbox {
-    
     --md-checkbox-outline-color: #BCC9D1;
     --md-checkbox-selected-container-color: var(--baller-form-selected-container-color, #4b6700);
     --md-checkbox-selected-icon-color: var(--baller-form-selected-icon-color, #ffffff);
   }
 
   md-filled-text-field {
+    --md-filled-text-field-active-indicator-color: #5E737D;
     --md-filled-text-field-container-color: #F4F4F5;
     --md-filled-text-field-input-text-color: #5E737D;
     --md-filled-field-label-text-color: #5E737D;
     --md-filled-field-hover-label-text-color: #5E737D;
     --md-filled-field-hover-input-text-color: #5E737D;
+    --md-filled-field-supporting-text-color: #5E737D;
+    --md-filled-field-hover-supporting-text-color: #5E737D;
     --md-filled-text-field-focus-outline-color: var(--baller-form-text-field-focus-outline-color, #4b6700);
     --md-filled-text-field-label-text-font: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
     --md-filled-text-field-input-text-font: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
@@ -164,7 +169,7 @@ export const componentStyles = css`
     position: absolute;
     top: -100px;
     left: -250px;
-    background-color: var(--baller-form-color-surface-variant);
+    background-color: #fff;
     border-radius: 5px;
     color: #fff;
     content: attr(aria-label);
@@ -173,7 +178,8 @@ export const componentStyles = css`
     transition: all 0.5s ease;
     min-width: 160px;
     z-index:50;
-    border: 1px solid var(--baller-form-color-outline);
+    font-weight: 400;
+    font-size: 16px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   }
   

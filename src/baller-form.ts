@@ -965,7 +965,7 @@ export class BallerForm extends LitElement {
           <div class="field-with-tooltip">
             <md-filled-text-field type="textarea" rows="10" name="freeform" label="Achievements oder Anmerkungen" maxLength=250 style="width: 100%">
             </md-filled-text-field>
-            <div class="invisible-icon"></div>
+            ${this._renderTooltip(tooltipMessages.achievments)}
           </div>
           <label class="label-medium inline-label">
             <md-checkbox
