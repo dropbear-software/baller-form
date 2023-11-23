@@ -4,5 +4,6 @@ export const tooltipMessages = {
   experience: "Deine Prime-Liga: / Dein höchstes Level bisher:",
   birthday: "Jedes Spiel hat seine Regeln. Unsere machen immer Spaß. Außer vielleicht diese hier: Du musst nämlich mindestens 18 Jahre alt sein, um Dich für die Baller League bewerben zu können.",
   highlight: "Hier kannst Du Deine Videos zeigen. Egal ob via Youtube, GoogleDrive, Drop-Box oder Wetransfer: hier ist Platz für Deine Links. Achte darauf, dass die Filme gängige Formate haben.",
-  achievments: "Schreib hier alles rein, was wir über Deine Fussball-Karriere wissen sollten. Torschützenkönig in der KK? Fünf Minuten Zweitliga-Erfahrung? Oder andere coole Stories - berichte uns hier davon."
+  achievments: "Schreib hier alles rein, was wir über Deine Fussball-Karriere wissen sollten. Torschützenkönig in der KK? Fünf Minuten Zweitliga-Erfahrung? Oder andere coole Stories - berichte uns hier davon.",
+  dates: "Zeig uns Deine Skills. Am 16. und 17. Dezember finden die Qualifikationstage für die Baller League statt. Wir nennen das Combine-Days. Nenne Du uns doch bitte, wann Du dafür verfügbar bist."
 };
