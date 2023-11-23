@@ -980,10 +980,10 @@ export class BallerForm extends LitElement {
               style="width: 100%"
             >
               <md-select-option value="16 Dezember">
-                <div slot="headline">16 Dezember</div>
+                <div slot="headline">16 Dezember 2023</div>
               </md-select-option>
               <md-select-option value="17 Dezember">
-                <div slot="headline">17 Dezember</div>
+                <div slot="headline">17 Dezember 2023</div>
               </md-select-option>
               <md-select-option value="An beiden Tagen">
                 <div slot="headline">An beiden Tagen</div>
