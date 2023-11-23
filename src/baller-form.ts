@@ -472,7 +472,6 @@ export class BallerForm extends LitElement {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, class-methods-use-this
   private _renderSuccessState(data: void){
-    // this.successDialog.open = true;
     const successPage = new URL('/bewerbung-erfolgreich/', window.location.origin);
     window.location.href = successPage.href;
   }
@@ -900,7 +899,6 @@ export class BallerForm extends LitElement {
         <div class="field-with-tooltip">
           <md-filled-text-field
             label="Highlight Tape (URL)"
-            type="url"
             name="highlight-tape"
             max="250"
             style="width: 100%"
@@ -912,7 +910,6 @@ export class BallerForm extends LitElement {
           <div class="field-with-tooltip">
           <md-filled-text-field
             label="Link Transfermarkt"
-            type="url"
             name="transfermarkt"
             max="250"
             style="width: 100%"
@@ -995,7 +992,7 @@ export class BallerForm extends LitElement {
                 <div slot="headline">An einem anderen Tag</div>
               </md-select-option>
             </md-filled-select>
-            <div class="invisible-icon"></div>
+            ${this._renderTooltip(tooltipMessages.dates)}
           </div>
 
           <div class="field-with-tooltip medium-top-padding">
@@ -1022,7 +1019,7 @@ export class BallerForm extends LitElement {
                 style="min-width: 1.2rem"
               ></md-checkbox>
               <span>
-                Ich stimme den <a href="/datenschutz/" style="color: #0698A0; text-decoration: none;">Datenschutzbestimmungen</a> und den <a href="#" style="color: #0698A0; text-decoration: none;">Teilnahmebedingungen</a> der Baller League zu.
+                Ich stimme den <a href="/datenschutz/" style="color: #0698A0; text-decoration: none;">Datenschutzbestimmungen</a> der Baller League zu.
               </span>
             </label>
             <div class="invisible-icon"></div>
