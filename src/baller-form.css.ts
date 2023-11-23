@@ -20,6 +20,8 @@ export const componentStyles = css`
     --md-sys-color-on-secondary: var(--baller-form-color-on-secondary);
     --md-sys-color-secondary-container: var(--baller-form-color-secondary-container);
     --md-sys-color-on-secondary-container: var(--baller-form-color-on-secondary-container);
+    --md-sys-color-secondary-container: var(--brand-color-black);
+    --md-sys-color-on-secondary-container: #fff;
 
     --md-sys-color-tertiary: var(--baller-form-color-tertiary);
     --md-sys-color-on-tertiary: var(--baller-form-color-on-tertiary);
@@ -32,6 +34,7 @@ export const componentStyles = css`
     --md-sys-color-on-surface-container: var(--baller-form-color-on-surface-container);
 
     --md-ref-typeface-plain: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
+
   }
 
   md-filled-select {
@@ -42,6 +45,7 @@ export const componentStyles = css`
     --md-filled-select-text-field-input-text-color: #5E737D;
     --md-filled-select-text-field-label-text-color: #5E737D;
     --md-menu-item-label-text-color: var(--baller-form-color-secondary, #5E737D);
+    --md-menu-item-label-text-color: #5E737D;
   }
 
   md-checkbox {
@@ -84,8 +88,12 @@ export const componentStyles = css`
     word-break: break-all;
   }
 
-  md-outlined-select::part(menu) {
-    --md-menu-container-color: var(--baller-form-menu-background, #f4fbfa);
+  md-filled-select::part(menu) {
+    --md-sys-color-secondary: blue;
+    --md-menu-container-color: #F4F4F5;
+    --md-menu-list-item-selected-label-text-color: #0698A0;
+    --md-menu-list-item-selected-container-color: #ba1a1a;
+    --md-menu-list-item-label-text-color: #5E737D
     width: 100%;
   }
 
@@ -123,6 +131,14 @@ export const componentStyles = css`
 
   .medium-top-padding {
     margin-top: 1.5rem;
+  }
+
+  .big-top-padding {
+    padding-block-start: 2.5rem;
+  }
+
+  .contain-shape {
+    max-width: 420px;
   }
 
   /* Typography */

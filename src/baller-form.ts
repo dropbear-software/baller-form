@@ -101,11 +101,11 @@ export class BallerForm extends LitElement {
   @query('md-filled-select[name="active-experience"]')
   activeExperience!: MdFilledSelect;
 
-  @query('md-filled-text-field[name="international-current-team-country"]')
+  @query('md-filled-select[name="international-current-team-country"]')
   currentInternationalTeamCountry!: MdFilledSelect;
 
   @query('md-filled-text-field[name="current-international-league"]')
-  currentInternationalLeague!: MdFilledSelect;
+  currentInternationalLeague!: MdFilledTextField;
 
   @query('md-filled-select[name="team-type"]')
   teamType!: MdFilledSelect;
@@ -705,84 +705,7 @@ export class BallerForm extends LitElement {
               style="width: 100%"
             >
 
-            <md-select-option value="Belgien">
-              <div slot="headline">Belgien</div>
-            </md-select-option>
-            <md-select-option value="Bulgarien">
-              <div slot="headline">Bulgarien</div>
-              </md-select-option>
-              <md-select-option value="Dänemark">
-              <div slot="headline">Dänemark</div>
-              </md-select-option>
-              <md-select-option value="Estland">
-                <div slot="headline">Estland</div>
-              </md-select-option>
-              <md-select-option value="Finnland">
-                <div slot="headline">Finnland</div>
-              </md-select-option>
-              <md-select-option value="Frankreich">
-                <div slot="headline">Frankreich</div>
-              </md-select-option>
-              <md-select-option value="Griechenland">
-                <div slot="headline">Griechenland</div>
-              </md-select-option>
-              <md-select-option value="Irland">
-                <div slot="headline">Irland</div>
-              </md-select-option>
-              <md-select-option value="Italien">
-                <div slot="headline">Italien</div>
-              </md-select-option>
-              <md-select-option value="Kroatien">
-                <div slot="headline">Kroatien</div>
-              </md-select-option>
-              <md-select-option value="Lettland">
-                <div slot="headline">Lettland</div>
-              </md-select-option>
-              <md-select-option value="Litauen">
-                <div slot="headline">Litauen</div>
-              </md-select-option>
-              <md-select-option value="Luxemburg">
-                <div slot="headline">Luxemburg</div>
-              </md-select-option>
-              <md-select-option value="Malta">
-                <div slot="headline">Malta</div>
-              </md-select-option>
-              <md-select-option value="Niederlande">
-                <div slot="headline">Niederlande</div>
-              </md-select-option>
-              <md-select-option value="Polen">
-                <div slot="headline">Polen</div>
-              </md-select-option>
-              <md-select-option value="Portugal">
-                <div slot="headline">Portugal</div>
-              </md-select-option>
-              <md-select-option value="Rumänien">
-                <div slot="headline">Rumänien</div>
-              </md-select-option>
-              <md-select-option value="Schweden">
-                <div slot="headline">Schweden</div>
-              </md-select-option>
-              <md-select-option value="Slowakei">
-                <div slot="headline">Slowakei</div>
-              </md-select-option>
-              <md-select-option value="Slowenien">
-                <div slot="headline">Slowenien</div>
-              </md-select-option>
-              <md-select-option value="Spanien">
-                <div slot="headline">Spanien</div>
-              </md-select-option>
-              <md-select-option value="Tschechische Republik">
-                <div slot="headline">Tschechische Republik</div>
-              </md-select-option>
-              <md-select-option value="Ungarn">
-                <div slot="headline">Ungarn</div>
-              </md-select-option>
-              <md-select-option value="Zypern">
-                <div slot="headline">Zypern</div>
-              </md-select-option>
-              <md-select-option value="Österreich">
-                <div slot="headline">Österreich</div>
-              </md-select-option>
+            ${this._renderCountryOptions()}
             </md-filled-select>
             <div class="invisible-icon"></div>
           </div>
@@ -862,7 +785,7 @@ export class BallerForm extends LitElement {
           name="other-experience"
           hidden
           max="250"
-          class="hidden"
+          class="hidden contain-shape"
         ></md-filled-text-field>
         
           <md-filled-text-field
@@ -871,7 +794,7 @@ export class BallerForm extends LitElement {
             max="250"
             style="width: 100%"
             @blur=${BallerForm._reportFieldValidity}
-            class="hidden"
+            class="hidden contain-shape"
           ></md-filled-text-field>
 
         ${this._renderHistoricalExperience()}
@@ -888,10 +811,94 @@ export class BallerForm extends LitElement {
   `;
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  private _renderCountryOptions() {
+    return html`
+    <md-select-option value="Belgien">
+      <div slot="headline">Belgien</div>
+    </md-select-option>
+    <md-select-option value="Bulgarien">
+      <div slot="headline">Bulgarien</div>
+    </md-select-option>
+    <md-select-option value="Dänemark">
+    <div slot="headline">Dänemark</div>
+    </md-select-option>
+    <md-select-option value="Estland">
+      <div slot="headline">Estland</div>
+    </md-select-option>
+    <md-select-option value="Finnland">
+      <div slot="headline">Finnland</div>
+    </md-select-option>
+    <md-select-option value="Frankreich">
+      <div slot="headline">Frankreich</div>
+    </md-select-option>
+    <md-select-option value="Griechenland">
+      <div slot="headline">Griechenland</div>
+    </md-select-option>
+    <md-select-option value="Irland">
+      <div slot="headline">Irland</div>
+    </md-select-option>
+    <md-select-option value="Italien">
+      <div slot="headline">Italien</div>
+    </md-select-option>
+    <md-select-option value="Kroatien">
+      <div slot="headline">Kroatien</div>
+    </md-select-option>
+    <md-select-option value="Lettland">
+      <div slot="headline">Lettland</div>
+    </md-select-option>
+    <md-select-option value="Litauen">
+      <div slot="headline">Litauen</div>
+    </md-select-option>
+    <md-select-option value="Luxemburg">
+      <div slot="headline">Luxemburg</div>
+    </md-select-option>
+    <md-select-option value="Malta">
+      <div slot="headline">Malta</div>
+    </md-select-option>
+    <md-select-option value="Niederlande">
+      <div slot="headline">Niederlande</div>
+    </md-select-option>
+    <md-select-option value="Polen">
+      <div slot="headline">Polen</div>
+    </md-select-option>
+    <md-select-option value="Portugal">
+      <div slot="headline">Portugal</div>
+    </md-select-option>
+    <md-select-option value="Rumänien">
+      <div slot="headline">Rumänien</div>
+    </md-select-option>
+    <md-select-option value="Schweden">
+      <div slot="headline">Schweden</div>
+    </md-select-option>
+    <md-select-option value="Slowakei">
+      <div slot="headline">Slowakei</div>
+    </md-select-option>
+    <md-select-option value="Slowenien">
+      <div slot="headline">Slowenien</div>
+    </md-select-option>
+    <md-select-option value="Spanien">
+      <div slot="headline">Spanien</div>
+    </md-select-option>
+    <md-select-option value="Tschechische Republik">
+      <div slot="headline">Tschechische Republik</div>
+    </md-select-option>
+    <md-select-option value="Ungarn">
+      <div slot="headline">Ungarn</div>
+    </md-select-option>
+    <md-select-option value="Zypern">
+      <div slot="headline">Zypern</div>
+    </md-select-option>
+    <md-select-option value="Österreich">
+      <div slot="headline">Österreich</div>
+    </md-select-option>
+    `;
+  }
+
   private _renderSocialQuestions() {
     return html`
       <div>
-        <div class="form-header">
+        <div class="form-header big-top-padding">
           <h2 class="display-small">Zeig uns, was Du kannst</h2>
           <h3 class="headline-small">Um so mehr wir von Dir wissen, um so höher sind Deine Chancen.</h3>
         </div>
@@ -979,11 +986,11 @@ export class BallerForm extends LitElement {
               required
               style="width: 100%"
             >
-              <md-select-option value="16 Dezember">
-                <div slot="headline">16 Dezember 2023</div>
+              <md-select-option value="16. Dezember 2023">
+                <div slot="headline">16. Dezember 2023</div>
               </md-select-option>
-              <md-select-option value="17 Dezember">
-                <div slot="headline">17 Dezember 2023</div>
+              <md-select-option value="17. Dezember 2023">
+                <div slot="headline">17. Dezember 2023</div>
               </md-select-option>
               <md-select-option value="An beiden Tagen">
                 <div slot="headline">An beiden Tagen</div>
@@ -1161,14 +1168,14 @@ export class BallerForm extends LitElement {
   private _renderInternationalActiveExperience(){
     return html`
     <div class="field-with-tooltip">
-      <md-filled-text-field
-        label="Land"
-        maxLength="100"
-        @blur=${BallerForm._reportFieldValidity}
-        name="international-current-team-country"
-        style="width: 100%;"
-      ></md-filled-text-field>
-      <div class="invisible-icon"></div>
+      <md-filled-select
+          label="Land"
+          name="international-current-team-country"
+          style="width: 100%;"
+        >
+        ${this._renderCountryOptions()}
+      </md-filled-select>
+    <div class="invisible-icon"></div>
     </div>
 
     <div class="field-with-tooltip">
