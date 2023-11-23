@@ -80,15 +80,18 @@ export const componentStyles = css`
     --md-outlined-select-text-field-input-text-font: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
   }
 
+  md-filled-text-field[type="textarea"] {
+    word-break: break-all;
+  }
+
   md-outlined-select::part(menu) {
     --md-menu-container-color: var(--baller-form-menu-background, #f4fbfa);
+    width: 100%;
   }
 
   #form-wrapper {
     background-color: var(--baller-form-color-background, #fefcf4);
-    /* border: 1px solid var(--baller-form-color-outline, #76786b); */
     padding: 1.5rem;
-    /* border-radius: 5px; */
     margin: 0 auto;
   }
 
@@ -107,7 +110,6 @@ export const componentStyles = css`
 
   .inline-label {
     display: flex;
-    align-items: center;
   }
 
   .hidden {
@@ -117,6 +119,10 @@ export const componentStyles = css`
   .invisible-icon {
     height: 18px;
     width: 18px;
+  }
+
+  .medium-top-padding {
+    margin-top: 1.5rem;
   }
 
   /* Typography */
@@ -186,7 +192,7 @@ export const componentStyles = css`
     color: var(--baller-form-color-on-surface-variant);
     opacity: 0;
     pointer-events: none;
-    text-align: center;
+    text-align: left
   }
   
   .tooltip-toggle:focus::before, .tooltip-toggle:focus::after, .tooltip-toggle:hover::before, .tooltip-toggle:hover::after {

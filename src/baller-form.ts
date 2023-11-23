@@ -152,6 +152,9 @@ export class BallerForm extends LitElement {
   @query('md-filled-text-field[name="freeform"]')
   freeform!: MdFilledTextField;
 
+  @query('md-filled-select[name="availability"]')
+  availability!: MdFilledSelect;
+
   @query('[data-element="tos"]')
   termsOfServiceBox!: MdCheckbox;
 
@@ -261,6 +264,7 @@ export class BallerForm extends LitElement {
       tiktok: this.tiktok.value,
       xing: this.xing.value,
       comments: this.freeform.value,
+      availability: this.availability.value,
       acceptedPrivacy: this.termsOfServiceBox.checked,
       acceptedTos: this.teilnahmebedingungenBox.checked
     };
@@ -332,6 +336,8 @@ export class BallerForm extends LitElement {
       for (const field of Array.from(formFields)) {
         // @ts-ignore
         if (!field.checkValidity()) {
+          // @ts-ignore
+          field.reportValidity();
           // @ts-ignore
           field.focus({preventScroll: false});
 
@@ -494,7 +500,7 @@ export class BallerForm extends LitElement {
             disabled
             style="width: 100%"
           >
-          Jetz bewerben
+          Jetzt bewerben
           </md-outlined-button>
         </div>
       </form>
@@ -851,6 +857,7 @@ export class BallerForm extends LitElement {
           ${this._renderSpielklasse()}
         </div>
 
+        
         <md-filled-text-field
           label="Welche sonstige Spielklasse?"
           name="other-experience"
@@ -963,29 +970,63 @@ export class BallerForm extends LitElement {
           </div>
 
           <div class="field-with-tooltip">
-            <md-filled-text-field type="textarea" rows="10" name="freeform" label="Achievements oder Anmerkungen" maxLength=250 style="width: 100%">
+            <md-filled-text-field type="textarea" rows="6" name="freeform" label="Achievements oder Anmerkungen" maxLength=250 style="width: 100%">
             </md-filled-text-field>
             ${this._renderTooltip(tooltipMessages.achievments)}
           </div>
-          <label class="label-medium inline-label">
-            <md-checkbox
-              touch-target="wrapper"
-              @change=${this._handleLegalChange}
-              data-element="tos"
-              style="min-width: 1.2rem"
-            ></md-checkbox>
-            <span>Ich stimme den <a href="/datenschutz/" style="color: #0698A0; text-decoration: none;">Datenschutzbestimmungen</a> von XING zu.</span>
-          </label>
 
-          <label class="label-medium inline-label">
-            <md-checkbox
-              touch-target="wrapper"
-              @change=${this._handleLegalChange}
-              data-element="teilnahmebedingungen"
-              style="min-width: 1.2rem"
-            ></md-checkbox>
-            <span>Ich stimme den <a href="/datenschutz/" style="color: #0698A0; text-decoration: none;">Datenschutzbestimmungen</a> der Baller League zu.</span>
-          </label>
+          <div class="field-with-tooltip">
+            <md-filled-select
+              label="Ich bin verfügbar am"
+              name="availability"
+              required
+              style="width: 100%"
+            >
+              <md-select-option value="16 Dezember">
+                <div slot="headline">16 Dezember</div>
+              </md-select-option>
+              <md-select-option value="17 Dezember">
+                <div slot="headline">17 Dezember</div>
+              </md-select-option>
+              <md-select-option value="An beiden Tagen">
+                <div slot="headline">An beiden Tagen</div>
+              </md-select-option>
+              <md-select-option value="An einem anderen Tag">
+                <div slot="headline">An einem anderen Tag</div>
+              </md-select-option>
+            </md-filled-select>
+            <div class="invisible-icon"></div>
+          </div>
+
+          <div class="field-with-tooltip medium-top-padding">
+            <label class="label-medium inline-label">
+              <md-checkbox
+                touch-target="wrapper"
+                @change=${this._handleLegalChange}
+                data-element="tos"
+                style="min-width: 1.2rem"
+              ></md-checkbox>
+              <span>
+              Ja, ich bin jederzeit widerruflich damit einverstanden, dass die von mir angegeben Daten an die Baller League GmbH für meine Anmeldung zur Baller League übertragen werden und ich zukünftig den E-Mail-Newsletter von XING zu ihrem Baller League Sponsoring, zu interessanten Angeboten und Jobangeboten von Partnern von XING erhalte.
+              </span>
+            </label>
+            <div class="invisible-icon"></div>
+          </div>
+
+          <div class="field-with-tooltip">
+            <label class="label-medium inline-label">
+              <md-checkbox
+                touch-target="wrapper"
+                @change=${this._handleLegalChange}
+                data-element="teilnahmebedingungen"
+                style="min-width: 1.2rem"
+              ></md-checkbox>
+              <span>
+                Ich stimme den <a href="/datenschutz/" style="color: #0698A0; text-decoration: none;">Datenschutzbestimmungen</a> und den <a href="#" style="color: #0698A0; text-decoration: none;">Teilnahmebedingungen</a> der Baller League zu.
+              </span>
+            </label>
+            <div class="invisible-icon"></div>
+          </div>
         </div>
       </div>
     `;
@@ -1084,7 +1125,6 @@ export class BallerForm extends LitElement {
       <md-filled-select
         label="Spielklasse"
         name="spielklasse"
-        required
         @change=${this._handleExperienceSelection}
         style="width: 100%;"
       >
@@ -1219,11 +1259,8 @@ export class BallerForm extends LitElement {
   private _renderTooltip(message: string){
     return html`
       <span class="tooltip-toggle" aria-label="${message}" tabindex="0">
-        <svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg">
-          <g fill="currentColor" fill-rule="evenodd">
-            <path d="M13.5 27C20.956 27 27 20.956 27 13.5S20.956 0 13.5 0 0 6.044 0 13.5 6.044 27 13.5 27zm0-2C7.15 25 2 19.85 2 13.5S7.15 2 13.5 2 25 7.15 25 13.5 19.85 25 13.5 25z"/>
-            <path d="M12.05 7.64c0-.228.04-.423.12-.585.077-.163.185-.295.32-.397.138-.102.298-.177.48-.227.184-.048.383-.073.598-.073.203 0 .398.025.584.074.186.05.35.126.488.228.14.102.252.234.336.397.084.162.127.357.127.584 0 .22-.043.412-.127.574-.084.163-.196.297-.336.4-.14.106-.302.185-.488.237-.186.053-.38.08-.584.08-.215 0-.414-.027-.597-.08-.182-.05-.342-.13-.48-.235-.135-.104-.243-.238-.32-.4-.08-.163-.12-.355-.12-.576zm-1.02 11.517c.134 0 .275-.013.424-.04.148-.025.284-.08.41-.16.124-.082.23-.198.313-.35.085-.15.127-.354.127-.61v-5.423c0-.238-.042-.43-.127-.57-.084-.144-.19-.254-.318-.332-.13-.08-.267-.13-.415-.153-.148-.024-.286-.036-.414-.036h-.21v-.95h4.195v7.463c0 .256.043.46.127.61.084.152.19.268.314.35.125.08.263.135.414.16.15.027.29.04.418.04h.21v.95H10.82v-.95h.21z"/>
-          </g>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2ZM12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4ZM13 11V17H11V11H13ZM13 7V9H11V7H13Z" fill="#1D2124"/>
         </svg>
       </span>
     `;

@@ -26,6 +26,7 @@ export interface ApplicationDataInit {
   tiktok: string,
   xing: string,
   comments: string,
+  availability: string,
   acceptedTos: boolean,
   acceptedPrivacy: boolean
 }
@@ -59,6 +60,8 @@ export class ApplicationData {
 
   readonly highestTeamLeague: string;
 
+  readonly otherExperience: string;
+
   readonly clubName: string;
 
   readonly transfermarktProfile: string
@@ -74,6 +77,8 @@ export class ApplicationData {
   readonly xing: string;
 
   readonly comments: string;
+
+  readonly availability: string;
 
   constructor(
     args: ApplicationDataInit
@@ -93,6 +98,7 @@ export class ApplicationData {
     this.highestTeamCountry = ApplicationData.normalizeHighestCountry(args.highestExperience, args.highestInternationalCountry);
     this.highestTeamLeague = ApplicationData.normalizeHighestLeague(args.highestExperience, args.highestDomesticLeague, args.highestInternationalLeague)
     this.clubName = args.clubName;
+    this.otherExperience = args.otherExperience;
     this.highlightTape = args.highlightTape;
     this.transfermarktProfile = args.transfermarktProfile;
     this.youTube = args.youTube;
@@ -100,6 +106,7 @@ export class ApplicationData {
     this.tikTok = args.tiktok;
     this.xing = args.xing;
     this.comments = args.comments;
+    this.availability = args.availability;
   }
   
   // Normalize the DOB with the appropriate YYYY-MM-DD formatting

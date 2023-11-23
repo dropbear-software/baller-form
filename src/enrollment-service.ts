@@ -91,6 +91,9 @@ export class EnrollmentService {
       attributes: [
         {
           email: data.email,
+          first_name: data.givenName,
+          last_name: data.familyName,
+          tel: data.telephone,
           personal_details: {
             first_name: data.givenName,
             last_name: data.familyName,
@@ -107,7 +110,8 @@ export class EnrollmentService {
               land: data.currentTeamCountry,
               association: data.clubName,
               team_type: data.currentTeamType,
-              league: data.currentLeague
+              league: data.currentLeague,
+              other: data.otherExperience,
             },
             highest_status: {
               land: data.highestTeamCountry,
@@ -122,6 +126,7 @@ export class EnrollmentService {
             tiktok_link: data.tikTok,
             xing: data.xing,
             comment: data.comments,
+            availability: data.availability,
           }
         }
       ]
