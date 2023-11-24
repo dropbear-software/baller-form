@@ -115,6 +115,9 @@ export class BallerForm extends LitElement {
 
   @query('md-filled-text-field[name="other-experience"]')
   otherExperience!: MdFilledTextField;
+  
+  @query('md-filled-text-field[name="domestic-historical-experience-league"]')
+  otherDomesticLeague!: MdFilledTextField;
 
   @query('md-filled-select[name="highest-domestic-experience"]')
   highestSpielklasse!: MdFilledSelect;
@@ -256,6 +259,7 @@ export class BallerForm extends LitElement {
       highestExperience: this.highestExperience.value,
       highestInternationalCountry: this.highestExperienceCountry.value,
       highestInternationalLeague: this.highestExperienceLeague.value,
+      otherLeague: this.otherDomesticLeague.value,
       clubName: this.clubName.value,
       highlightTape: this.highlightTape.value,
       transfermarktProfile: this.transfermarkt.value,
@@ -396,6 +400,22 @@ export class BallerForm extends LitElement {
         this.shadowRoot?.getElementById('international-active-experience')?.classList.add('hidden');
         this.shadowRoot?.getElementById('domestic-active-experience')?.classList.add('hidden');
         this.clubName.classList.add('hidden');
+        break;
+    }
+  }
+
+  private _handleHighestDomesticExperienceSelection(e: Event){
+    // @ts-ignore
+    const highestExperience = e.target.value;
+
+    switch (highestExperience) {
+      case 'andere':
+        // show the new text field 
+        this.shadowRoot?.getElementById('domestic-other-league')?.classList.remove('hidden');
+        break;
+      default:
+        // Make sure the extra text field is hidden
+        this.shadowRoot?.getElementById('domestic-other-league')?.classList.add('hidden');
         break;
     }
   }
@@ -1250,10 +1270,24 @@ export class BallerForm extends LitElement {
       <md-filled-select
         label="Deine höchstgespielte Spielklasse"
         name="highest-domestic-experience"
+        @change=${this._handleHighestDomesticExperienceSelection}
         style="width: 100%"
       >
         ${this.leageOptions}
       </md-filled-select>
+      <div class="invisible-icon"></div>
+    </div>
+
+    <div class="field-with-tooltip" >
+      <md-filled-text-field
+        label="Liga"
+        maxLength="100"
+        @blur=${BallerForm._reportFieldValidity}
+        name="domestic-historical-experience-league"
+        style="width: 100%"
+        id="domestic-other-league"
+        class="hidden"
+      ></md-filled-text-field>
       <div class="invisible-icon"></div>
     </div>
     `;

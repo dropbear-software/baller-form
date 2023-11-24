@@ -14,6 +14,7 @@ export interface ApplicationDataInit {
   germanLeague: string,
   internationalLeague: string,
   otherExperience: string,
+  otherLeague: string,
   highestDomesticLeague: string,
   highestInternationalCountry: string,
   highestInternationalLeague: string,
@@ -62,6 +63,8 @@ export class ApplicationData {
 
   readonly otherExperience: string;
 
+  readonly otherDomesticLeague: string;
+
   readonly clubName: string;
 
   readonly transfermarktProfile: string
@@ -96,9 +99,10 @@ export class ApplicationData {
     this.currentTeamType = ApplicationData.normalizeTeamType(args.currentPlayingStatus, args.teamType);
     this.currentLeague = ApplicationData.normalizeLeague(args.currentPlayingStatus, args.germanLeague, args.internationalLeague);
     this.highestTeamCountry = ApplicationData.normalizeHighestCountry(args.highestExperience, args.highestInternationalCountry);
-    this.highestTeamLeague = ApplicationData.normalizeHighestLeague(args.highestExperience, args.highestDomesticLeague, args.highestInternationalLeague)
+    this.highestTeamLeague = ApplicationData.normalizeHighestLeague(args.highestExperience, args.highestDomesticLeague, args.highestInternationalLeague, args.otherLeague)
     this.clubName = args.clubName;
     this.otherExperience = args.otherExperience;
+    this.otherDomesticLeague = args.otherLeague;
     this.highlightTape = args.highlightTape;
     this.transfermarktProfile = args.transfermarktProfile;
     this.youTube = args.youTube;
@@ -170,8 +174,11 @@ export class ApplicationData {
     return '';
   }
 
-  private static normalizeHighestLeague(currentStatus: string, domesticLeague: string, internationalLeague: string){
+  private static normalizeHighestLeague(currentStatus: string, domesticLeague: string, internationalLeague: string, otherDomesticLeague: string){
     if (currentStatus === 'deutschland') {
+      if (domesticLeague === 'andere') {
+        return otherDomesticLeague;
+      }
       return domesticLeague;
     } 
     
