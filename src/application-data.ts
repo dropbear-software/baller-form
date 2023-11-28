@@ -83,6 +83,8 @@ export class ApplicationData {
 
   readonly availability: string;
 
+  readonly acceptedTos: boolean;
+
   constructor(
     args: ApplicationDataInit
   ) {
@@ -111,6 +113,7 @@ export class ApplicationData {
     this.xing = args.xing;
     this.comments = args.comments;
     this.availability = args.availability;
+    this.acceptedTos = args.acceptedTos;
   }
   
   // Normalize the DOB with the appropriate YYYY-MM-DD formatting

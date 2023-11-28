@@ -94,6 +94,7 @@ export class EnrollmentService {
           first_name: data.givenName,
           last_name: data.familyName,
           tel: data.telephone,
+          accepted_conditions: data.acceptedTos,
           personal_details: {
             first_name: data.givenName,
             last_name: data.familyName,
