@@ -740,6 +740,7 @@ export class BallerForm extends LitElement {
         <md-filled-select
           label="Teamtyp"
           name="team-type"
+          required
           @change=${this._handleTeamTypeSelection}
           style="width: 100%"
         >
@@ -790,12 +791,12 @@ export class BallerForm extends LitElement {
         </md-filled-select>
         <div class="invisible-icon"></div>
       </div>
+        ${this._renderTeamTypeDropdown()}
         ${this._renderActiveExperience()}
         <div id="international-active-experience" class="hidden form-fields">
           ${this._renderInternationalActiveExperience()}
         </div>
         <div id="domestic-active-experience" class="hidden form-fields">
-          ${this._renderTeamTypeDropdown()}
           ${this._renderSpielklasse()}
         </div>
 
@@ -805,7 +806,7 @@ export class BallerForm extends LitElement {
           name="other-experience"
           hidden
           max="250"
-          class="hidden contain-shape"
+          class="hidden"
         ></md-filled-text-field>
         
           <md-filled-text-field

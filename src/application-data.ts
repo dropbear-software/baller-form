@@ -96,7 +96,7 @@ export class ApplicationData {
     this.currentCountry = ApplicationData.normalizeCountry(args.bundesland, args.customCurrentCountry);
     this.position = args.position;
     this.currentTeamCountry = ApplicationData.normalizeCurrentTeamCountry(args.currentPlayingStatus, args.currentFootballCountry);
-    this.currentTeamType = ApplicationData.normalizeTeamType(args.currentPlayingStatus, args.teamType);
+    this.currentTeamType = args.teamType;
     this.currentLeague = ApplicationData.normalizeLeague(args.currentPlayingStatus, args.germanLeague, args.internationalLeague);
     this.highestTeamCountry = ApplicationData.normalizeHighestCountry(args.highestExperience, args.highestInternationalCountry);
     this.highestTeamLeague = ApplicationData.normalizeHighestLeague(args.highestExperience, args.highestDomesticLeague, args.highestInternationalLeague, args.otherLeague)
@@ -161,14 +161,6 @@ export class ApplicationData {
     
     if (currentStatus === 'international') {
       return highestTeamCountry;
-    }
-    
-    return '';
-  }
-
-  private static normalizeTeamType(currentStatus: string, teamType: string){
-    if (currentStatus === 'deutschland') {
-      return teamType;
     }
     
     return '';
