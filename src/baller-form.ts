@@ -1018,7 +1018,14 @@ export class BallerForm extends LitElement {
             ${this._renderTooltip(tooltipMessages.dates)}
           </div>
 
-          <div class="field-with-tooltip medium-top-padding">
+          <p class="label-medium">
+          Als Kooperationspartner der Baller League leitet die New Work SE Deine Bewerbungsdaten an die 
+          BALLER LEAGUE GmbH weiter. Es gelten hierfür die 
+          <a href="/datenschutz/" target="_blank" style="color: #0698A0; text-decoration: none;">Datenschutzbestimmungen</a> 
+          für das Bewerbungsverfahren der BALLER LEAGUE.
+          </p>
+          <div class="field-with-tooltip">
+            
             <label class="label-medium inline-label">
               <md-checkbox
                 touch-target="wrapper"
@@ -1027,7 +1034,7 @@ export class BallerForm extends LitElement {
                 style="min-width: 1.2rem"
               ></md-checkbox>
               <span>
-              Ja, ich bin jederzeit widerruflich damit einverstanden, dass die von mir angegeben Daten an die Baller League GmbH für meine Anmeldung zur Baller League übertragen werden und ich zukünftig den E-Mail-Newsletter von XING zu ihrem Baller League Sponsoring, zu interessanten Angeboten und Jobangeboten von Partnern von XING erhalte.
+              Ja, ich möchte den regelmäßig erscheinenden E-Mail Newsletter von XING mit exklusiven Ticketverlosungen und Angeboten rund um die Baller League erhalten. Abmeldung jederzeit möglich. Es gelten die Datenschutzbestimmungen der New Work SE.
               </span>
             </label>
             <div class="invisible-icon"></div>
