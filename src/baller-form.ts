@@ -161,9 +161,6 @@ export class BallerForm extends LitElement {
   @query('[data-element="tos"]')
   termsOfServiceBox!: MdCheckbox;
 
-  @query('[data-element="teilnahmebedingungen"]')
-  teilnahmebedingungenBox!: MdCheckbox;
-
   @query('md-dialog[data-reason="success"]')
   successDialog!: MdDialog;
 
@@ -269,8 +266,7 @@ export class BallerForm extends LitElement {
       xing: this.xing.value,
       comments: this.freeform.value,
       availability: this.availability.value,
-      acceptedPrivacy: this.termsOfServiceBox.checked,
-      acceptedTos: this.teilnahmebedingungenBox.checked
+      acceptedTos: this.termsOfServiceBox.checked
     };
 
     const applicationData = new ApplicationData(userData);
@@ -309,9 +305,8 @@ export class BallerForm extends LitElement {
 
   private _shouldEnableSubmit(): boolean {
     const hasAcceptedDatenschutz = this.termsOfServiceBox.checked;
-    const hasAcceptedTeilnahmebedingungen = this.teilnahmebedingungenBox.checked;
 
-    return hasAcceptedDatenschutz && hasAcceptedTeilnahmebedingungen;
+    return hasAcceptedDatenschutz;
   }
 
   
@@ -1033,21 +1028,6 @@ export class BallerForm extends LitElement {
               ></md-checkbox>
               <span>
               Ja, ich bin jederzeit widerruflich damit einverstanden, dass die von mir angegeben Daten an die Baller League GmbH für meine Anmeldung zur Baller League übertragen werden und ich zukünftig den E-Mail-Newsletter von XING zu ihrem Baller League Sponsoring, zu interessanten Angeboten und Jobangeboten von Partnern von XING erhalte.
-              </span>
-            </label>
-            <div class="invisible-icon"></div>
-          </div>
-
-          <div class="field-with-tooltip">
-            <label class="label-medium inline-label">
-              <md-checkbox
-                touch-target="wrapper"
-                @change=${this._handleLegalChange}
-                data-element="teilnahmebedingungen"
-                style="min-width: 1.2rem"
-              ></md-checkbox>
-              <span>
-                Ich stimme den <a href="/datenschutz/" style="color: #0698A0; text-decoration: none;">Datenschutzbestimmungen</a> der Baller League zu.
               </span>
             </label>
             <div class="invisible-icon"></div>

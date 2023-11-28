@@ -29,7 +29,6 @@ export interface ApplicationDataInit {
   comments: string,
   availability: string,
   acceptedTos: boolean,
-  acceptedPrivacy: boolean
 }
 
 export class ApplicationData {
