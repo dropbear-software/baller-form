@@ -337,8 +337,10 @@ export class BallerForm extends LitElement {
         if (!field.checkValidity()) {
           // @ts-ignore
           field.reportValidity();
+
+          field.scrollIntoView();
           // @ts-ignore
-          field.focus({preventScroll: false});
+          field.focus();
 
           this.dispatchEvent(new CustomEvent('invalid-field', {
             detail: field.localName,
@@ -620,7 +622,7 @@ export class BallerForm extends LitElement {
               @blur=${BallerForm._reportFieldValidity}
               style="width: 100%"
             ></md-filled-text-field>
-          ${this._renderTooltip(tooltipMessages.phone)}
+            <div class="invisible-icon"></div>
           </div>
           
           <div class="field-with-tooltip">
@@ -646,7 +648,7 @@ export class BallerForm extends LitElement {
                 <div slot="headline">XL</div>
               </md-select-option>
             </md-filled-select>
-            ${this._renderTooltip(tooltipMessages.clothes)}
+            <div class="invisible-icon"></div>
           </div>
 
           <div class="field-with-tooltip">
@@ -916,7 +918,7 @@ export class BallerForm extends LitElement {
       <div>
         <div class="form-header big-top-padding">
           <h2 class="display-small">Zeig uns, was Du kannst</h2>
-          <h3 class="headline-small">Um so mehr wir von Dir wissen, um so höher sind Deine Chancen.</h3>
+          <h3 class="headline-small">Diese Angaben sind optional. Um so mehr wir von Dir wissen, um so höher sind Deine Chancen.</h3>
         </div>
         <div class="form-fields">
         <div class="field-with-tooltip">
@@ -1018,7 +1020,7 @@ export class BallerForm extends LitElement {
             ${this._renderTooltip(tooltipMessages.dates)}
           </div>
 
-          <p class="label-medium">
+          <p class="label-medium" style="max-width: 420px;">
           Als Kooperationspartner der Baller League leitet die New Work SE Deine Bewerbungsdaten an die 
           BALLER LEAGUE GmbH weiter. Es gelten hierfür die 
           <a href="/datenschutz/" target="_blank" style="color: #0698A0; text-decoration: none;">Datenschutzbestimmungen</a> 
@@ -1034,7 +1036,8 @@ export class BallerForm extends LitElement {
                 style="min-width: 1.2rem"
               ></md-checkbox>
               <span>
-              Ja, ich möchte den regelmäßig erscheinenden E-Mail Newsletter von XING mit exklusiven Ticketverlosungen und Angeboten rund um die Baller League erhalten. Abmeldung jederzeit möglich. Es gelten die Datenschutzbestimmungen der New Work SE.
+              Ja, ich möchte den regelmäßig erscheinenden E-Mail Newsletter von XING mit exklusiven Ticketverlosungen und Angeboten rund um die Baller League erhalten. Abmeldung jederzeit möglich. Es gelten die 
+              <a href="https://www.new-work.se/de/datenschutz" target="_blank" style="color: #0698A0; text-decoration: none;">Datenschutzbestimmungen</a> der New Work SE.
               </span>
             </label>
             <div class="invisible-icon"></div>
@@ -1219,7 +1222,7 @@ export class BallerForm extends LitElement {
           <div slot="headline">Im Ausland</div>
         </md-select-option>
       </md-filled-select>
-      ${this._renderTooltip(tooltipMessages.experience)}
+      <div class="invisible-icon"></div>
     </div>
     `;
   }
