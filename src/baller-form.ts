@@ -2,6 +2,8 @@ import { LitElement, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { Task } from '@lit/task';
 
+import "element-internals-polyfill";
+
 import type { MdFilledButton } from '@material/web/button/filled-button.js';
 import type { MdCheckbox } from '@material/web/checkbox/checkbox.js';
 import type { MdFilledTextField } from '@material/web/textfield/filled-text-field.js';
@@ -40,6 +42,16 @@ import '@material/web/dialog/dialog.js';
  */
 @customElement('baller-form')
 export class BallerForm extends LitElement {
+  private _internals: any;
+  
+  static get formAssociated() {
+    return true;
+  }
+
+  constructor() {
+    super();
+    this._internals = this.attachInternals();
+  }
   // Public Static Fields
 
   static styles = [componentStyles];
