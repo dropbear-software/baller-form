@@ -2,12 +2,9 @@ import { LitElement, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { Task } from '@lit/task';
 
-import "element-internals-polyfill";
-
 import type { MdFilledButton } from '@material/web/button/filled-button.js';
 import type { MdCheckbox } from '@material/web/checkbox/checkbox.js';
 import type { MdFilledTextField } from '@material/web/textfield/filled-text-field.js';
-import type { MdFilledSelect } from '@material/web/select/filled-select.js';
 import type { MdDialog } from '@material/web/dialog/dialog.js';
 
 import { componentStyles } from './baller-form.css.js';
@@ -26,6 +23,8 @@ import '@material/web/icon/icon.js';
 import '@material/web/select/filled-select.js';
 import '@material/web/select/select-option.js';
 import '@material/web/dialog/dialog.js';
+import '@material/web/list/list.js';
+import '@material/web/list/list-item.js';
 
 /**
  * @tagname baller-form
@@ -50,7 +49,7 @@ export class BallerForm extends LitElement {
 
   constructor() {
     super();
-    this._internals = this.attachInternals();
+    this.loadPolyfills();
   }
   // Public Static Fields
 
@@ -61,6 +60,16 @@ export class BallerForm extends LitElement {
   private static _reportFieldValidity(event: FocusEvent) {
     // @ts-ignore
     event.target.reportValidity();
+  }
+
+  private static _renderTooltip(message: string){
+    return html`
+      <span class="tooltip-toggle" aria-label="${message}" tabindex="0">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2ZM12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4ZM13 11V17H11V11H13ZM13 7V9H11V7H13Z" fill="#1D2124"/>
+        </svg>
+      </span>
+    `;
   }
 
   // Public Class Fields
@@ -89,87 +98,6 @@ export class BallerForm extends LitElement {
   @query('md-filled-text-field[autocomplete="email"]')
   email!: MdFilledTextField;
 
-  @query('md-filled-text-field[autocomplete="tel"]')
-  tel!: MdFilledTextField;
-
-  @query('md-filled-text-field[autocomplete="bday"]')
-  birthday!: MdFilledTextField;
-
-  @query('md-filled-select[name="shirt-size"]')
-  shirt!: MdFilledSelect
-
-  @query('md-filled-select[name="experience"]')
-  experience!: MdFilledSelect;
-
-  @query('md-filled-select[name="bundesland"]')
-  bundesland!: MdFilledSelect;
-
-  @query('md-filled-select[name="current-country"]')
-  currentCountry!: MdFilledSelect;
-
-  @query('md-filled-select[name="position"]')
-  position!: MdFilledSelect;
-
-  @query('md-filled-select[name="active-experience"]')
-  activeExperience!: MdFilledSelect;
-
-  @query('md-filled-select[name="international-current-team-country"]')
-  currentInternationalTeamCountry!: MdFilledSelect;
-
-  @query('md-filled-text-field[name="current-international-league"]')
-  currentInternationalLeague!: MdFilledTextField;
-
-  @query('md-filled-select[name="team-type"]')
-  teamType!: MdFilledSelect;
-
-  @query('md-filled-select[name="spielklasse"]')
-  spielklasse!: MdFilledSelect;
-
-  @query('md-filled-text-field[name="other-experience"]')
-  otherExperience!: MdFilledTextField;
-  
-  @query('md-filled-text-field[name="domestic-historical-experience-league"]')
-  otherDomesticLeague!: MdFilledTextField;
-
-  @query('md-filled-select[name="highest-domestic-experience"]')
-  highestSpielklasse!: MdFilledSelect;
-  
-  @query('md-filled-select[name="highest-experience"]')
-  highestExperience!: MdFilledSelect;
-
-  @query('md-filled-text-field[name="historical-experience-country"]')
-  highestExperienceCountry!: MdFilledTextField;
-
-  @query('md-filled-text-field[name="historical-experience-league"]')
-  highestExperienceLeague!: MdFilledTextField;
-
-  @query('md-filled-text-field[name="club"]')
-  clubName!: MdFilledTextField;
-
-  @query('md-filled-text-field[name="highlight-tape"]')
-  highlightTape!: MdFilledTextField;
-
-  @query('md-filled-text-field[name="transfermarkt"]')
-  transfermarkt!: MdFilledTextField;
-
-  @query('md-filled-text-field[name="youtube"]')
-  youtube!: MdFilledTextField;
-
-  @query('md-filled-text-field[name="instagram"]')
-  instagram!: MdFilledTextField;
-
-  @query('md-filled-text-field[name="tiktok"]')
-  tiktok!: MdFilledTextField;
-
-  @query('md-filled-text-field[name="xing"]')
-  xing!: MdFilledTextField;
-
-  @query('md-filled-text-field[name="freeform"]')
-  freeform!: MdFilledTextField;
-
-  @query('md-filled-select[name="availability"]')
-  availability!: MdFilledSelect;
-
   @query('[data-element="tos"]')
   termsOfServiceBox!: MdCheckbox;
 
@@ -179,13 +107,13 @@ export class BallerForm extends LitElement {
   @query('md-dialog[data-reason="error"]')
   errorDialog!: MdDialog;
 
+  @query('md-dialog[data-reason="dates"]')
+  datePicker!: MdDialog;
+
   // Private Class Fields
 
   @state()
-  leageOptions = this._renderMensLeagueDropdown();
-
-  @state()
-  private noExperience = false;
+  private successPage = new URL('/bewerbung-erfolgreich/', window.location.origin);
 
   private _enrollmentService?: EnrollmentService;
 
@@ -233,6 +161,41 @@ export class BallerForm extends LitElement {
 
   // Private Methods
 
+  private async loadPolyfills(){
+    // Feature detection
+    const supportsDialog = (!!document.createElement("dialog").close);
+    const supportsElementInternals = (('FormDataEvent' in window) && ('ElementInternals' in window &&
+    'setFormValue' in window.ElementInternals.prototype));
+  
+    if (!supportsDialog) {
+      try {
+        // Install polyfill
+        // @ts-ignore
+        const { dialogPolyfill } = await import('https://ga.jspm.io/npm:dialog-polyfill@0.5.6/dist/dialog-polyfill.esm.js');
+
+        // Register all dialogs we need to support
+        dialogPolyfill.registerDialog(this.successDialog);
+        dialogPolyfill.registerDialog(this.errorDialog);
+        dialogPolyfill.registerDialog(this.datePicker);
+        console.info('Dialog element polyfill installed');
+      } catch (error) {
+        console.error('Unable to load Dialog element polyfill support\n', error);
+      }
+    }
+  
+    if (!supportsElementInternals) {
+      try {
+        // Install polyfill
+        // @ts-ignore
+        await import('https://ga.jspm.io/npm:element-internals-polyfill@1.3.9/dist/index.js');
+        this._internals = this.attachInternals();
+        console.info('Element Internals polyfill installed');
+      } catch (error) {
+        console.error('Unable to load Element Internals polyfill support\n', error);
+      }
+    }
+  }
+
   private _initializeServices(){
     this._enrollmentService = new EnrollmentService(this.brazeEndpoint);
     this._spamService = new SpamService(
@@ -255,67 +218,12 @@ export class BallerForm extends LitElement {
       familyName: this.familyName.value,
       givenName: this.firstName.value,
       email: this.email.value,
-      telephone: this.tel.value,
-      birthDate: this.birthday.valueAsDate!,
-      shirtSize: this.shirt.value,
-      bundesland: this.bundesland.value,
-      customCurrentCountry: this.currentCountry.value,
-      position: this.position.value,
-      currentPlayingStatus: this.activeExperience.value,
-      currentFootballCountry: this.currentInternationalTeamCountry.value,
-      teamType: this.teamType.value,
-      germanLeague: this.spielklasse.value,
-      internationalLeague: this.currentInternationalLeague.value,
-      otherExperience: this.otherExperience.value,
-      highestDomesticLeague: this.highestSpielklasse.value,
-      highestExperience: this.highestExperience.value,
-      highestInternationalCountry: this.highestExperienceCountry.value,
-      highestInternationalLeague: this.highestExperienceLeague.value,
-      otherLeague: this.otherDomesticLeague.value,
-      clubName: this.clubName.value,
-      highlightTape: this.highlightTape.value,
-      transfermarktProfile: this.transfermarkt.value,
-      youTube: this.youtube.value,
-      instagram: this.instagram.value,
-      tiktok: this.tiktok.value,
-      xing: this.xing.value,
-      comments: this.freeform.value,
-      availability: this.availability.value,
       acceptedTos: this.termsOfServiceBox.checked
     };
 
     const applicationData = new ApplicationData(userData);
 
     return applicationData;
-  }
-
-  private _validateAge(){
-    let isOldEnough = false;
-
-    // Calculate the difference between the date input field and today's date.
-    const today = new Date();
-    const dateInputFieldDate = new Date(this.birthday.value);
-    const differenceInDays = (today.getTime() - dateInputFieldDate.getTime()) / (1000 * 60 * 60 * 24);
-
-    // Check if the number of days since the date input field value is greater than or equal to 18 years.
-    if (differenceInDays >= 18 * 365.25) {
-      isOldEnough = true;
-      
-      this.birthday.setCustomValidity('');
-      this.birthday.error = false;
-      this.birthday.errorText = '';
-
-      this.birthday.reportValidity();
-    }
-
-    if (!isOldEnough) {
-      this.birthday.error = true;
-      this.birthday.errorText = 'Du musst mindestens 18 Jahre alt sein.'
-      this.birthday.setCustomValidity('Sie müssen mindestens 18 Jahre alt sein.');
-      this.birthday.dispatchEvent(new Event('invalid'));
-      
-      this.birthday.reportValidity();      
-    }
   }
 
   private _shouldEnableSubmit(): boolean {
@@ -331,6 +239,10 @@ export class BallerForm extends LitElement {
   private _onSuccessDialogClose(){
     this.successDialog.close();
     this.applicationFormElement.reset();
+  }
+
+  private _onDateSelection(){
+    this.datePicker.close();
   }
 
   private _onErrorDialogClose(){
@@ -368,129 +280,12 @@ export class BallerForm extends LitElement {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  private _handleFederalStateSelection(e: Event){
-    // @ts-ignore
-    if (e.target.value === 'Ausland') {
-      this.currentCountry.hidden = false;
-      this.currentCountry.classList.remove('hidden');
-    } else {
-      this.currentCountry.hidden = true;
-      this.currentCountry.classList.add('hidden');
-    }
-  }
-
-  private _handleExperienceSelection(e: Event){
-    // @ts-ignore
-    if (e.target.value === 'andere') {
-      this.otherExperience.hidden = false;
-      this.otherExperience.classList.remove('hidden');
-    } else {
-      this.otherExperience.hidden = true;
-      this.otherExperience.classList.add('hidden');
-    }
-  }
-
-  private _handleActiveExperienceSelection(e: Event){
-    // @ts-ignore
-    const activeExperience = e.target.value;
-
-    this.noExperience = (activeExperience === 'vereinslos');
-
-    switch (activeExperience) {
-      case 'deutschland':
-        // Unhide the German active experience section
-        this.shadowRoot?.getElementById('domestic-active-experience')?.classList.remove('hidden');
-        this.shadowRoot?.getElementById('international-active-experience')?.classList.add('hidden');
-        this.clubName.classList.remove('hidden');
-        break;
-      case 'international':
-        // Unhide the international active experience section
-        this.shadowRoot?.getElementById('international-active-experience')?.classList.remove('hidden');
-        this.shadowRoot?.getElementById('domestic-active-experience')?.classList.add('hidden');
-        this.clubName.classList.remove('hidden');
-        break;
-      default:
-        this.shadowRoot?.getElementById('international-active-experience')?.classList.add('hidden');
-        this.shadowRoot?.getElementById('domestic-active-experience')?.classList.add('hidden');
-        this.clubName.classList.add('hidden');
-        break;
-    }
-  }
-
-  private _handleHighestDomesticExperienceSelection(e: Event){
-    // @ts-ignore
-    const highestExperience = e.target.value;
-
-    switch (highestExperience) {
-      case 'andere':
-        // show the new text field 
-        this.shadowRoot?.getElementById('domestic-other-league')?.classList.remove('hidden');
-        break;
-      default:
-        // Make sure the extra text field is hidden
-        this.shadowRoot?.getElementById('domestic-other-league')?.classList.add('hidden');
-        break;
-    }
-  }
-
-  private _handleHighestExperienceSelection(e: Event){
-    // @ts-ignore
-    const highestExperience = e.target.value;
-
-    switch (highestExperience) {
-      case 'deutschland':
-        // Unhide the German active experience section
-        this.shadowRoot?.getElementById('domestic-historical-experience')?.classList.remove('hidden');
-        this.shadowRoot?.getElementById('international-historical-experience')?.classList.add('hidden');
-        break;
-      case 'international':
-        // Unhide the international active experience section
-        this.shadowRoot?.getElementById('international-historical-experience')?.classList.remove('hidden');
-        this.shadowRoot?.getElementById('domestic-historical-experience')?.classList.add('hidden');
-        break;
-      default:
-        this.shadowRoot?.getElementById('international-historical-experience')?.classList.add('hidden');
-        this.shadowRoot?.getElementById('domestic-historical-experience')?.classList.add('hidden');
-        break;
-    }
-  }
-
   private _handleLegalChange() {
     if (this._shouldEnableSubmit()) {
       this.submitButton.disabled = false;
     } else {
       this.submitButton.disabled = true;
     }
-  }
-
-
-  private async _handleTeamTypeSelection(e: Event){
-    // @ts-ignore
-    const selectedTeamType = e.target.value;
-
-    switch (selectedTeamType) {
-      case 'herren':
-        this.leageOptions = this._renderMensLeagueDropdown();
-        break;
-      case 'a-junioren':
-        this.leageOptions = this._renderBoysLeagueDropdown();
-        break;
-      case 'frauen':
-        this.leageOptions = this._renderWomensLeagueDropdown();
-        break;
-      case 'a-juniorinnen':
-        this.leageOptions = this._renderGirlsLeagueDropdown();
-        break;
-      default:
-        break;
-    }
-
-    this.spielklasse.reset();
-    this.spielklasse.disabled = false;
-
-    this.requestUpdate();
-    await this.updateComplete;
   }
 
   // Templates
@@ -504,10 +299,9 @@ export class BallerForm extends LitElement {
 
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, class-methods-use-this
-  private _renderSuccessState(data: void){
-    const successPage = new URL('/bewerbung-erfolgreich/', window.location.origin);
-    window.location.href = successPage.href;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private _renderSuccessState(_data: void){
+    window.location.href = this.successPage.href;
   }
 
   private _renderErrorState(error: unknown){
@@ -516,14 +310,16 @@ export class BallerForm extends LitElement {
     this.errorDialog.open = true;
   }
 
+  private _openDatePicker(){
+    this.datePicker.open = true;
+  }
+
   private _renderForm(){
     return html`
     <section id="form-wrapper">
       <form id="application-form">
         <div>
           ${this._renderPersonalQuestions()}
-          ${this._renderFootballQuestions()}
-          ${this._renderSocialQuestions()}
         </div>
         <div class="form-footer">
           <md-outlined-button
@@ -539,8 +335,66 @@ export class BallerForm extends LitElement {
       </form>
     </section>
 
+    ${this._renderDateSelectionDialog()}
     ${this._renderSuccessDialog()}
     ${this._renderErrorDialog()}
+    `;
+  }
+
+  private _renderDateSelectionDialog(){
+    const availableDates = [
+      new Date("2024-01-08T14:00:00.000+01:00"),
+      new Date("2024-01-15T14:00:00.000+01:00"),
+      new Date("2024-01-22T14:00:00.000+01:00"),
+      new Date("2024-01-29T14:00:00.000+01:00"),
+      new Date("2024-02-05T14:00:00.000+01:00"),
+      new Date("2024-02-12T14:00:00.000+01:00"),
+      new Date("2024-02-19T14:00:00.000+01:00"),
+      new Date("2024-02-26T14:00:00.000+01:00"),
+      new Date("2024-03-04T14:00:00.000+01:00"),
+      new Date("2024-03-11T14:00:00.000+01:00"),
+      new Date("2024-03-18T14:00:00.000+01:00"),
+      new Date("2024-03-23T14:00:00.000+01:00"),
+    ];
+
+    return html`
+      <md-dialog type="alert" data-reason="dates">
+        <div slot="headline" class="display-small">Headline</div>
+
+        <md-list slot="content">
+          <p class="label-medium">
+            Some supporting text
+          </p>
+        ${availableDates.map((matchDate) => 
+          html`
+          <md-list-item type="button">
+            <div slot="headline">
+              ${matchDate.toLocaleDateString('de-DE', {
+                weekday: 'long',
+                day: 'numeric',
+                year: 'numeric',
+                month: 'long',
+              })}
+            </div>
+            <div slot="supporting-text">
+              ${matchDate.toLocaleTimeString('de-DE', {
+                hour: 'numeric',
+                minute: 'numeric',
+                timeZone: 'CET',
+                timeZoneName: 'longGeneric'
+              })}
+            </div>
+            <div slot="trailing-supporting-text">+</div>
+          </md-list-item>
+          `
+        )}
+        </md-list>
+        <div slot="actions">
+          <md-filled-button form="date-selection" value="close" @click=${this._onDateSelection}>
+            Schließen
+          </md-filled-button>
+        </div>
+      </md-dialog>
     `;
   }
 
@@ -576,13 +430,32 @@ export class BallerForm extends LitElement {
     `;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   private _renderPersonalQuestions() {
     return html`
       <div>
         <div class="form-header">
-          <h2 class="display-small">Über Dich:</h2>
+          <p class="label-medium">
+            Wie Du dabei sein kannst? Einfach für den XING Newsletter anmelden.
+          </p>
+          <p class="label-medium">
+            Damit nimmst Du nicht nur an der Verlosung für die Tickets teil – Du bleibst auch mit den News um die Baller League immer am Ball.
+          </p>
         </div>
         <div class="form-fields">
+          <div class="field-with-tooltip">
+            <md-filled-text-field
+              label="E-Mail"
+              required
+              autocomplete="email"
+              type="email"
+              max="250"
+              style="width: 100%"
+              @blur=${BallerForm._reportFieldValidity}
+            ></md-filled-text-field>
+            <div class="invisible-icon"></div>
+          </div>
+
           <div class="field-with-tooltip">
             <md-filled-text-field
               label="Vorname"
@@ -594,6 +467,7 @@ export class BallerForm extends LitElement {
             ></md-filled-text-field>
             <div class="invisible-icon"></div>
           </div>
+
           <div class="field-with-tooltip">
             <md-filled-text-field
               label="Nachname"
@@ -607,442 +481,33 @@ export class BallerForm extends LitElement {
           </div>
 
           <div class="field-with-tooltip">
-            <md-filled-text-field
-              label="Geburtsdatum"
-              required
-              autocomplete="bday"
-              type="date"
-              style="width: 100%"
-              @blur=${this._validateAge}
-            ></md-filled-text-field>
-            ${this._renderTooltip(tooltipMessages.birthday)}
-          </div>
-
-          <div class="field-with-tooltip">
-            <md-filled-text-field
-              label="E-Mail"
-              required
-              autocomplete="email"
-              type="email"
-              max="250"
-              style="width: 100%"
-              @blur=${BallerForm._reportFieldValidity}
-            ></md-filled-text-field>
-            <div class="invisible-icon"></div>
-          </div>
-          <div class="field-with-tooltip">
-            <md-filled-text-field
-              label="Telefon"
-              autocomplete="tel"
-              type="tel"
-              max="20"
-              @blur=${BallerForm._reportFieldValidity}
-              style="width: 100%"
-            ></md-filled-text-field>
-            <div class="invisible-icon"></div>
-          </div>
-          
-          <div class="field-with-tooltip">
             <md-filled-select
-              label="Kleidergröße"
-              name="shirt-size"
-              required
+              label="XING Member"
+              name="xing-member"
               style="width: 100%;"
             >
-            <md-select-option value="XS">
-              <div slot="headline">XS</div>
-            </md-select-option>
-            <md-select-option value="S">
-              <div slot="headline">S</div>
+              <md-select-option value="true">
+                <div slot="headline">Ja</div>
               </md-select-option>
-              <md-select-option value="M">
-              <div slot="headline">M</div>
-              </md-select-option>
-              <md-select-option value="L">
-                <div slot="headline">L</div>
-              </md-select-option>
-              <md-select-option value="XL">
-                <div slot="headline">XL</div>
+              <md-select-option value="false">
+                <div slot="headline">Nein</div>
               </md-select-option>
             </md-filled-select>
-            <div class="invisible-icon"></div>
+            ${BallerForm._renderTooltip(tooltipMessages.xing)}
           </div>
 
           <div class="field-with-tooltip">
-          <md-filled-select
-            label="Dein Bundesland"
-            name="bundesland"
-            required
-            @change=${this._handleFederalStateSelection}
-            style="width: 100%"
-          >
-          <md-select-option value="Baden-Württemberg">
-            <div slot="headline">Baden-Württemberg</div>
-           </md-select-option>
-           <md-select-option value="Bayern">
-             <div slot="headline">Bayern</div>
-            </md-select-option>
-            <md-select-option value="Berlin">
-             <div slot="headline">Berlin</div>
-            </md-select-option>
-            <md-select-option value="Brandenburg">
-              <div slot="headline">Brandenburg</div>
-            </md-select-option>
-            <md-select-option value="Bremen">
-              <div slot="headline">Bremen</div>
-            </md-select-option>
-            <md-select-option value="Hamburg">
-              <div slot="headline">Hamburg</div>
-            </md-select-option>
-            <md-select-option value="Hessen">
-              <div slot="headline">Hessen</div>
-            </md-select-option>
-            <md-select-option value="Mecklenburg-Vorpommern">
-              <div slot="headline">Mecklenburg-Vorpommern</div>
-            </md-select-option>
-            <md-select-option value="Niedersachsen">
-              <div slot="headline">Niedersachsen</div>
-            </md-select-option>
-            <md-select-option value="Nordrhein-Westfalen">
-              <div slot="headline">Nordrhein-Westfalen</div>
-            </md-select-option>
-            <md-select-option value="Rheinland-Pfalz">
-              <div slot="headline">Rheinland-Pfalz</div>
-            </md-select-option>
-            <md-select-option value="Saarland">
-              <div slot="headline">Saarland</div>
-            </md-select-option>
-            <md-select-option value="Sachsen">
-              <div slot="headline">Sachsen</div>
-            </md-select-option>
-            <md-select-option value="Sachsen-Anhalt">
-              <div slot="headline">Sachsen-Anhalt</div>
-            </md-select-option>
-            <md-select-option value="Schleswig-Holstein">
-              <div slot="headline">Schleswig-Holstein</div>
-            </md-select-option>
-            <md-select-option value="Thüringen">
-              <div slot="headline">Thüringen</div>
-            </md-select-option>
-            <md-select-option value="Ausland">
-              <div slot="headline">Ich wohne im Ausland</div>
-            </md-select-option>
-          </md-filled-select>
-          <div class="invisible-icon"></div>
-          </div>
-
-          <div class="field-with-tooltip">
-            <md-filled-select
-              label="Land"
-              name="current-country"
-              class="hidden"
+            <md-filled-tonal-button
+              @click=${this._openDatePicker}
+              type="button"
+              name="apply"
               style="width: 100%"
             >
-
-            ${this._renderCountryOptions()}
-            </md-filled-select>
-            <div class="invisible-icon"></div>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  private _renderTeamTypeDropdown(){
-    return html`
-      <div class="field-with-tooltip">
-        <md-filled-select
-          label="Teamtyp"
-          name="team-type"
-          required
-          @change=${this._handleTeamTypeSelection}
-          style="width: 100%"
-        >
-          <md-select-option value="herren">
-            <div slot="headline">Herren</div>
-          </md-select-option>
-          <md-select-option value="a-junioren">
-            <div slot="headline">A-Junioren</div>
-          </md-select-option>
-          <md-select-option value="frauen">
-            <div slot="headline">Frauen</div>
-          </md-select-option>
-          <md-select-option value="a-juniorinnen">
-            <div slot="headline">A-Juniorinnen</div>
-          </md-select-option>
-        </md-filled-select>
-      <div class="invisible-icon"></div>
-      </div>
-    `;
-  }
-
-  private _renderFootballQuestions() {
-    return html`
-    <div>
-      <div class="form-header">
-        <h2 class="display-small">Deine Fußballerfahrung</h2>
-      </div>
-      <div class="form-fields">
-      <div class="field-with-tooltip">
-        <md-filled-select
-          label="Deine Position"
-          name="position"
-          required
-          style="width: 100%"
-        >
-          <md-select-option value="stürmer">
-            <div slot="headline">Stürmer</div>
-          </md-select-option>
-          <md-select-option value="mittelfeldspieler">
-            <div slot="headline">Mittelfeldspieler</div>
-          </md-select-option>
-          <md-select-option value="verteidiger">
-            <div slot="headline">Verteidiger</div>
-          </md-select-option>
-          <md-select-option value="torwart">
-            <div slot="headline">Torwart</div>
-          </md-select-option>
-        </md-filled-select>
-        <div class="invisible-icon"></div>
-      </div>
-        ${this._renderTeamTypeDropdown()}
-        ${this._renderActiveExperience()}
-        <div id="international-active-experience" class="hidden form-fields">
-          ${this._renderInternationalActiveExperience()}
-        </div>
-        <div id="domestic-active-experience" class="hidden form-fields">
-          ${this._renderSpielklasse()}
-        </div>
-
-        
-        <md-filled-text-field
-          label="Welche sonstige Spielklasse?"
-          name="other-experience"
-          hidden
-          max="250"
-          class="hidden"
-        ></md-filled-text-field>
-        
-          <md-filled-text-field
-            label="In welchem Verein spielst Du"
-            name="club"
-            max="250"
-            style="width: 100%"
-            @blur=${BallerForm._reportFieldValidity}
-            class="hidden contain-shape"
-          ></md-filled-text-field>
-
-        ${this._renderHistoricalExperience()}
-        <div id="domestic-historical-experience" class="hidden form-fields">
-          ${this._renderDomesticHistoricalExperience()}
-        </div>
-
-        <div id="international-historical-experience" class="hidden form-fields">
-          ${this._renderInternationalHistoricalExperience()}
-        </div>
-        
-      </div>
-    </div>
-  `;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  private _renderCountryOptions() {
-    return html`
-    <md-select-option value="Belgien">
-      <div slot="headline">Belgien</div>
-    </md-select-option>
-    <md-select-option value="Bulgarien">
-      <div slot="headline">Bulgarien</div>
-    </md-select-option>
-    <md-select-option value="Dänemark">
-    <div slot="headline">Dänemark</div>
-    </md-select-option>
-    <md-select-option value="Estland">
-      <div slot="headline">Estland</div>
-    </md-select-option>
-    <md-select-option value="Finnland">
-      <div slot="headline">Finnland</div>
-    </md-select-option>
-    <md-select-option value="Frankreich">
-      <div slot="headline">Frankreich</div>
-    </md-select-option>
-    <md-select-option value="Griechenland">
-      <div slot="headline">Griechenland</div>
-    </md-select-option>
-    <md-select-option value="Irland">
-      <div slot="headline">Irland</div>
-    </md-select-option>
-    <md-select-option value="Italien">
-      <div slot="headline">Italien</div>
-    </md-select-option>
-    <md-select-option value="Kroatien">
-      <div slot="headline">Kroatien</div>
-    </md-select-option>
-    <md-select-option value="Lettland">
-      <div slot="headline">Lettland</div>
-    </md-select-option>
-    <md-select-option value="Litauen">
-      <div slot="headline">Litauen</div>
-    </md-select-option>
-    <md-select-option value="Luxemburg">
-      <div slot="headline">Luxemburg</div>
-    </md-select-option>
-    <md-select-option value="Malta">
-      <div slot="headline">Malta</div>
-    </md-select-option>
-    <md-select-option value="Niederlande">
-      <div slot="headline">Niederlande</div>
-    </md-select-option>
-    <md-select-option value="Polen">
-      <div slot="headline">Polen</div>
-    </md-select-option>
-    <md-select-option value="Portugal">
-      <div slot="headline">Portugal</div>
-    </md-select-option>
-    <md-select-option value="Rumänien">
-      <div slot="headline">Rumänien</div>
-    </md-select-option>
-    <md-select-option value="Schweden">
-      <div slot="headline">Schweden</div>
-    </md-select-option>
-    <md-select-option value="Slowakei">
-      <div slot="headline">Slowakei</div>
-    </md-select-option>
-    <md-select-option value="Slowenien">
-      <div slot="headline">Slowenien</div>
-    </md-select-option>
-    <md-select-option value="Spanien">
-      <div slot="headline">Spanien</div>
-    </md-select-option>
-    <md-select-option value="Tschechische Republik">
-      <div slot="headline">Tschechische Republik</div>
-    </md-select-option>
-    <md-select-option value="Ungarn">
-      <div slot="headline">Ungarn</div>
-    </md-select-option>
-    <md-select-option value="Zypern">
-      <div slot="headline">Zypern</div>
-    </md-select-option>
-    <md-select-option value="Österreich">
-      <div slot="headline">Österreich</div>
-    </md-select-option>
-    `;
-  }
-
-  private _renderSocialQuestions() {
-    return html`
-      <div>
-        <div class="form-header big-top-padding">
-          <h2 class="display-small">Zeig uns, was Du kannst</h2>
-          <h3 class="headline-small">Diese Angaben sind optional. Um so mehr wir von Dir wissen, um so höher sind Deine Chancen.</h3>
-        </div>
-        <div class="form-fields">
-        <div class="field-with-tooltip">
-          <md-filled-text-field
-            label="Highlight Tape (URL)"
-            name="highlight-tape"
-            max="250"
-            style="width: 100%"
-            @blur=${BallerForm._reportFieldValidity}
-          ></md-filled-text-field>
-          
-          ${this._renderTooltip(tooltipMessages.highlight)}
-        </div>
-          <div class="field-with-tooltip">
-          <md-filled-text-field
-            label="Link Transfermarkt"
-            name="transfermarkt"
-            max="250"
-            style="width: 100%"
-            @blur=${BallerForm._reportFieldValidity}
-          ></md-filled-text-field>
+              Termine auswählen
+            </md-filled-tonal-button>
             <div class="invisible-icon"></div>
           </div>
 
-          <div class="field-with-tooltip">
-            <md-filled-text-field
-              label="YouTube"
-              autocomplete="username"
-              max="250"
-              name="youtube"
-              style="width: 100%"
-            >
-            </md-filled-text-field>
-            <div class="invisible-icon"></div>
-          </div>
-
-          <div class="field-with-tooltip">
-            <md-filled-text-field
-              label="Instagram"
-              autocomplete="username"
-              max="250"
-              name="instagram"
-              style="width: 100%"
-            >
-            </md-filled-text-field>
-            <div class="invisible-icon"></div>
-          </div>
-
-          <div class="field-with-tooltip">
-            <md-filled-text-field
-              label="TikTok"
-              autocomplete="username"
-              max="250"
-              name="tiktok"
-              style="width: 100%"
-            >
-            </md-filled-text-field>
-            <div class="invisible-icon"></div>
-          </div>
-
-          <div class="field-with-tooltip">
-            <md-filled-text-field
-              label="XING"
-              autocomplete="username"
-              max="250"
-              name="xing" 
-              style="width: 100%"
-            >
-            </md-filled-text-field>
-            <div class="invisible-icon"></div>
-          </div>
-
-          <div class="field-with-tooltip">
-            <md-filled-text-field type="textarea" rows="6" name="freeform" label="Achievements oder Anmerkungen" maxLength=250 style="width: 100%">
-            </md-filled-text-field>
-            ${this._renderTooltip(tooltipMessages.achievments)}
-          </div>
-
-          <div class="field-with-tooltip">
-            <md-filled-select
-              label="Ich bin verfügbar am"
-              name="availability"
-              required
-              style="width: 100%"
-            >
-              <md-select-option value="16. Dezember 2023">
-                <div slot="headline">16. Dezember 2023</div>
-              </md-select-option>
-              <md-select-option value="17. Dezember 2023">
-                <div slot="headline">17. Dezember 2023</div>
-              </md-select-option>
-              <md-select-option value="An beiden Tagen">
-                <div slot="headline">An beiden Tagen</div>
-              </md-select-option>
-              <md-select-option value="An einem anderen Tag">
-                <div slot="headline">An einem anderen Tag</div>
-              </md-select-option>
-            </md-filled-select>
-            ${this._renderTooltip(tooltipMessages.dates)}
-          </div>
-
-          <p class="label-medium" style="max-width: 420px;">
-          Als Kooperationspartner der Baller League leitet die New Work SE Deine Bewerbungsdaten an die 
-          BALLER LEAGUE GmbH weiter. Es gelten hierfür die 
-          <a href="/datenschutz/" target="_blank" style="color: #0698A0; text-decoration: none;">Datenschutzbestimmungen</a> 
-          für das Bewerbungsverfahren der BALLER LEAGUE.
-          </p>
           <div class="field-with-tooltip">
             
             <label class="label-medium inline-label">
@@ -1053,289 +518,21 @@ export class BallerForm extends LitElement {
                 style="min-width: 1.2rem"
               ></md-checkbox>
               <span>
-              Ja, ich möchte den regelmäßig erscheinenden E-Mail Newsletter von XING mit exklusiven Ticketverlosungen und Angeboten rund um die Baller League erhalten. Abmeldung jederzeit möglich. Es gelten die 
-              <a href="https://www.new-work.se/de/datenschutz" target="_blank" style="color: #0698A0; text-decoration: none;">Datenschutzbestimmungen</a> der New Work SE.
+                Ja, ich möchte den regelmäßig erscheinenden E-Mail Newsletter von XING mit exklusiven Ticketverlosungen und Angeboten rund um die Baller League 
+                erhalten. Abmeldung jederzeit möglich. Es gelten die
+                <a href="https://www.new-work.se/de/datenschutz" target="_blank" style="color: #0698A0; text-decoration: none;">Datenschutzbestimmungen</a>
+                der New Work SE. Mit der Teilnahme am Gewinnspiel stimmst Du unseren 
+                <a href="#" target="_blank" style="color: #0698A0; text-decoration: none;">Teilnahmebedingungen</a>
+                zu.
               </span>
             </label>
             <div class="invisible-icon"></div>
           </div>
+
         </div>
       </div>
     `;
-  
-
-}
-
-  // eslint-disable-next-line class-methods-use-this
-  private _renderMensLeagueDropdown(){
-    return html`
-      <md-select-option value="1-bundesliga">
-        <div slot="headline">1. Bundesliga</div>
-      </md-select-option>
-      <md-select-option value="2-bundesliga">
-        <div slot="headline">2. Bundesliga</div>
-      </md-select-option>
-      <md-select-option value="3-liga">
-        <div slot="headline">3. Liga</div>
-      </md-select-option>
-      <md-select-option value="regionalliga">
-        <div slot="headline">Regionalliga</div>
-      </md-select-option>
-      <md-select-option value="oberliga">
-        <div slot="headline">Oberliga</div>
-      </md-select-option>
-      <md-select-option value="verbands-landesliga">
-        <div slot="headline">Verbands/Landesliga</div>
-      </md-select-option>
-      <md-select-option value="bezirks-kreisklasse">
-        <div slot="headline">Bezirks/Kreisklasse</div>
-      </md-select-option>
-      <md-select-option value="andere">
-        <div slot="headline">Andere</div>
-      </md-select-option>
-    `;
   }
-
-  // eslint-disable-next-line class-methods-use-this
-  private _renderBoysLeagueDropdown(){
-    return html`
-      <md-select-option value="bundesliga">
-        <div slot="headline">Bundesliga</div>
-      </md-select-option>
-      <md-select-option value="regionalliga-oberliga">
-        <div slot="headline">Regionalliga/Oberliga</div>
-      </md-select-option>
-      <md-select-option value="verbands-landesliga">
-        <div slot="headline">Verbands/Landesliga</div>
-      </md-select-option>
-      <md-select-option value="andere">
-        <div slot="headline">Andere</div>
-      </md-select-option>
-    `;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  private _renderWomensLeagueDropdown(){
-    return html`
-      <md-select-option value="1-bundesliga">
-        <div slot="headline">1. Bundesliga</div>
-      </md-select-option>
-      <md-select-option value="2-bundesliga">
-        <div slot="headline">2. Bundesliga</div>
-      </md-select-option>
-      <md-select-option value="regionalliga">
-        <div slot="headline">Regionalliga</div>
-      </md-select-option>
-      <md-select-option value="verbands-landesliga">
-        <div slot="headline">Verbands/Landesliga</div>
-      </md-select-option>
-      <md-select-option value="andere">
-        <div slot="headline">Andere</div>
-      </md-select-option>
-    `;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  private _renderGirlsLeagueDropdown(){
-    return html`
-      <md-select-option value="regionalliga-oberliga">
-        <div slot="headline">Regionalliga/Oberliga</div>
-      </md-select-option>
-      <md-select-option value="verbands-landesliga">
-        <div slot="headline">Verbands/Landesliga</div>
-      </md-select-option>
-      <md-select-option value="andere">
-        <div slot="headline">Andere</div>
-      </md-select-option>
-    `;
-  }
-
-  private _renderSpielklasse() {
-
-    return html`
-    <div class="field-with-tooltip">
-      <md-filled-select
-        label="Spielklasse"
-        name="spielklasse"
-        @change=${this._handleExperienceSelection}
-        style="width: 100%;"
-      >
-      ${this.leageOptions}
-      </md-filled-select>
-      <div class="invisible-icon"></div>
-    </div>
-    `;
-  }
-
-  private _renderActiveExperience(){
-    return html`
-    <div class="field-with-tooltip">
-      <md-filled-select
-        label="Wie bist Du gerade aktiv"
-        name="active-experience"
-        required
-        @change=${this._handleActiveExperienceSelection}
-        style="width: 100%;"
-      >
-        <md-select-option value="deutschland">
-          <div slot="headline">Ich spiele in Deutschland</div>
-        </md-select-option>
-        <md-select-option value="vereinslos">
-          <div slot="headline">Bin aktuell vereinslos</div>
-        </md-select-option>
-        <md-select-option value="international">
-          <div slot="headline">Ich spiele im Ausland</div>
-        </md-select-option>
-      </md-filled-select>
-      <div class="invisible-icon"></div>
-    </div>
-    `;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  private _renderInternationalActiveExperience(){
-    return html`
-    <div class="field-with-tooltip">
-      <md-filled-select
-          label="Land"
-          name="international-current-team-country"
-          style="width: 100%;"
-        >
-        ${this._renderCountryOptions()}
-      </md-filled-select>
-    <div class="invisible-icon"></div>
-    </div>
-
-    <div class="field-with-tooltip">
-      <md-filled-text-field
-        label="Liga"
-        maxLength="100"
-        @blur=${BallerForm._reportFieldValidity}
-        name="current-international-league"
-        style="width: 100%;"
-      ></md-filled-text-field>
-      <div class="invisible-icon"></div>
-    </div>
-    `;
-  }
-
-  private _renderHistoricalExperience(){
-    if (this.noExperience) {
-      return html`
-        <div class="field-with-tooltip">
-          <md-filled-select
-            label="Deine höchstgespielte Spielklasse"
-            name="highest-experience"
-            required
-            @change=${this._handleHighestExperienceSelection}
-            style="width: 100%"
-          >
-            <md-select-option value="deutschland">
-              <div slot="headline">In Deutschland</div>
-            </md-select-option>
-            <md-select-option value="international">
-              <div slot="headline">Im Ausland</div>
-            </md-select-option>
-          </md-filled-select>
-          <div class="invisible-icon"></div>
-        </div>
-      `;
-    }
-
-    return html`
-      <div class="field-with-tooltip">
-        <md-filled-select
-          label="Deine höchstgespielte Spielklasse"
-          name="highest-experience"
-          required
-          @change=${this._handleHighestExperienceSelection}
-          style="width: 100%"
-        >
-          <md-select-option value="dasselbe">
-            <div slot="headline">die, in der ich jetzt gerade spiele</div>
-          </md-select-option>
-          <md-select-option value="deutschland">
-            <div slot="headline">In Deutschland</div>
-          </md-select-option>
-          <md-select-option value="international">
-            <div slot="headline">Im Ausland</div>
-          </md-select-option>
-        </md-filled-select>
-        <div class="invisible-icon"></div>
-      </div>
-      `;
-    
-    
-  }
-
-   // eslint-disable-next-line class-methods-use-this
-   private _renderInternationalHistoricalExperience(){
-    return html`
-    <div class="field-with-tooltip">
-      <md-filled-text-field
-        label="Land"
-        maxLength="100"
-        @blur=${BallerForm._reportFieldValidity}
-        name="historical-experience-country"
-        style="width: 100%"
-      ></md-filled-text-field>
-      <div class="invisible-icon"></div>
-    </div>
-
-    <div class="field-with-tooltip">
-      <md-filled-text-field
-        label="Liga"
-        maxLength="100"
-        @blur=${BallerForm._reportFieldValidity}
-        name="historical-experience-league"
-        style="width: 100%"
-      ></md-filled-text-field>
-      <div class="invisible-icon"></div>
-    </div>
-    `;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  private _renderDomesticHistoricalExperience(){
-    return html`
-    <div class="field-with-tooltip">
-      <md-filled-select
-        label="Deine höchstgespielte Spielklasse"
-        name="highest-domestic-experience"
-        @change=${this._handleHighestDomesticExperienceSelection}
-        style="width: 100%"
-      >
-        ${this.leageOptions}
-      </md-filled-select>
-      <div class="invisible-icon"></div>
-    </div>
-
-    <div class="field-with-tooltip" >
-      <md-filled-text-field
-        label="Liga"
-        maxLength="100"
-        @blur=${BallerForm._reportFieldValidity}
-        name="domestic-historical-experience-league"
-        style="width: 100%"
-        id="domestic-other-league"
-        class="hidden"
-      ></md-filled-text-field>
-      <div class="invisible-icon"></div>
-    </div>
-    `;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  private _renderTooltip(message: string){
-    return html`
-      <span class="tooltip-toggle" aria-label="${message}" tabindex="0">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2ZM12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4ZM13 11V17H11V11H13ZM13 7V9H11V7H13Z" fill="#1D2124"/>
-        </svg>
-      </span>
-    `;
-  }
-
 }
 
 declare global {

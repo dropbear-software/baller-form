@@ -93,42 +93,7 @@ export class EnrollmentService {
           email: data.email,
           first_name: data.givenName,
           last_name: data.familyName,
-          tel: data.telephone,
           accepted_conditions: data.acceptedTos,
-          personal_details: {
-            first_name: data.givenName,
-            last_name: data.familyName,
-            email: data.email,
-            tel: data.telephone,
-            dob: data.birthDate,
-            bundesland: data.bundesland,
-            current_country: data.currentCountry,
-            clothes_size: data.shirt
-          },
-          experience_level: {
-            position: data.position,
-            current_status: {
-              land: data.currentTeamCountry,
-              association: data.clubName,
-              team_type: data.currentTeamType,
-              league: data.currentLeague,
-              other: data.otherExperience,
-            },
-            highest_status: {
-              land: data.highestTeamCountry,
-              league: data.highestTeamLeague,
-            }
-          },
-          other_details: {
-            highlight_tape: data.highlightTape,
-            link_transfermarket: data.transfermarktProfile,
-            youtube_link: data.youTube,
-            instagram_link: data.instagram,
-            tiktok_link: data.tikTok,
-            xing: data.xing,
-            comment: data.comments,
-            availability: data.availability,
-          }
         }
       ]
     }
