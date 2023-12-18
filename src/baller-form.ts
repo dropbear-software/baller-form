@@ -184,6 +184,9 @@ export class BallerForm extends LitElement {
   @state()
   leageOptions = this._renderMensLeagueDropdown();
 
+  @state()
+  private noExperience = false;
+
   private _enrollmentService?: EnrollmentService;
 
   private _spamService?: SpamService;
@@ -391,6 +394,8 @@ export class BallerForm extends LitElement {
   private _handleActiveExperienceSelection(e: Event){
     // @ts-ignore
     const activeExperience = e.target.value;
+
+    this.noExperience = (activeExperience === 'vereinslos');
 
     switch (activeExperience) {
       case 'deutschland':
@@ -1215,28 +1220,52 @@ export class BallerForm extends LitElement {
   }
 
   private _renderHistoricalExperience(){
+    if (this.noExperience) {
+      return html`
+        <div class="field-with-tooltip">
+          <md-filled-select
+            label="Deine höchstgespielte Spielklasse"
+            name="highest-experience"
+            required
+            @change=${this._handleHighestExperienceSelection}
+            style="width: 100%"
+          >
+            <md-select-option value="deutschland">
+              <div slot="headline">In Deutschland</div>
+            </md-select-option>
+            <md-select-option value="international">
+              <div slot="headline">Im Ausland</div>
+            </md-select-option>
+          </md-filled-select>
+          <div class="invisible-icon"></div>
+        </div>
+      `;
+    }
+
     return html`
-    <div class="field-with-tooltip">
-      <md-filled-select
-        label="Deine höchstgespielte Spielklasse"
-        name="highest-experience"
-        required
-        @change=${this._handleHighestExperienceSelection}
-        style="width: 100%"
-      >
-        <md-select-option value="dasselbe">
-          <div slot="headline">die, in der ich jetzt gerade spiele</div>
-        </md-select-option>
-        <md-select-option value="deutschland">
-          <div slot="headline">In Deutschland</div>
-        </md-select-option>
-        <md-select-option value="international">
-          <div slot="headline">Im Ausland</div>
-        </md-select-option>
-      </md-filled-select>
-      <div class="invisible-icon"></div>
-    </div>
-    `;
+      <div class="field-with-tooltip">
+        <md-filled-select
+          label="Deine höchstgespielte Spielklasse"
+          name="highest-experience"
+          required
+          @change=${this._handleHighestExperienceSelection}
+          style="width: 100%"
+        >
+          <md-select-option value="dasselbe">
+            <div slot="headline">die, in der ich jetzt gerade spiele</div>
+          </md-select-option>
+          <md-select-option value="deutschland">
+            <div slot="headline">In Deutschland</div>
+          </md-select-option>
+          <md-select-option value="international">
+            <div slot="headline">Im Ausland</div>
+          </md-select-option>
+        </md-filled-select>
+        <div class="invisible-icon"></div>
+      </div>
+      `;
+    
+    
   }
 
    // eslint-disable-next-line class-methods-use-this
