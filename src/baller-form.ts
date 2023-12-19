@@ -6,6 +6,7 @@ import type { MdFilledButton } from '@material/web/button/filled-button.js';
 import type { MdCheckbox } from '@material/web/checkbox/checkbox.js';
 import type { MdFilledTextField } from '@material/web/textfield/filled-text-field.js';
 import type { MdDialog } from '@material/web/dialog/dialog.js';
+import type { MdFilledSelect } from '@material/web/select/filled-select.js';
 
 import { componentStyles } from './baller-form.css.js';
 import { ApplicationData, ApplicationDataInit } from './application-data.js';
@@ -89,6 +90,9 @@ export class BallerForm extends LitElement {
   @query('form#application-form')
   applicationFormElement!: HTMLFormElement;
 
+  @query('form#date-selection')
+  dateSelectionForm!: HTMLFormElement;
+
   @query('md-filled-text-field[autocomplete="given-name"]')
   firstName!: MdFilledTextField;
 
@@ -97,6 +101,9 @@ export class BallerForm extends LitElement {
 
   @query('md-filled-text-field[autocomplete="email"]')
   email!: MdFilledTextField;
+
+  @query('md-filled-select[name="xing-member"]')
+  xingMember!: MdFilledSelect;
 
   @query('[data-element="tos"]')
   termsOfServiceBox!: MdCheckbox;
@@ -114,6 +121,9 @@ export class BallerForm extends LitElement {
 
   @state()
   private successPage = new URL('/bewerbung-erfolgreich/', window.location.origin);
+
+  @state()
+  private selectedDates = new Set<string>();
 
   private _enrollmentService?: EnrollmentService;
 
@@ -218,6 +228,8 @@ export class BallerForm extends LitElement {
       familyName: this.familyName.value,
       givenName: this.firstName.value,
       email: this.email.value,
+      xingMember: this.xingMember.value === 'true',
+      availableDates: this.selectedDates,
       acceptedTos: this.termsOfServiceBox.checked
     };
 
@@ -228,8 +240,9 @@ export class BallerForm extends LitElement {
 
   private _shouldEnableSubmit(): boolean {
     const hasAcceptedDatenschutz = this.termsOfServiceBox.checked;
+    const hasSelectedDate = this.selectedDates.size !== 0;
 
-    return hasAcceptedDatenschutz;
+    return hasAcceptedDatenschutz && hasSelectedDate;
   }
 
   
@@ -239,9 +252,28 @@ export class BallerForm extends LitElement {
   private _onSuccessDialogClose(){
     this.successDialog.close();
     this.applicationFormElement.reset();
+    this.dateSelectionForm.reset();
   }
 
-  private _onDateSelection(){
+  // eslint-disable-next-line class-methods-use-this
+  private _onDateSelection(e: Event){
+    // @ts-ignore
+    const isSelected = e.target!.checked;
+    // @ts-ignore
+    const selectedDate = e.target!.dataset.date;
+
+    if (isSelected) {
+      this.selectedDates.add(selectedDate);
+    } else {
+      this.selectedDates.delete(selectedDate);
+    }
+    this.requestUpdate();
+    this._updateSubmitButton();
+  }
+
+  
+  private _onDateFormSubmit(e: PointerEvent){
+    e.preventDefault();
     this.datePicker.close();
   }
 
@@ -280,7 +312,7 @@ export class BallerForm extends LitElement {
     }
   }
 
-  private _handleLegalChange() {
+  private _updateSubmitButton() {
     if (this._shouldEnableSubmit()) {
       this.submitButton.disabled = false;
     } else {
@@ -357,41 +389,52 @@ export class BallerForm extends LitElement {
       new Date("2024-03-23T14:00:00.000+01:00"),
     ];
 
+    let headline;
+
+    if (this.selectedDates.size === 1) {
+      headline = html`${this.selectedDates.size} Datum ausgewählt`;
+    } else {
+      headline = html`${this.selectedDates.size} Termine ausgewählt`;
+    }
+
     return html`
       <md-dialog type="alert" data-reason="dates">
-        <div slot="headline" class="display-small">Headline</div>
+        <div slot="headline" class="display-small">
+          ${headline}
+        </div>
 
         <md-list slot="content">
-          <p class="label-medium">
-            Some supporting text
-          </p>
+          <form id="date-selection">
         ${availableDates.map((matchDate) => 
           html`
-          <md-list-item type="button">
-            <div slot="headline">
-              ${matchDate.toLocaleDateString('de-DE', {
-                weekday: 'long',
-                day: 'numeric',
-                year: 'numeric',
-                month: 'long',
-              })}
-            </div>
-            <div slot="supporting-text">
-              ${matchDate.toLocaleTimeString('de-DE', {
-                hour: 'numeric',
-                minute: 'numeric',
-                timeZone: 'CET',
-                timeZoneName: 'longGeneric'
-              })}
-            </div>
-            <div slot="trailing-supporting-text">+</div>
-          </md-list-item>
-          `
-        )}
+          <label>
+            <md-list-item type="button">
+              <div slot="headline">
+                ${matchDate.toLocaleDateString('de-DE', {
+                  weekday: 'long',
+                  day: 'numeric',
+                  year: 'numeric',
+                  month: 'long',
+                })}
+              </div>
+              <div slot="supporting-text">
+                ${matchDate.toLocaleTimeString('de-DE', {
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  timeZone: 'CET',
+                  timeZoneName: 'longGeneric'
+                })}
+              </div>
+              <div slot="trailing-supporting-text">
+                <md-checkbox touch-target="wrapper" data-date=${matchDate.toISOString()} @change=${this._onDateSelection}></md-checkbox>
+              </div>
+            </md-list-item>
+          </label>`)}
+          </form>
         </md-list>
         <div slot="actions">
-          <md-filled-button form="date-selection" value="close" @click=${this._onDateSelection}>
-            Schließen
+          <md-filled-button value="close" @click=${this._onDateFormSubmit}>
+            Bestätigen
           </md-filled-button>
         </div>
       </md-dialog>
@@ -513,7 +556,7 @@ export class BallerForm extends LitElement {
             <label class="label-medium inline-label">
               <md-checkbox
                 touch-target="wrapper"
-                @change=${this._handleLegalChange}
+                @change=${this._updateSubmitButton}
                 data-element="tos"
                 style="min-width: 1.2rem"
               ></md-checkbox>

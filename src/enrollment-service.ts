@@ -93,6 +93,8 @@ export class EnrollmentService {
           email: data.email,
           first_name: data.givenName,
           last_name: data.familyName,
+          xing_member: data.xingMember,
+          selected_dates: data.availableDates,
           accepted_conditions: data.acceptedTos,
         }
       ]

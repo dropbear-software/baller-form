@@ -50,8 +50,11 @@ export const componentStyles = css`
 
   md-checkbox {
     --md-checkbox-outline-color: #BCC9D1;
-    --md-checkbox-selected-container-color: var(--baller-form-selected-container-color, #4b6700);
+    --md-checkbox-selected-container-color: #1b1c17;
     --md-checkbox-selected-icon-color: var(--baller-form-selected-icon-color, #ffffff);
+    --md-checkbox-container-shape: 1px;
+    --md-focus-ring-color: #1b1c17;
+    padding: 1rem;
   }
 
   md-filled-text-field {
@@ -63,7 +66,7 @@ export const componentStyles = css`
     --md-filled-field-hover-input-text-color: #5E737D;
     --md-filled-field-supporting-text-color: #5E737D;
     --md-filled-field-hover-supporting-text-color: #5E737D;
-    --md-filled-text-field-focus-outline-color: var(--baller-form-text-field-focus-outline-color, #4b6700);
+    --md-filled-text-field-focus-outline-color: var(--baller-form-text-field-focus-outline-color, #1b1c17);
     --md-filled-text-field-label-text-font: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
     --md-filled-text-field-input-text-font: var(--baller-form-font-family, "Open Sans", "Trebuchet MS", Arial, "Helvetica Neue", sans-serif);
   }
