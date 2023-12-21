@@ -361,7 +361,7 @@ export class BallerForm extends LitElement {
             disabled
             style="width: 100%"
           >
-          Jetzt bewerben
+          Jetzt teilnehmen
           </md-outlined-button>
         </div>
       </form>
