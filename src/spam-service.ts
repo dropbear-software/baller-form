@@ -26,7 +26,7 @@ export class SpamService {
   readonly minimumTrustRequired = 0.4;
 
   // Simple flag to set if we are actually using this feature or not
-  featureEnabled = false;
+  featureEnabled = true;
 
   constructor(siteKey: string, endpoint: string) {
     this.siteKey = siteKey;
