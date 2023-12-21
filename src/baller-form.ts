@@ -560,7 +560,7 @@ export class BallerForm extends LitElement {
             <div class="invisible-icon"></div>
           </div>
 
-          <div class="field-with-tooltip">
+          <div class="field-with-tooltip tos-section">
             
             <label class="label-medium inline-label">
               <md-checkbox
@@ -574,7 +574,7 @@ export class BallerForm extends LitElement {
                 erhalten. Abmeldung jederzeit möglich. Es gelten die
                 <a href="https://www.new-work.se/de/datenschutz" target="_blank" style="color: #0698A0; text-decoration: none;">Datenschutzbestimmungen</a>
                 der New Work SE. Mit der Teilnahme am Gewinnspiel stimmst Du unseren 
-                <a href="#" target="_blank" style="color: #0698A0; text-decoration: none;">Teilnahmebedingungen</a>
+                <a href="/gewinnspielteilnahmebedingungen" target="_blank" style="color: #0698A0; text-decoration: none;">Teilnahmebedingungen</a>
                 zu.
               </span>
             </label>
