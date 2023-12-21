@@ -373,7 +373,21 @@ export class BallerForm extends LitElement {
     `;
   }
 
+  private static _renderMatchTimes(matchTime: Date, useExactTimes = false){
+    if (useExactTimes) {
+      return html`${matchTime.toLocaleTimeString('de-DE', {
+        hour: 'numeric',
+        minute: 'numeric',
+        timeZone: 'CET',
+        timeZoneName: 'longGeneric'
+      })}`;
+    }
+
+    return html`ab nachmittags`;
+  }
+
   private _renderDateSelectionDialog(){
+
     const availableDates = [
       new Date("2024-01-08T14:00:00.000+01:00"),
       new Date("2024-01-15T14:00:00.000+01:00"),
@@ -418,12 +432,7 @@ export class BallerForm extends LitElement {
                 })}
               </div>
               <div slot="supporting-text">
-                ${matchDate.toLocaleTimeString('de-DE', {
-                  hour: 'numeric',
-                  minute: 'numeric',
-                  timeZone: 'CET',
-                  timeZoneName: 'longGeneric'
-                })}
+                ${BallerForm._renderMatchTimes(matchDate)}
               </div>
               <div slot="trailing-supporting-text">
                 <md-checkbox touch-target="wrapper" data-date=${matchDate.toISOString()} @change=${this._onDateSelection}></md-checkbox>

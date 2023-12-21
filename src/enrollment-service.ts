@@ -84,7 +84,7 @@ export class EnrollmentService {
         {
           email: data.email,
           app_id: '220983e3-8db5-49d5-8272-620b09b1f7fa',
-          name: 'Submit_BallerLeague_Application',
+          name: 'Submit_Newsletter_Sweepstake',
           time: new Date().toISOString(),
         },
       ],
