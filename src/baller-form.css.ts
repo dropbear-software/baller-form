@@ -108,6 +108,15 @@ export const componentStyles = css`
     background-color: var(--baller-form-color-background, #fefcf4);
     padding: 1.5rem;
     margin: 0 auto;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-header {
+    margin-block-end: 2rem;
+  }
+
+  .tos-section {
+    margin-block: 1.5rem;
   }
 
   .form-fields { 
