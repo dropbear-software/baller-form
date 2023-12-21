@@ -57,6 +57,10 @@ export const componentStyles = css`
     padding: 1rem;
   }
 
+  md-dialog {
+    --md-dialog-container-color: white;
+  }
+
   md-filled-text-field {
     --md-filled-text-field-active-indicator-color: #5E737D;
     --md-filled-text-field-container-color: #F4F4F5;
