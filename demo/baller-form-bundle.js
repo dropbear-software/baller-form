@@ -108,6 +108,15 @@
     background-color: var(--baller-form-color-background, #fefcf4);
     padding: 1.5rem;
     margin: 0 auto;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-header {
+    margin-block-end: 2rem;
+  }
+
+  .tos-section {
+    margin-block: 1.5rem;
   }
 
   .form-fields { 
@@ -668,7 +677,7 @@
             disabled
             style="width: 100%"
           >
-          Jetzt bewerben
+          Jetzt teilnehmen
           </md-outlined-button>
         </div>
       </form>
@@ -807,7 +816,7 @@
             <div class="invisible-icon"></div>
           </div>
 
-          <div class="field-with-tooltip">
+          <div class="field-with-tooltip tos-section">
             
             <label class="label-medium inline-label">
               <md-checkbox
@@ -821,7 +830,7 @@
                 erhalten. Abmeldung jederzeit möglich. Es gelten die
                 <a href="https://www.new-work.se/de/datenschutz" target="_blank" style="color: #0698A0; text-decoration: none;">Datenschutzbestimmungen</a>
                 der New Work SE. Mit der Teilnahme am Gewinnspiel stimmst Du unseren 
-                <a href="#" target="_blank" style="color: #0698A0; text-decoration: none;">Teilnahmebedingungen</a>
+                <a href="/gewinnspielteilnahmebedingungen" target="_blank" style="color: #0698A0; text-decoration: none;">Teilnahmebedingungen</a>
                 zu.
               </span>
             </label>
