@@ -167,9 +167,6 @@ export class BallerForm extends LitElement {
   @query('md-filled-text-field[name="freeform"]')
   freeform!: MdFilledTextField;
 
-  @query('md-filled-select[name="availability"]')
-  availability!: MdFilledSelect;
-
   @query('[data-element="tos"]')
   termsOfServiceBox!: MdCheckbox;
 
@@ -280,7 +277,6 @@ export class BallerForm extends LitElement {
       tiktok: this.tiktok.value,
       xing: this.xing.value,
       comments: this.freeform.value,
-      availability: this.availability.value,
       acceptedTos: this.termsOfServiceBox.checked
     };
 
@@ -1012,29 +1008,6 @@ export class BallerForm extends LitElement {
             <md-filled-text-field type="textarea" rows="6" name="freeform" label="Achievements oder Anmerkungen" maxLength=250 style="width: 100%">
             </md-filled-text-field>
             ${this._renderTooltip(tooltipMessages.achievments)}
-          </div>
-
-          <div class="field-with-tooltip">
-            <md-filled-select
-              label="Ich bin verfügbar am"
-              name="availability"
-              required
-              style="width: 100%"
-            >
-              <md-select-option value="16. Dezember 2023">
-                <div slot="headline">16. Dezember 2023</div>
-              </md-select-option>
-              <md-select-option value="17. Dezember 2023">
-                <div slot="headline">17. Dezember 2023</div>
-              </md-select-option>
-              <md-select-option value="An beiden Tagen">
-                <div slot="headline">An beiden Tagen</div>
-              </md-select-option>
-              <md-select-option value="An einem anderen Tag">
-                <div slot="headline">An einem anderen Tag</div>
-              </md-select-option>
-            </md-filled-select>
-            ${this._renderTooltip(tooltipMessages.dates)}
           </div>
 
           <p class="label-medium" style="max-width: 420px;">

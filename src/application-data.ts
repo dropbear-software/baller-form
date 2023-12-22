@@ -27,7 +27,6 @@ export interface ApplicationDataInit {
   tiktok: string,
   xing: string,
   comments: string,
-  availability: string,
   acceptedTos: boolean,
 }
 
@@ -80,8 +79,6 @@ export class ApplicationData {
 
   readonly comments: string;
 
-  readonly availability: string;
-
   readonly acceptedTos: boolean;
 
   constructor(
@@ -111,7 +108,6 @@ export class ApplicationData {
     this.tikTok = args.tiktok;
     this.xing = args.xing;
     this.comments = args.comments;
-    this.availability = args.availability;
     this.acceptedTos = args.acceptedTos;
   }
   

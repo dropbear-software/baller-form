@@ -127,7 +127,6 @@ export class EnrollmentService {
             tiktok_link: data.tikTok,
             xing: data.xing,
             comment: data.comments,
-            availability: data.availability,
           }
         }
       ]
