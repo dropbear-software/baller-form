@@ -120,7 +120,7 @@ export class BallerForm extends LitElement {
   // Private Class Fields
 
   @state()
-  private successPage = new URL('/bewerbung-erfolgreich/', window.location.origin);
+  private successPage = new URL('/teilnahme-erfolgreich/', window.location.origin);
 
   @state()
   private selectedDates = new Set<string>();
@@ -389,7 +389,6 @@ export class BallerForm extends LitElement {
   private _renderDateSelectionDialog(){
 
     const availableDates = [
-      new Date("2024-01-08T14:00:00.000+01:00"),
       new Date("2024-01-15T14:00:00.000+01:00"),
       new Date("2024-01-22T14:00:00.000+01:00"),
       new Date("2024-01-29T14:00:00.000+01:00"),
