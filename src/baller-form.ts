@@ -389,9 +389,6 @@ export class BallerForm extends LitElement {
   private _renderDateSelectionDialog(){
 
     const availableDates = [
-      new Date("2024-01-15T14:00:00.000+01:00"),
-      new Date("2024-01-22T14:00:00.000+01:00"),
-      new Date("2024-01-29T14:00:00.000+01:00"),
       new Date("2024-02-05T14:00:00.000+01:00"),
       new Date("2024-02-12T14:00:00.000+01:00"),
       new Date("2024-02-19T14:00:00.000+01:00"),
@@ -399,7 +396,9 @@ export class BallerForm extends LitElement {
       new Date("2024-03-04T14:00:00.000+01:00"),
       new Date("2024-03-11T14:00:00.000+01:00"),
       new Date("2024-03-18T14:00:00.000+01:00"),
-      new Date("2024-03-23T14:00:00.000+01:00"),
+      new Date("2024-03-25T14:00:00.000+01:00"),
+      new Date("2024-04-01T14:00:00.000+01:00"),
+      new Date("2024-04-06T14:00:00.000+01:00"),
     ];
 
     let headline;
