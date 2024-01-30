@@ -389,7 +389,6 @@ export class BallerForm extends LitElement {
   private _renderDateSelectionDialog(){
 
     const availableDates = [
-      new Date("2024-02-05T14:00:00.000+01:00"),
       new Date("2024-02-12T14:00:00.000+01:00"),
       new Date("2024-02-19T14:00:00.000+01:00"),
       new Date("2024-02-26T14:00:00.000+01:00"),
