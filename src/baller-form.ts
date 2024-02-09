@@ -388,8 +388,10 @@ export class BallerForm extends LitElement {
 
   private _renderDateSelectionDialog(){
 
-    const availableDates = [
-      new Date("2024-02-12T14:00:00.000+01:00"),
+    // How many days before the match should we stop showing that option
+    const cutOffDays = 2;
+
+    const matchDates = [
       new Date("2024-02-19T14:00:00.000+01:00"),
       new Date("2024-02-26T14:00:00.000+01:00"),
       new Date("2024-03-04T14:00:00.000+01:00"),
@@ -399,6 +401,8 @@ export class BallerForm extends LitElement {
       new Date("2024-04-01T14:00:00.000+01:00"),
       new Date("2024-04-06T14:00:00.000+01:00"),
     ];
+
+    const availableDates = this._filterInvalidDates(matchDates, cutOffDays);
 
     let headline;
 
@@ -445,6 +449,12 @@ export class BallerForm extends LitElement {
         </div>
       </md-dialog>
     `;
+  }
+
+  private _filterInvalidDates(dates: Date[], cutoffDays: number): Date[]{
+    const daysInMilliseconds = cutoffDays * 24 * 60 * 60 * 1000;
+    const thresholdDate = new Date(Date.now() + daysInMilliseconds);
+    return dates.filter((date) => date > thresholdDate);
   }
 
   private _renderSuccessDialog(){
@@ -564,7 +574,7 @@ export class BallerForm extends LitElement {
                 touch-target="wrapper"
                 @change=${this._updateSubmitButton}
                 data-element="tos"
-                style="min-width: 1.2rem"
+                style="min-width: 1.2rem; margin-top: 0.2rem; padding-top: 0;"
               ></md-checkbox>
               <span>
                 Ja, ich möchte den regelmäßig erscheinenden E-Mail Newsletter von XING mit exklusiven Ticketverlosungen und Angeboten rund um die Baller League 

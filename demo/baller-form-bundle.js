@@ -686,25 +686,25 @@
     ${this._renderDateSelectionDialog()}
     ${this._renderSuccessDialog()}
     ${this._renderErrorDialog()}
-    `}static _renderMatchTimes(e,t=!1){return t?h`${e.toLocaleTimeString("de-DE",{hour:"numeric",minute:"numeric",timeZone:"CET",timeZoneName:"longGeneric"})}`:h`ab nachmittags`}_renderDateSelectionDialog(){let e=[new Date("2024-02-12T14:00:00.000+01:00"),new Date("2024-02-19T14:00:00.000+01:00"),new Date("2024-02-26T14:00:00.000+01:00"),new Date("2024-03-04T14:00:00.000+01:00"),new Date("2024-03-11T14:00:00.000+01:00"),new Date("2024-03-18T14:00:00.000+01:00"),new Date("2024-03-25T14:00:00.000+01:00"),new Date("2024-04-01T14:00:00.000+01:00"),new Date("2024-04-06T14:00:00.000+01:00")],t;return this.selectedDates.size===1?t=h`${this.selectedDates.size} Datum ausgewählt`:t=h`${this.selectedDates.size} Termine ausgewählt`,h`
+    `}static _renderMatchTimes(e,t=!1){return t?h`${e.toLocaleTimeString("de-DE",{hour:"numeric",minute:"numeric",timeZone:"CET",timeZoneName:"longGeneric"})}`:h`ab nachmittags`}_renderDateSelectionDialog(){let t=[new Date("2024-02-19T14:00:00.000+01:00"),new Date("2024-02-26T14:00:00.000+01:00"),new Date("2024-03-04T14:00:00.000+01:00"),new Date("2024-03-11T14:00:00.000+01:00"),new Date("2024-03-18T14:00:00.000+01:00"),new Date("2024-03-25T14:00:00.000+01:00"),new Date("2024-04-01T14:00:00.000+01:00"),new Date("2024-04-06T14:00:00.000+01:00")],i=this._filterInvalidDates(t,2),o;return this.selectedDates.size===1?o=h`${this.selectedDates.size} Datum ausgewählt`:o=h`${this.selectedDates.size} Termine ausgewählt`,h`
       <md-dialog type="alert" data-reason="dates">
         <div slot="headline" class="display-small">
-          ${t}
+          ${o}
         </div>
 
         <md-list slot="content">
           <form id="date-selection">
-        ${e.map(i=>h`
+        ${i.map(a=>h`
           <label>
             <md-list-item type="button">
               <div slot="headline">
-                ${i.toLocaleDateString("de-DE",{weekday:"long",day:"numeric",year:"numeric",month:"long"})}
+                ${a.toLocaleDateString("de-DE",{weekday:"long",day:"numeric",year:"numeric",month:"long"})}
               </div>
               <div slot="supporting-text">
-                ${be._renderMatchTimes(i)}
+                ${be._renderMatchTimes(a)}
               </div>
               <div slot="trailing-supporting-text">
-                <md-checkbox touch-target="wrapper" data-date=${i.toISOString()} @change=${this._onDateSelection}></md-checkbox>
+                <md-checkbox touch-target="wrapper" data-date=${a.toISOString()} @change=${this._onDateSelection}></md-checkbox>
               </div>
             </md-list-item>
           </label>`)}
@@ -716,7 +716,7 @@
           </md-filled-button>
         </div>
       </md-dialog>
-    `}_renderSuccessDialog(){return h`
+    `}_filterInvalidDates(e,t){let i=t*24*60*60*1e3,o=new Date(Date.now()+i);return e.filter(a=>a>o)}_renderSuccessDialog(){return h`
       <md-dialog type="alert" data-reason="success">
         <div slot="headline" class="display-small">Glückwunsch</div>
         <form slot="content" id="form-id" method="dialog">
@@ -823,7 +823,7 @@
                 touch-target="wrapper"
                 @change=${this._updateSubmitButton}
                 data-element="tos"
-                style="min-width: 1.2rem"
+                style="min-width: 1.2rem; margin-top: 0.2rem; padding-top: 0;"
               ></md-checkbox>
               <span>
                 Ja, ich möchte den regelmäßig erscheinenden E-Mail Newsletter von XING mit exklusiven Ticketverlosungen und Angeboten rund um die Baller League 
