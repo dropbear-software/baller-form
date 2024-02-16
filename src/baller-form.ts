@@ -402,7 +402,7 @@ export class BallerForm extends LitElement {
       new Date("2024-04-06T14:00:00.000+01:00"),
     ];
 
-    const availableDates = this._filterInvalidDates(matchDates, cutOffDays);
+    const availableDates = BallerForm._filterInvalidDates(matchDates, cutOffDays);
 
     let headline;
 
@@ -451,7 +451,7 @@ export class BallerForm extends LitElement {
     `;
   }
 
-  private _filterInvalidDates(dates: Date[], cutoffDays: number): Date[]{
+  private static _filterInvalidDates(dates: Date[], cutoffDays: number): Date[]{
     const daysInMilliseconds = cutoffDays * 24 * 60 * 60 * 1000;
     const thresholdDate = new Date(Date.now() + daysInMilliseconds);
     return dates.filter((date) => date > thresholdDate);
