@@ -367,75 +367,42 @@ export class BallerForm extends LitElement {
       </form>
     </section>
 
-    ${this._renderDateSelectionDialog()}
+    ${this._renderTeamSelectionDialog()}
     ${this._renderSuccessDialog()}
     ${this._renderErrorDialog()}
     `;
   }
 
-  private static _renderMatchTimes(matchTime: Date, useExactTimes = false){
-    if (useExactTimes) {
-      return html`${matchTime.toLocaleTimeString('de-DE', {
-        hour: 'numeric',
-        minute: 'numeric',
-        timeZone: 'CET',
-        timeZoneName: 'longGeneric'
-      })}`;
-    }
-
-    return html`ab nachmittags`;
-  }
-
-  private _renderDateSelectionDialog(){
-
-    // How many days before the match should we stop showing that option
-    const cutOffDays = 2;
-
-    const matchDates = [
-      new Date("2024-02-26T14:00:00.000+01:00"),
-      new Date("2024-03-04T14:00:00.000+01:00"),
-      new Date("2024-03-11T14:00:00.000+01:00"),
-      new Date("2024-03-18T14:00:00.000+01:00"),
-      new Date("2024-03-25T14:00:00.000+01:00"),
-      new Date("2024-04-01T14:00:00.000+01:00"),
-      new Date("2024-04-06T14:00:00.000+01:00"),
-    ];
-
-    const availableDates = BallerForm._filterInvalidDates(matchDates, cutOffDays);
-
-    let headline;
-
-    if (this.selectedDates.size === 1) {
-      headline = html`${this.selectedDates.size} Datum ausgewählt`;
-    } else {
-      headline = html`${this.selectedDates.size} Termine ausgewählt`;
-    }
+  private _renderTeamSelectionDialog(){
+    const teams = [
+      {
+        name: 'Beton Berlin',
+        img: null
+      },
+      {
+        name: 'Eintract Spandau',
+        img: null
+      }
+    ]
 
     return html`
       <md-dialog type="alert" data-reason="dates">
         <div slot="headline" class="display-small">
-          ${headline}
+        Wähle Dein Trikot:
         </div>
 
         <md-list slot="content">
           <form id="date-selection">
-        ${availableDates.map((matchDate) => 
+        ${teams.map((team) => 
           html`
           <label>
             <md-list-item type="button">
+              <img slot="start" style="width: 56px" src="https://placekitten.com/112/112" alt="${team.name} Trikot">
               <div slot="headline">
-                ${matchDate.toLocaleDateString('de-DE', {
-                  weekday: 'long',
-                  day: 'numeric',
-                  year: 'numeric',
-                  month: 'long',
-                })}
-              </div>
-              <div slot="supporting-text">
-                ${BallerForm._renderMatchTimes(matchDate)}
+                ${team.name}
               </div>
               <div slot="trailing-supporting-text">
-                <md-checkbox touch-target="wrapper" data-date=${matchDate.toISOString()} @change=${this._onDateSelection}></md-checkbox>
+                <md-checkbox touch-target="wrapper" data-name=${team.name} @change=${this._onDateSelection}></md-checkbox>
               </div>
             </md-list-item>
           </label>`)}
@@ -561,7 +528,7 @@ export class BallerForm extends LitElement {
               name="apply"
               style="width: 100%"
             >
-              Termine auswählen
+            Ich möchte das Trikot gewinnen von:
             </md-filled-tonal-button>
             <div class="invisible-icon"></div>
           </div>
