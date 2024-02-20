@@ -22,7 +22,7 @@
     "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",
     "test": "tsc && wtr --coverage",
     "test:watch": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wtr --watch\"",
-    "bundle": "esbuild dist/src/index.js --bundle --minify --sourcemap --outfile=demo/baller-form-bundle.js && esbuild --bundle styles/theme.css --outfile=demo/theme.css",
+    "bundle": "esbuild dist/src/index.js --bundle --minify --sourcemap --outfile=demo/ticket-form-bundle.js && esbuild --bundle styles/theme.css --outfile=demo/theme.css",
     "deploy": "firebase deploy"
   },
   "dependencies": {

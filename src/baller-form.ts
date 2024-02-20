@@ -28,7 +28,7 @@ import '@material/web/list/list.js';
 import '@material/web/list/list-item.js';
 
 /**
- * @tagname baller-form
+ * @tagname ticket-form
  *
  * @summary The Baller League Player Registration Form
  *
@@ -40,8 +40,8 @@ import '@material/web/list/list-item.js';
  * @fires {CustomEvent} signup-form-displayed - When the form is first shown to the user
  * @fires {CustomEvent} submission_error - When the user attempts to submit the form but an error occurs
  */
-@customElement('baller-form')
-export class BallerForm extends LitElement {
+@customElement('ticket-form')
+export class TicketForm extends LitElement {
   private _internals: any;
   
   static get formAssociated() {
@@ -376,14 +376,54 @@ export class BallerForm extends LitElement {
   private _renderTeamSelectionDialog(){
     const teams = [
       {
+        name: 'Streets United',
+        img: null
+      },
+      {
+        name: 'Käfigtiger',
+        img: null
+      },
+      {
+        name: 'Las Ligas Ladies',
+        img: null
+      },
+      {
+        name: 'Brotatos',
+        img: null
+      },
+      {
+        name: 'Hollywood United',
+        img: null
+      },
+      {
+        name: 'VfR Zimbos',
+        img: null
+      },
+      {
+        name: 'Golden XI',
+        img: null
+      },
+      {
+        name: 'Calcio Berlin',
+        img: null
+      },
+      {
+        name: 'Eintracht Spandau',
+        img: null
+      },
+      {
         name: 'Beton Berlin',
         img: null
       },
       {
-        name: 'Eintract Spandau',
+        name: 'Hardstuck Royale',
         img: null
-      }
-    ]
+      },
+      {
+        name: 'Gönrgy',
+        img: null
+      },
+    ];
 
     return html`
       <md-dialog type="alert" data-reason="dates">
@@ -455,16 +495,13 @@ export class BallerForm extends LitElement {
     `;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   private _renderPersonalQuestions() {
     return html`
       <div>
         <div class="form-header">
           <p class="label-medium">
-            Wie Du dabei sein kannst? Einfach für den XING Newsletter anmelden.
-          </p>
-          <p class="label-medium">
-            Damit nimmst Du nicht nur an der Verlosung für die Tickets teil – Du bleibst auch mit den News um die Baller League immer am Ball.
+          Und so bist Du dabei: Meld Dich mit Deiner E-Mailadresse für den XING Baller League Newsletter an. 
+          So bleibst Du mit den News um die Baller League immer am Ball und sicherst Dir die Chance auf dein Lieblingstrikot.
           </p>
         </div>
         <div class="form-fields">
@@ -476,7 +513,7 @@ export class BallerForm extends LitElement {
               type="email"
               max="250"
               style="width: 100%"
-              @blur=${BallerForm._reportFieldValidity}
+              @blur=${TicketForm._reportFieldValidity}
             ></md-filled-text-field>
             <div class="invisible-icon"></div>
           </div>
@@ -488,7 +525,7 @@ export class BallerForm extends LitElement {
               autocomplete="given-name"
               max="250"
               style="width: 100%"
-              @blur=${BallerForm._reportFieldValidity}
+              @blur=${TicketForm._reportFieldValidity}
             ></md-filled-text-field>
             <div class="invisible-icon"></div>
           </div>
@@ -500,7 +537,7 @@ export class BallerForm extends LitElement {
               max="250"
               autocomplete="family-name"
               style="width: 100%"
-              @blur=${BallerForm._reportFieldValidity}
+              @blur=${TicketForm._reportFieldValidity}
             ></md-filled-text-field>
             <div class="invisible-icon"></div>
           </div>
@@ -518,7 +555,7 @@ export class BallerForm extends LitElement {
                 <div slot="headline">Nein</div>
               </md-select-option>
             </md-filled-select>
-            ${BallerForm._renderTooltip(tooltipMessages.xing)}
+            ${TicketForm._renderTooltip(tooltipMessages.xing)}
           </div>
 
           <div class="field-with-tooltip">
@@ -562,6 +599,6 @@ export class BallerForm extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'baller-form': BallerForm;
+    'ticket-form': TicketForm;
   }
 }
