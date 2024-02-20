@@ -392,7 +392,6 @@ export class BallerForm extends LitElement {
     const cutOffDays = 2;
 
     const matchDates = [
-      new Date("2024-02-26T14:00:00.000+01:00"),
       new Date("2024-03-04T14:00:00.000+01:00"),
       new Date("2024-03-11T14:00:00.000+01:00"),
       new Date("2024-03-18T14:00:00.000+01:00"),
