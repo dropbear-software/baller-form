@@ -90,9 +90,6 @@ export class TicketForm extends LitElement {
   @query('form#application-form')
   applicationFormElement!: HTMLFormElement;
 
-  @query('form#date-selection')
-  dateSelectionForm!: HTMLFormElement;
-
   @query('md-filled-text-field[autocomplete="given-name"]')
   firstName!: MdFilledTextField;
 
@@ -123,7 +120,7 @@ export class TicketForm extends LitElement {
   private successPage = new URL('/tikotgewinnspiel-teilnahme-erfolgreich/', window.location.origin);
 
   @state()
-  private selectedTeams = new Set<string>();
+  private _selectedTeam?: string;
 
   private _enrollmentService?: EnrollmentService;
 
@@ -229,7 +226,7 @@ export class TicketForm extends LitElement {
       givenName: this.firstName.value,
       email: this.email.value,
       xingMember: this.xingMember.value === 'true',
-      selectedTeams: this.selectedTeams,
+      selectedTeams: this._selectedTeam!,
       acceptedTos: this.termsOfServiceBox.checked
     };
 
@@ -240,41 +237,16 @@ export class TicketForm extends LitElement {
 
   private _shouldEnableSubmit(): boolean {
     const hasAcceptedDatenschutz = this.termsOfServiceBox.checked;
-    const hasSelectedDate = this.selectedTeams.size !== 0;
+    const hasSelectedTeam = (this._selectedTeam !== null || this._selectedTeam !== undefined);
 
-    return hasAcceptedDatenschutz && hasSelectedDate;
+    return hasAcceptedDatenschutz && hasSelectedTeam;
   }
-
-  
 
   // Event Handlers
 
   private _onSuccessDialogClose(){
     this.successDialog.close();
     this.applicationFormElement.reset();
-    this.dateSelectionForm.reset();
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  private _onDateSelection(e: Event){
-    // @ts-ignore
-    const isSelected = e.target!.checked;
-    // @ts-ignore
-    const selectedDate = e.target!.dataset.date;
-
-    if (isSelected) {
-      this.selectedTeams.add(selectedDate);
-    } else {
-      this.selectedTeams.delete(selectedDate);
-    }
-    this.requestUpdate();
-    this._updateSubmitButton();
-  }
-
-  
-  private _onDateFormSubmit(e: PointerEvent){
-    e.preventDefault();
-    this.datePicker.close();
   }
 
   private _onErrorDialogClose(){
@@ -342,10 +314,6 @@ export class TicketForm extends LitElement {
     this.errorDialog.open = true;
   }
 
-  private _openDatePicker(){
-    this.datePicker.open = true;
-  }
-
   private _renderForm(){
     return html`
     <section id="form-wrapper">
@@ -367,96 +335,8 @@ export class TicketForm extends LitElement {
       </form>
     </section>
 
-    ${this._renderTeamSelectionDialog()}
     ${this._renderSuccessDialog()}
     ${this._renderErrorDialog()}
-    `;
-  }
-
-  private _renderTeamSelectionDialog(){
-    const teams = [
-      {
-        name: 'Streets United',
-        img: 'streetsunited.png'
-      },
-      {
-        name: 'Käfigtiger',
-        img: 'kafigtiger.png'
-      },
-      {
-        name: 'Las Ligas Ladies',
-        img: 'lasligas.png'
-      },
-      {
-        name: 'Protatos',
-        img: 'brotatos.png'
-      },
-      {
-        name: 'Hollywood United',
-        img: 'hollywoodunited.png'
-      },
-      {
-        name: 'VfR Zimbos',
-        img: 'zimbos.png'
-      },
-      {
-        name: 'Golden XI',
-        img: 'goldenxi.png'
-      },
-      {
-        name: 'Calcio Berlin',
-        img: 'calcioberlin.png'
-      },
-      {
-        name: 'Eintracht Spandau',
-        img: 'eintrachtspandau.png'
-      },
-      {
-        name: 'Beton Berlin',
-        img: 'betonberlin.png'
-      },
-      {
-        name: 'Hardstuck Royale',
-        img: 'hardstuck.png'
-      },
-      {
-        name: 'Gönrgy',
-        img: 'gonrgy.png'
-      },
-    ];
-
-    return html`
-      <md-dialog type="alert" data-reason="dates">
-        <div slot="headline" class="display-small">
-        Wähle Dein Trikot:
-        </div>
-
-        <md-list slot="content">
-          <form id="date-selection">
-        ${teams.map((team) => 
-          html`
-          <label>
-            <md-list-item type="button">
-              <img slot="start" src="/wp-content/themes/ballerleague-dynamic/assets/images/jerseys/mini/${team.img}" alt="${team.name} Trikot">
-              <div slot="headline">
-                ${team.name}
-              </div>
-              <div slot="supporting-text">
-                Heimtrikot '24
-              </div>
-              <div slot="trailing-supporting-text">
-                <md-checkbox touch-target="wrapper" data-name=${team.name} @change=${this._onDateSelection}></md-checkbox>
-              </div>
-            </md-list-item>
-          </label>`)}
-          </form>
-        </md-list>
-        <div slot="actions">
-          <md-filled-button value="close" @click=${this._onDateFormSubmit}>
-            Bestätigen
-          </md-filled-button>
-        </div>
-      </md-dialog>
     `;
   }
 
@@ -494,55 +374,19 @@ export class TicketForm extends LitElement {
 
   // eslint-disable-next-line class-methods-use-this
   private _renderTeamSelection(){
-    const teams = [
-      {
-        name: 'Streets United',
-        img: 'streetsunited.png'
-      },
-      {
-        name: 'Käfigtiger',
-        img: 'kafigtiger.png'
-      },
-      {
-        name: 'Las Ligas Ladies',
-        img: 'lasligas.png'
-      },
-      {
-        name: 'Protatos',
-        img: 'brotatos.png'
-      },
-      {
-        name: 'Hollywood United',
-        img: 'hollywoodunited.png'
-      },
-      {
-        name: 'VfR Zimbos',
-        img: 'zimbos.png'
-      },
-      {
-        name: 'Golden XI',
-        img: 'goldenxi.png'
-      },
-      {
-        name: 'Calcio Berlin',
-        img: 'calcioberlin.png'
-      },
-      {
-        name: 'Eintracht Spandau',
-        img: 'eintrachtspandau.png'
-      },
-      {
-        name: 'Beton Berlin',
-        img: 'betonberlin.png'
-      },
-      {
-        name: 'Hardstuck Royale',
-        img: 'hardstuck.png'
-      },
-      {
-        name: 'Gönrgy',
-        img: 'gonrgy.png'
-      },
+    const teamNames = [
+      'Streets United',
+      'Käfigtiger',
+      'Las Ligas Ladies',
+      'Protatos',
+      'Hollywood United',
+      'VfR Zimbos',
+      'Golden XI',
+      'Calcio Berlin',
+      'Eintracht Spandau',
+      'Beton Berlin',
+      'Hardstuck Royale',
+      'Gönrgy'
     ];
 
     return html`
@@ -552,9 +396,9 @@ export class TicketForm extends LitElement {
           name="team-selection"
           style="width: 100%;"
         >
-        ${teams.map((team) => html`
-        <md-select-option value="${team.name}">
-            <div slot="headline">${team.name}</div>
+        ${teamNames.map((team) => html`
+        <md-select-option value="${team}">
+            <div slot="headline">${team}</div>
           </md-select-option>
         `)}
         </md-filled-select>
@@ -629,18 +473,6 @@ export class TicketForm extends LitElement {
           </div>
 
           ${this._renderTeamSelection()}
-
-          <div class="field-with-tooltip">
-            <md-filled-tonal-button
-              @click=${this._openDatePicker}
-              type="button"
-              name="apply"
-              style="width: 100%"
-            >
-            Ich möchte das Trikot gewinnen von:
-            </md-filled-tonal-button>
-            <div class="invisible-icon"></div>
-          </div>
 
           <div class="field-with-tooltip tos-section">
             

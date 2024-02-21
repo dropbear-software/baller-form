@@ -94,7 +94,7 @@ export class EnrollmentService {
           first_name: data.givenName,
           last_name: data.familyName,
           xing_member: data.xingMember,
-          selected_teams: data.selectedTeams,
+          selected_teams: data.selectedTeam,
           accepted_conditions: data.acceptedTos,
         }
       ]

@@ -3,7 +3,7 @@ export interface ApplicationDataInit {
   familyName: string,
   email: string,
   xingMember: boolean,
-  selectedTeams: Set<string>,
+  selectedTeams: string,
   acceptedTos: boolean,
 }
 
@@ -16,7 +16,7 @@ export class ApplicationData {
 
   readonly xingMember: boolean;
 
-  readonly selectedTeams: Set<string>;
+  readonly selectedTeam: string;
 
   readonly acceptedTos: boolean;
 
@@ -27,7 +27,7 @@ export class ApplicationData {
     this.familyName = args.familyName;
     this.email = args.email;
     this.xingMember = args.xingMember;
-    this.selectedTeams = args.selectedTeams;
+    this.selectedTeam = args.selectedTeams;
     this.acceptedTos = args.acceptedTos;
   }
 }
