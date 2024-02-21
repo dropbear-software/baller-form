@@ -84,7 +84,7 @@ export class EnrollmentService {
         {
           email: data.email,
           app_id: '220983e3-8db5-49d5-8272-620b09b1f7fa',
-          name: 'Submit_Newsletter_Sweepstake',
+          name: 'Jersey_Sweepstake_Submission',
           time: new Date().toISOString(),
         },
       ],
@@ -94,7 +94,7 @@ export class EnrollmentService {
           first_name: data.givenName,
           last_name: data.familyName,
           xing_member: data.xingMember,
-          selected_dates: data.availableDates,
+          selected_teams: data.selectedTeams,
           accepted_conditions: data.acceptedTos,
         }
       ]

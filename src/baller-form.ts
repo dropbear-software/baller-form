@@ -120,10 +120,10 @@ export class TicketForm extends LitElement {
   // Private Class Fields
 
   @state()
-  private successPage = new URL('/teilnahme-erfolgreich/', window.location.origin);
+  private successPage = new URL('/tikotgewinnspiel-teilnahme-erfolgreich/', window.location.origin);
 
   @state()
-  private selectedDates = new Set<string>();
+  private selectedTeams = new Set<string>();
 
   private _enrollmentService?: EnrollmentService;
 
@@ -229,7 +229,7 @@ export class TicketForm extends LitElement {
       givenName: this.firstName.value,
       email: this.email.value,
       xingMember: this.xingMember.value === 'true',
-      availableDates: this.selectedDates,
+      selectedTeams: this.selectedTeams,
       acceptedTos: this.termsOfServiceBox.checked
     };
 
@@ -240,7 +240,7 @@ export class TicketForm extends LitElement {
 
   private _shouldEnableSubmit(): boolean {
     const hasAcceptedDatenschutz = this.termsOfServiceBox.checked;
-    const hasSelectedDate = this.selectedDates.size !== 0;
+    const hasSelectedDate = this.selectedTeams.size !== 0;
 
     return hasAcceptedDatenschutz && hasSelectedDate;
   }
@@ -263,9 +263,9 @@ export class TicketForm extends LitElement {
     const selectedDate = e.target!.dataset.date;
 
     if (isSelected) {
-      this.selectedDates.add(selectedDate);
+      this.selectedTeams.add(selectedDate);
     } else {
-      this.selectedDates.delete(selectedDate);
+      this.selectedTeams.delete(selectedDate);
     }
     this.requestUpdate();
     this._updateSubmitButton();
@@ -377,51 +377,51 @@ export class TicketForm extends LitElement {
     const teams = [
       {
         name: 'Streets United',
-        img: null
+        img: 'streetsunited.png'
       },
       {
         name: 'Käfigtiger',
-        img: null
+        img: 'kafigtiger.png'
       },
       {
         name: 'Las Ligas Ladies',
-        img: null
+        img: 'lasligas.png'
       },
       {
-        name: 'Brotatos',
-        img: null
+        name: 'Protatos',
+        img: 'brotatos.png'
       },
       {
         name: 'Hollywood United',
-        img: null
+        img: 'hollywoodunited.png'
       },
       {
         name: 'VfR Zimbos',
-        img: null
+        img: 'zimbos.png'
       },
       {
         name: 'Golden XI',
-        img: null
+        img: 'goldenxi.png'
       },
       {
         name: 'Calcio Berlin',
-        img: null
+        img: 'calcioberlin.png'
       },
       {
         name: 'Eintracht Spandau',
-        img: null
+        img: 'eintrachtspandau.png'
       },
       {
         name: 'Beton Berlin',
-        img: null
+        img: 'betonberlin.png'
       },
       {
         name: 'Hardstuck Royale',
-        img: null
+        img: 'hardstuck.png'
       },
       {
         name: 'Gönrgy',
-        img: null
+        img: 'gonrgy.png'
       },
     ];
 
@@ -437,9 +437,12 @@ export class TicketForm extends LitElement {
           html`
           <label>
             <md-list-item type="button">
-              <img slot="start" style="width: 56px" src="https://placekitten.com/112/112" alt="${team.name} Trikot">
+              <img slot="start" src="/wp-content/themes/ballerleague-dynamic/assets/images/jerseys/mini/${team.img}" alt="${team.name} Trikot">
               <div slot="headline">
                 ${team.name}
+              </div>
+              <div slot="supporting-text">
+                Heimtrikot '24
               </div>
               <div slot="trailing-supporting-text">
                 <md-checkbox touch-target="wrapper" data-name=${team.name} @change=${this._onDateSelection}></md-checkbox>
@@ -455,12 +458,6 @@ export class TicketForm extends LitElement {
         </div>
       </md-dialog>
     `;
-  }
-
-  private static _filterInvalidDates(dates: Date[], cutoffDays: number): Date[]{
-    const daysInMilliseconds = cutoffDays * 24 * 60 * 60 * 1000;
-    const thresholdDate = new Date(Date.now() + daysInMilliseconds);
-    return dates.filter((date) => date > thresholdDate);
   }
 
   private _renderSuccessDialog(){
@@ -495,13 +492,85 @@ export class TicketForm extends LitElement {
     `;
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  private _renderTeamSelection(){
+    const teams = [
+      {
+        name: 'Streets United',
+        img: 'streetsunited.png'
+      },
+      {
+        name: 'Käfigtiger',
+        img: 'kafigtiger.png'
+      },
+      {
+        name: 'Las Ligas Ladies',
+        img: 'lasligas.png'
+      },
+      {
+        name: 'Protatos',
+        img: 'brotatos.png'
+      },
+      {
+        name: 'Hollywood United',
+        img: 'hollywoodunited.png'
+      },
+      {
+        name: 'VfR Zimbos',
+        img: 'zimbos.png'
+      },
+      {
+        name: 'Golden XI',
+        img: 'goldenxi.png'
+      },
+      {
+        name: 'Calcio Berlin',
+        img: 'calcioberlin.png'
+      },
+      {
+        name: 'Eintracht Spandau',
+        img: 'eintrachtspandau.png'
+      },
+      {
+        name: 'Beton Berlin',
+        img: 'betonberlin.png'
+      },
+      {
+        name: 'Hardstuck Royale',
+        img: 'hardstuck.png'
+      },
+      {
+        name: 'Gönrgy',
+        img: 'gonrgy.png'
+      },
+    ];
+
+    return html`
+      <div class="field-with-tooltip">
+        <md-filled-select
+          label="Ich möchte das Trikot gewinnen von:"
+          name="team-selection"
+          style="width: 100%;"
+        >
+        ${teams.map((team) => html`
+        <md-select-option value="${team.name}">
+            <div slot="headline">${team.name}</div>
+          </md-select-option>
+        `)}
+        </md-filled-select>
+        <div class="invisible-icon"></div>
+      </div>
+    `;
+  }
+
   private _renderPersonalQuestions() {
     return html`
       <div>
         <div class="form-header">
           <p class="label-medium">
-          Und so bist Du dabei: Meld Dich mit Deiner E-Mailadresse für den XING Baller League Newsletter an. 
-          So bleibst Du mit den News um die Baller League immer am Ball und sicherst Dir die Chance auf dein Lieblingstrikot.
+            So einfach bist Du dabei: <br>
+            Melde Dich mit Deiner E-Mailadresse für den XING Newsletter an. 
+            So bleibst Du mit exklusiven News rund um die Baller League am Ball und sicherst Dir die Chance auf ein Trikot Deiner Wunschmannschaft. 
           </p>
         </div>
         <div class="form-fields">
@@ -558,6 +627,8 @@ export class TicketForm extends LitElement {
             ${TicketForm._renderTooltip(tooltipMessages.xing)}
           </div>
 
+          ${this._renderTeamSelection()}
+
           <div class="field-with-tooltip">
             <md-filled-tonal-button
               @click=${this._openDatePicker}
@@ -584,7 +655,7 @@ export class TicketForm extends LitElement {
                 erhalten. Abmeldung jederzeit möglich. Es gelten die
                 <a href="https://www.new-work.se/de/datenschutz" target="_blank" style="color: #0698A0; text-decoration: none;">Datenschutzbestimmungen</a>
                 der New Work SE. Mit der Teilnahme am Gewinnspiel stimmst Du unseren 
-                <a href="/gewinnspielteilnahmebedingungen" target="_blank" style="color: #0698A0; text-decoration: none;">Teilnahmebedingungen</a>
+                <a href="/teilnahmebedingungentrikotgewinnspiel" target="_blank" style="color: #0698A0; text-decoration: none;">Teilnahmebedingungen</a>
                 zu.
               </span>
             </label>
