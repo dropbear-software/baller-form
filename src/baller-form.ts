@@ -568,9 +568,10 @@ export class TicketForm extends LitElement {
       <div>
         <div class="form-header">
           <p class="label-medium">
-            So einfach bist Du dabei: <br>
-            Melde Dich mit Deiner E-Mailadresse für den XING Newsletter an. 
-            So bleibst Du mit exklusiven News rund um die Baller League am Ball und sicherst Dir die Chance auf ein Trikot Deiner Wunschmannschaft. 
+            So bist Du in der Verlosung:<br>
+            Melde Dich mit Deiner E-Mail-Adresse für den XING Newsletter an. 
+            So bleibst Du rund um die Baller League am Ball und sicherst 
+            Dir die Chance auf ein Trikot Deines Dream-Teams.
           </p>
         </div>
         <div class="form-fields">
@@ -651,8 +652,9 @@ export class TicketForm extends LitElement {
                 style="min-width: 1.2rem; margin-top: 0.2rem; padding-top: 0;"
               ></md-checkbox>
               <span>
-                Ja, ich möchte den regelmäßig erscheinenden E-Mail Newsletter von XING mit exklusiven Ticketverlosungen und Angeboten rund um die Baller League 
-                erhalten. Abmeldung jederzeit möglich. Es gelten die
+              Ja, ich möchte den regelmäßig erscheinenden E-Mail-Newsletter von XING mit 
+              exklusiven Ticket-Verlosungen, News und Angeboten rund um die 
+              Baller League erhalten. Abmeldung jederzeit möglich. Es gelten die
                 <a href="https://www.new-work.se/de/datenschutz" target="_blank" style="color: #0698A0; text-decoration: none;">Datenschutzbestimmungen</a>
                 der New Work SE. Mit der Teilnahme am Gewinnspiel stimmst Du unseren 
                 <a href="/teilnahmebedingungentrikotgewinnspiel" target="_blank" style="color: #0698A0; text-decoration: none;">Teilnahmebedingungen</a>
