@@ -16,7 +16,6 @@ import { tooltipMessages } from './tooltips.js';
 
 import '@material/web/button/filled-button.js';
 import '@material/web/button/filled-tonal-button.js';
-import '@material/web/button/outlined-button.js';
 import '@material/web/textfield/filled-text-field.js';
 import '@material/web/elevation/elevation.js';
 import '@material/web/checkbox/checkbox.js';
@@ -84,7 +83,7 @@ export class TicketForm extends LitElement {
   @property({ type: String, attribute: 'braze-endpoint' }) brazeEndpoint =
     '/ballerleague/v1/submit_application';
 
-  @query('md-outlined-button[name="apply"]')
+  @query('md-filled-button[name="apply"]')
   submitButton!: MdFilledButton;
 
   @query('form#application-form')
@@ -102,6 +101,9 @@ export class TicketForm extends LitElement {
   @query('md-filled-select[name="xing-member"]')
   xingMember!: MdFilledSelect;
 
+  @query('md-filled-select[name="team-selection"]')
+  team!: MdFilledSelect;
+
   @query('[data-element="tos"]')
   termsOfServiceBox!: MdCheckbox;
 
@@ -111,13 +113,10 @@ export class TicketForm extends LitElement {
   @query('md-dialog[data-reason="error"]')
   errorDialog!: MdDialog;
 
-  @query('md-dialog[data-reason="dates"]')
-  datePicker!: MdDialog;
-
   // Private Class Fields
 
   @state()
-  private successPage = new URL('/tikotgewinnspiel-teilnahme-erfolgreich/', window.location.origin);
+  private successPage = new URL('/trikotgewinnspiel-teilnahme-erfolgreich/', window.location.origin);
 
   @state()
   private _selectedTeam?: string;
@@ -183,7 +182,6 @@ export class TicketForm extends LitElement {
         // Register all dialogs we need to support
         dialogPolyfill.registerDialog(this.successDialog);
         dialogPolyfill.registerDialog(this.errorDialog);
-        dialogPolyfill.registerDialog(this.datePicker);
         console.info('Dialog element polyfill installed');
       } catch (error) {
         console.error('Unable to load Dialog element polyfill support\n', error);
@@ -226,7 +224,7 @@ export class TicketForm extends LitElement {
       givenName: this.firstName.value,
       email: this.email.value,
       xingMember: this.xingMember.value === 'true',
-      selectedTeams: this._selectedTeam!,
+      selectedTeams: this.team.value,
       acceptedTos: this.termsOfServiceBox.checked
     };
 
@@ -236,10 +234,7 @@ export class TicketForm extends LitElement {
   }
 
   private _shouldEnableSubmit(): boolean {
-    const hasAcceptedDatenschutz = this.termsOfServiceBox.checked;
-    const hasSelectedTeam = (this._selectedTeam !== null || this._selectedTeam !== undefined);
-
-    return hasAcceptedDatenschutz && hasSelectedTeam;
+    return this.termsOfServiceBox.checked;
   }
 
   // Event Handlers
@@ -322,7 +317,7 @@ export class TicketForm extends LitElement {
           ${this._renderPersonalQuestions()}
         </div>
         <div class="form-footer">
-          <md-outlined-button
+          <md-filled-button
             @click=${this._onSubmitEvent}
             type="button"
             name="apply"
@@ -330,7 +325,7 @@ export class TicketForm extends LitElement {
             style="width: 100%"
           >
           Jetzt teilnehmen
-          </md-outlined-button>
+          </md-filled-button>
         </div>
       </form>
     </section>
@@ -395,6 +390,7 @@ export class TicketForm extends LitElement {
           label="Ich möchte das Trikot gewinnen von:"
           name="team-selection"
           style="width: 100%;"
+          required
         >
         ${teamNames.map((team) => html`
         <md-select-option value="${team}">
@@ -461,6 +457,7 @@ export class TicketForm extends LitElement {
               label="XING Member"
               name="xing-member"
               style="width: 100%;"
+              @select=${TicketForm._reportFieldValidity}
             >
               <md-select-option value="true">
                 <div slot="headline">Ja</div>
