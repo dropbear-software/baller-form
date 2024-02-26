@@ -686,7 +686,7 @@
     ${this._renderDateSelectionDialog()}
     ${this._renderSuccessDialog()}
     ${this._renderErrorDialog()}
-    `}static _renderMatchTimes(e,t=!1){return t?h`${e.toLocaleTimeString("de-DE",{hour:"numeric",minute:"numeric",timeZone:"CET",timeZoneName:"longGeneric"})}`:h`ab nachmittags`}_renderDateSelectionDialog(){let t=[new Date("2024-03-04T14:00:00.000+01:00"),new Date("2024-03-11T14:00:00.000+01:00"),new Date("2024-03-18T14:00:00.000+01:00"),new Date("2024-03-25T14:00:00.000+01:00"),new Date("2024-04-01T14:00:00.000+01:00"),new Date("2024-04-06T14:00:00.000+01:00")],i=pe._filterInvalidDates(t,2),o;return this.selectedDates.size===1?o=h`${this.selectedDates.size} Datum ausgewählt`:o=h`${this.selectedDates.size} Termine ausgewählt`,h`
+    `}static _renderMatchTimes(e,t=!1){return t?h`${e.toLocaleTimeString("de-DE",{hour:"numeric",minute:"numeric",timeZone:"CET",timeZoneName:"longGeneric"})}`:h`ab nachmittags`}_renderDateSelectionDialog(){let t=[new Date("2024-03-04T14:00:00.000+01:00"),new Date("2024-03-11T14:00:00.000+01:00"),new Date("2024-03-18T14:00:00.000+01:00"),new Date("2024-03-25T14:00:00.000+01:00"),new Date("2024-04-01T14:00:00.000+01:00"),new Date("2024-04-06T14:00:00.000+01:00")],i=pe._filterInvalidDates(t,7),o;return this.selectedDates.size===1?o=h`${this.selectedDates.size} Datum ausgewählt`:o=h`${this.selectedDates.size} Termine ausgewählt`,h`
       <md-dialog type="alert" data-reason="dates">
         <div slot="headline" class="display-small">
           ${o}

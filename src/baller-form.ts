@@ -389,7 +389,7 @@ export class BallerForm extends LitElement {
   private _renderDateSelectionDialog(){
 
     // How many days before the match should we stop showing that option
-    const cutOffDays = 2;
+    const cutOffDays = 7;
 
     const matchDates = [
       new Date("2024-03-04T14:00:00.000+01:00"),
